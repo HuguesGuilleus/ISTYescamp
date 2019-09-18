@@ -22,14 +22,8 @@
 		COUL coulP; /* {BLANC, NOIR} */
 	} BOITE ;
 	
-	typedef struct {
-		int angle;
-		COUL coulJ;
-	} JOUEUR;
 	
 	BOITE plateau [6][6]; 
-
-
 
 	void init_plateau();
 	void init_piece1_debug();
