@@ -1,31 +1,32 @@
 #include "vue.h"
 
 
-void afficher_plateau(BOX plateau[NB_BOX_PLATEAU][NB_BOX_PLATEAU]){
-	POINT centreBox;
+void afficher_plateau(BOITE plateau[NB_BOITE_PLATEAU][NB_BOITE_PLATEAU]){
+	POINT centreBoite;
 	
 	int marge;
-	int largeur_box = (TAILLE_PLATEAU/NB_BOX_PLATEAU);
-	int rayon_box = largeur_box/2;
+	int largeur_boite = (TAILLE_PLATEAU/NB_BOITE_PLATEAU);
+	int rayon_boite = largeur_boite/2;
 	int x,y,cercle;
 	
-	for(x=0;x<NB_BOX_PLATEAU;x++){
+	for(x=0;x<NB_BOITE_PLATEAU;x++){
 		marge = (L_PANEL_JEU-TAILLE_PLATEAU)/2;
-		centreBox.x = marge+( largeur_box*x)+rayon_box;
 		
-		for(y=0;y<NB_BOX_PLATEAU;y++){
+		centreBoite.x = marge+( largeur_boite*x)+rayon_boite;
+		
+		for(y=0;y<NB_BOITE_PLATEAU;y++){
 			marge = (H_FENETRE-TAILLE_PLATEAU)/2;
 			
-			centreBox.y = marge+(largeur_box*y)+rayon_box;
+			centreBoite.y = marge+(largeur_boite*y)+rayon_boite;
 
 			for (cercle = 0;cercle < plateau[x][y].lisere;cercle++){
-				draw_circle(centreBox,rayon_box-(cercle*4),blanc);
+				draw_circle(centreBoite,rayon_boite-(cercle*4),blanc);
 			}
 			
 			if(plateau[x][y].typeP == LICORNE)
-				afficher_licorne(plateau[x][y].coulP,centreBox);
+				afficher_licorne(plateau[x][y].coulP,centreBoite);
 			else if(plateau[x][y].typeP == PALADIN)
-				afficher_paladin(plateau[x][y].coulP,centreBox);
+				afficher_paladin(plateau[x][y].coulP,centreBoite);
 			
 			
 		}
@@ -45,7 +46,7 @@ void afficher_panel_score(){
 
 }
 
-void afficher_panel_jeu(BOX plateau[NB_BOX_PLATEAU][NB_BOX_PLATEAU]){
+void afficher_panel_jeu(BOITE plateau[NB_BOITE_PLATEAU][NB_BOITE_PLATEAU]){
 	POINT pBG,pHD;
 	
 	pBG.x = 0;pBG.y=0;
