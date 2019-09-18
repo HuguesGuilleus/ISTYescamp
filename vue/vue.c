@@ -73,6 +73,13 @@ void afficher_panneau_jeu(int ig){
 	
 	draw_fill_rectangle(pBG,pHD,couleur_RGB(129,116,98));
 	
+	afficher_legende_plateau(ig);
+	
+	
+	afficher_plateau(ig);
+}
+
+void afficher_legende_plateau(int ig){
 	int i;
 	POINT pLettre,pChiffre;
 	char lettre[2];
@@ -108,8 +115,6 @@ void afficher_panneau_jeu(int ig){
 			aff_int((NB_BOITE_PLATEAU-i), 12, pChiffre, blanc);
 		}
 	}
-	
-	afficher_plateau(ig);
 }
 
 void afficher_licorne(POINT centre, COUL coul){

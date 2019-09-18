@@ -32,6 +32,8 @@
 	// ###############################
 	
 	void afficher_plateau(int ig);
+	void afficher_legende_plateau(int ig);
+
 	void afficher_panneau_info();
 	void afficher_panneau_jeu(int ig);
 	
