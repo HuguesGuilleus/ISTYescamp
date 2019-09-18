@@ -1,30 +1,33 @@
 #include "vue.h"
 
 
-void afficher_plateau(BOX plateau[NB_BOX_PLATEAU][NB_BOX_PLATEAU]){
-	POINT centreBox;
+void afficher_plateau(){
+	POINT centreBoite;
 	
 	int marge;
-	int largeur_box = (TAILLE_PLATEAU/NB_BOX_PLATEAU);
+	int largeur_boite = (TAILLE_PLATEAU/NB_BOITE_PLATEAU);
+	int rayon_boite = largeur_boite/2;
 	int x,y,cercle;
 	
-	for(y=0;y<NB_BOX_PLATEAU;y++){
-		marge = (H_FENETRE-TAILLE_PLATEAU)/2;
-		centreBox.y = marge+( largeur_box*y)+largeur_box/2;
+	for(x=0;x<NB_BOITE_PLATEAU;x++){
+		marge = (L_PANEL_JEU-TAILLE_PLATEAU)/2;
 		
-		for(x=0;x<NB_BOX_PLATEAU;x++){
-			marge = (L_PANEL_JEU-TAILLE_PLATEAU)/2;
+		centreBoite.x = marge+( largeur_boite*x)+rayon_boite;
+		
+		for(y=0;y<NB_BOITE_PLATEAU;y++){
+			marge = (H_FENETRE-TAILLE_PLATEAU)/2;
 			
-			centreBox.x = marge+(largeur_box*x)+largeur_box/2;
+			centreBoite.y = marge+(largeur_boite*y)+rayon_boite;
 
-			for (cercle = 0;cercle < plateau[y][x].lisere;cercle++){
-				draw_circle(centreBox,(largeur_box/2)-(cercle*4),blanc);
+			
+			for (cercle = 0;cercle < plateau[x][y].lisere;cercle++){
+				draw_circle(centreBoite,rayon_boite-(cercle*4),blanc);
 			}
 			
-			if(plateau[y][x].typeP == LICORNE)
-				afficher_licorne(plateau[y][x].coulP,centreBox);
-			else if(plateau[y][x].typeP == PALADIN)
-				afficher_paladin(plateau[y][x].coulP,centreBox);
+			if(plateau[x][y].typeP == LICORNE)
+				afficher_licorne(plateau[x][y].coulP,centreBoite);
+			else if(plateau[x][y].typeP == PALADIN)
+				afficher_paladin(plateau[x][y].coulP,centreBoite);
 			
 			
 		}
@@ -44,16 +47,19 @@ void afficher_panel_score(){
 
 }
 
-void afficher_panel_jeu(BOX plateau[NB_BOX_PLATEAU][NB_BOX_PLATEAU]){
+void afficher_panel_jeu(){
 	POINT pBG,pHD;
 	
 	pBG.x = 0;pBG.y=0;
 	pHD.x = L_PANEL_JEU;pHD.y=H_FENETRE;
+	draw_fill_rectangle(pBG,pHD,couleur_RGB(232,210,160));
 	
-	draw_fill_rectangle(pBG,pHD,marron);
-	affiche_all();
+	pBG.x += (L_PANEL_JEU-TAILLE_PLATEAU)/2-25;pBG.y+=(H_FENETRE-TAILLE_PLATEAU)/2-25;
+	pHD.x -= (L_PANEL_JEU-TAILLE_PLATEAU)/2-18;pHD.y-=(H_FENETRE-TAILLE_PLATEAU)/2-18;
 	
-	afficher_plateau(plateau);
+	draw_fill_rectangle(pBG,pHD,couleur_RGB(129,116,98));
+	
+	afficher_plateau();
 }
 
 void afficher_licorne(COUL coul,POINT centre){
@@ -65,8 +71,6 @@ void afficher_licorne(COUL coul,POINT centre){
 		pCouleur = noir;
 		
 	draw_fill_circle(centre,10,pCouleur);
-	affiche_all();
-	
 }
 
 void afficher_paladin(COUL coul,POINT centre){
@@ -78,7 +82,6 @@ void afficher_paladin(COUL coul,POINT centre){
 		pCouleur = noir;
 		
 	draw_fill_circle(centre,5,pCouleur);
-	affiche_all();
-	
+
 }
 
