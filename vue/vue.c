@@ -171,5 +171,17 @@ void afficher_lisere_pion(int ig,NUMBOITE boite){
 		pBGBox = numBoite_to_pointBG_ig2(boite);
 		
 	afficher_lisere(pBGBox,plateau[boite.x][boite.y].lisere);
+	
+	
+	switch (plateau[boitex][boite.y].typeP){
+		case LICORNE:
+			afficher_licorne(pBGBox, plateau[boitex][boite.y].coulP);
+			break;
+		case PALADIN:
+			afficher_paladin(pBGBox, plateau[boitex][boite.y].coulP);
+			break;
+		default:
+			break;
+	}
 }
 
