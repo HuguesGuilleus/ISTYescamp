@@ -7,10 +7,10 @@
 	
 	void jouer();
 	
-POINT numBoite_to_pointBG_ig2(NUMBOX numboxB);
-POINT numBoite_to_pointBG_ig2(NUMBOX numboxB);
-POINT point_ig1_to_numBoite(POINT P);
-POINT point_ig2_to_numBoite(POINT P);
+	POINT numBoite_to_pointBG_ig1(NUMBOITE numboxB);
+	POINT numBoite_to_pointBG_ig2(NUMBOITE numboxB);
+	NUMBOITE point_ig1_to_numBoite(POINT P);
+	NUMBOITE point_ig2_to_numBoite(POINT P);
 
 
 #endif
