@@ -22,8 +22,8 @@
 
 	// Une case du plateau
 	typedef struct  {
-		int lisere ; /* {1.2.3} */
-		TYPE typeP ; /* {VIDE, LICORNE , PALADIN} */
+		int lisere; /* {1.2.3} */
+		TYPE typeP; /* {VIDE, LICORNE , PALADIN} */
 		COUL coulP; /* {BLANC, NOIR} */
 	} BOITE ;
 	

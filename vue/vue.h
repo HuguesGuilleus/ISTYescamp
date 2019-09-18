@@ -32,8 +32,8 @@
 	// ###############################
 	
 	void afficher_plateau(int ig);
-	void afficher_panel_score();
-	void afficher_panel_jeu(int ig);
+	void afficher_panneau_info();
+	void afficher_panneau_jeu(int ig);
 	
 	void afficher_licorne(POINT centre, COUL coul);
 	void afficher_paladin(POINT centre, COUL coul);
