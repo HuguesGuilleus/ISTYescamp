@@ -1,3 +1,5 @@
+#ifndef GRAPHICS_H
+	#define GRAPHICS_H
 // ############################################
 //                    ISTY
 //
@@ -257,3 +259,5 @@
 
 	// 9.1 Renvoie la distance entre deux points
 	int distance(POINT P1, POINT P2);
+
+#endif
