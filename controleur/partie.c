@@ -24,10 +24,9 @@ POINT numBoite_to_pointBG_ig1(NUMBOITE numboxB){
 	POINT P;
 	int marge = (H_FENETRE-TAILLE_PLATEAU)/2;
 	int largeur_boite = (TAILLE_PLATEAU/NB_BOITE_PLATEAU);
-	int rayon_boite = largeur_boite/2;
 	
-	P.x = (numboxB.x*largeur_boite) + marge+rayon_boite;
-	P.y = (numboxB.y*largeur_boite) + marge+rayon_boite;
+	P.x = (numboxB.x*largeur_boite) + marge;
+	P.y = (numboxB.y*largeur_boite) + marge;
 	return P;
 }
 
@@ -35,10 +34,9 @@ POINT numBoite_to_pointBG_ig2(NUMBOITE numboxB){
 	POINT P;
 	int marge = (H_FENETRE-TAILLE_PLATEAU)/2;
 	int largeur_boite = (TAILLE_PLATEAU/NB_BOITE_PLATEAU);
-	int rayon_boite = largeur_boite/2;
 	
-	P.x = (H_FENETRE)-((numboxB.y*largeur_boite) + marge+rayon_boite);
-	P.y = ((numboxB.x*largeur_boite) + marge+rayon_boite);
+	P.x = (H_FENETRE)-((numboxB.y*largeur_boite) + marge);
+	P.y = ((numboxB.x*largeur_boite) + marge);
 	
 	return P;
 }
