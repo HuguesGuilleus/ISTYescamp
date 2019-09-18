@@ -2,6 +2,8 @@
 
 #ifndef MODELE_H
 	#define MODELE_H 1
+	
+	#define NB_BOX_PLATEAU 6
 
 	// La couleur d'un pion
 	typedef enum {
@@ -20,6 +22,8 @@
 		COUL coulP; /* {BLANC, NOIR} */
 	} BOX ;
 
-	void init_plateau();
+	void init_plateau(BOX plateau[NB_BOX_PLATEAU][NB_BOX_PLATEAU]);
+	void init_piece1_debug(BOX plateau[NB_BOX_PLATEAU][NB_BOX_PLATEAU]);
+	void init_piece2_debug(BOX plateau[NB_BOX_PLATEAU][NB_BOX_PLATEAU]);
 
 #endif

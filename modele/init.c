@@ -1,6 +1,6 @@
 #include "modele.h"
 
-void init_plateau() {
+void init_plateau(BOX plateau[NB_BOX_PLATEAU][NB_BOX_PLATEAU]) {
 	int x,y ;
 	for (x = 0; x < 6; x++) {
 		for (y = 0; y < 6; y++) {
@@ -38,8 +38,8 @@ void init_plateau() {
 }
 
 // Initlialise le plateau et place des pièces pour le débug.
-void init_piece1_debug() {
-	init_plateau();
+void init_piece1_debug(BOX plateau[NB_BOX_PLATEAU][NB_BOX_PLATEAU]) {
+	init_plateau(plateau);
 
 	plateau[0][1].typeP = PALADIN ;
 	plateau[0][1].coulP = NOIR ;
@@ -69,10 +69,10 @@ void init_piece1_debug() {
 	plateau[4][4].coulP = NOIR ;
 }
 
-void init_piece2_debug() {
+void init_piece2_debug(BOX plateau[NB_BOX_PLATEAU][NB_BOX_PLATEAU]) {
 	int y;
 
-	init_plateau();
+	init_plateau(plateau);
 
 	for (y = 0; y < 6; y++) {
 		plateau[0][y].typeP = PALADIN ;
