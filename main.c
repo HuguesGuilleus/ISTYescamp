@@ -10,6 +10,7 @@ int main(){
 	init_piece1_debug();
 	afficher_panneau_info();
 	afficher_panneau_jeu(ig);
+	//jouer();
 
 	while (TRUE) {
 		boiteOrigine = attend_click_NUMBOITE(ig);

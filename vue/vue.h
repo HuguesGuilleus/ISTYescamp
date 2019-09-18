@@ -37,8 +37,9 @@
 	void afficher_panneau_info();
 	void afficher_panneau_jeu(int ig);
 
-	void afficher_licorne(POINT centre, COUL coul);
-	void afficher_paladin(POINT centre, COUL coul);
-	void affiche_lisere(POINT centre, int nbLisere);
+	void afficher_licorne(POINT bg, COUL coul);
+	void afficher_paladin(POINT bg, COUL coul);
+	void afficher_lisere(POINT bg, int nbLisere);
+	void afficher_lisere_pion(int ig,NUMBOITE boite);
 
 #endif

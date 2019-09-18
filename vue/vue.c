@@ -3,41 +3,27 @@
 //Prend en paramètre un entier 1 ou 2, pour a l'interface graphique (rotation plateau)
 //Affiche les boites du plateau, les paladins et les licornes
 void afficher_plateau(int ig){
-	
-	int marge = (H_FENETRE-TAILLE_PLATEAU)/2;
-	int largeur_boite = (TAILLE_PLATEAU/NB_BOITE_PLATEAU);
-	int rayon_boite = largeur_boite/2;
 	int x,y;
 	
-	POINT pBG,pHD;
-	pBG.x = (H_FENETRE-TAILLE_PLATEAU)/2;
-	pBG.y=(H_FENETRE-TAILLE_PLATEAU)/2;
-	pHD.x = H_FENETRE-((H_FENETRE-TAILLE_PLATEAU)/2);
-	pHD.y=H_FENETRE-((H_FENETRE-TAILLE_PLATEAU)/2);
-	draw_fill_rectangle(pBG,pHD,couleur_RGB(129,116,98));
-	
-	POINT centreBoite;
+	POINT pBDBox;
 	NUMBOITE boite;
 	
 	for(x=0;x<NB_BOITE_PLATEAU;x++){
-		centreBoite.x = marge+( largeur_boite*x)+rayon_boite;
-		
 		for(y=0;y<NB_BOITE_PLATEAU;y++){
-			centreBoite.y = marge+(largeur_boite*y)+rayon_boite;
-			
+			boite.y = y;boite.x = x;
 			if (ig == 1)
-				boite = point_ig1_to_numBoite(centreBoite);
+				pBDBox = numBoite_to_pointBG_ig1(boite);
 			else
-				boite = point_ig2_to_numBoite(centreBoite);
+				pBDBox = numBoite_to_pointBG_ig2(boite);
+				
+			afficher_lisere(pBDBox, plateau[x][y].lisere);
 			
-			affiche_lisere(centreBoite, plateau[boite.x][boite.y].lisere);
-			
-			switch (plateau[boite.x][boite.y].typeP){
+			switch (plateau[x][y].typeP){
 				case LICORNE:
-					afficher_licorne(centreBoite, plateau[boite.x][boite.y].coulP);
+					afficher_licorne(pBDBox, plateau[x][y].coulP);
 					break;
 				case PALADIN:
-					afficher_paladin(centreBoite, plateau[boite.x][boite.y].coulP);
+					afficher_paladin(pBDBox, plateau[x][y].coulP);
 					break;
 				default:
 					break;
@@ -46,6 +32,7 @@ void afficher_plateau(int ig){
 	}
 	affiche_all();
 }
+
 
 //Affiche le 
 void afficher_panneau_info(){
@@ -74,8 +61,7 @@ void afficher_panneau_jeu(int ig){
 	draw_fill_rectangle(pBG,pHD,couleur_RGB(129,116,98));
 	
 	afficher_legende_plateau(ig);
-	
-	
+
 	afficher_plateau(ig);
 }
 
@@ -117,25 +103,27 @@ void afficher_legende_plateau(int ig){
 	}
 }
 
-void afficher_licorne(POINT centre, COUL coul){
+void afficher_licorne(POINT bg, COUL coul){
 	COULEUR pCouleur = noir;
 	
 	if (coul == BLANC)
 		pCouleur = blanc-(0x646464);
 	else if(coul == NOIR)
 		pCouleur = noir;
-	
+		
+	bg.x += (TAILLE_PLATEAU/NB_BOITE_PLATEAU)/2;
+	bg.y += (TAILLE_PLATEAU/NB_BOITE_PLATEAU)/2;
 	int i;
 	for(i = 20;i>5;i--){
 		pCouleur += 0x050505;
-		centre.y += 2;
+		bg.y += 2;
 		if (i%2 == 0)
-			centre.x += 2;
-		draw_fill_circle(centre,i, pCouleur);
+			bg.x += 2;
+		draw_fill_circle(bg,i, pCouleur);
 	}
 }
 
-void afficher_paladin(POINT centre, COUL coul){
+void afficher_paladin(POINT bg, COUL coul){
 	COULEUR pCouleur = noir;
 	
 	if (coul == BLANC)
@@ -143,25 +131,45 @@ void afficher_paladin(POINT centre, COUL coul){
 	else if(coul == NOIR)
 		pCouleur = noir;
 		
+	bg.x += (TAILLE_PLATEAU/NB_BOITE_PLATEAU)/2;
+	bg.y += (TAILLE_PLATEAU/NB_BOITE_PLATEAU)/2;
 	int i;
 	for(i = 15;i>10;i--){
 		pCouleur += 0x0F0F0F;
-		centre.y += 2;
+		bg.y += 2;
 		if (i%2 == 0)
-			centre.x += 2;
-		draw_fill_circle(centre,i, pCouleur);
+			bg.x += 2;
+		draw_fill_circle(bg,i, pCouleur);
 	}
 
 }
 
-void affiche_lisere(POINT centre, int nbLisere){
+void afficher_lisere(POINT bg, int nbLisere){
 	int cercle;
 	int rayon_boite = (TAILLE_PLATEAU/NB_BOITE_PLATEAU)/2;
+
+	draw_fill_rectangle(bg,(POINT){
+		x:bg.x+rayon_boite*2,
+		y:bg.y+rayon_boite*2
+	},couleur_RGB(129,116,98));
 	
+	
+	bg.x += rayon_boite;
+	bg.y += rayon_boite;
 	for (cercle = 0;cercle < nbLisere;cercle++){
-		draw_circle(centre,rayon_boite-(cercle*4),blanc);
+		draw_circle(bg,rayon_boite-(cercle*4),blanc);
 	}
 	
+}
+
+void afficher_lisere_pion(int ig,NUMBOITE boite){
+	POINT pBGBox;
 	
+	if (ig ==1)
+		pBGBox = numBoite_to_pointBG_ig1(boite);
+	else if(ig == 2)
+		pBGBox = numBoite_to_pointBG_ig2(boite);
+		
+	afficher_lisere(pBGBox,plateau[boite.x][boite.y].lisere);
 }
 
