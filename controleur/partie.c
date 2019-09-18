@@ -16,11 +16,11 @@ void jouer(){
 	
 }
 
-POINT numBoite_to_pointBG_ig2(NUMBOX numboxB){
+POINT numBoite_to_pointBG_ig2(NUMBOITE numboxB){
 	
 	
 }
-POINT numBoite_to_pointBG_ig2(NUMBOX numboxB){
+POINT numBoite_to_pointBG_ig2(NUMBOITE numboxB){
 	
 	
 }
