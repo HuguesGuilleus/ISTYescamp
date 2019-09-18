@@ -26,9 +26,13 @@
 		int angle;
 		COUL coulJ;
 	} JOUEUR;
+	
+	BOITE plateau [6][6]; 
 
-	void init_plateau(BOITE plateau[NB_BOITE_PLATEAU][NB_BOITE_PLATEAU]);
-	void init_piece1_debug(BOITE plateau[NB_BOITE_PLATEAU][NB_BOITE_PLATEAU]);
-	void init_piece2_debug(BOITE plateau[NB_BOITE_PLATEAU][NB_BOITE_PLATEAU]);
+
+
+	void init_plateau();
+	void init_piece1_debug();
+	void init_piece2_debug();
 
 #endif

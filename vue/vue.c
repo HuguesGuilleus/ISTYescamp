@@ -1,7 +1,7 @@
 #include "vue.h"
 
 
-void afficher_plateau(BOITE plateau[NB_BOITE_PLATEAU][NB_BOITE_PLATEAU]){
+void afficher_plateau(){
 	POINT centreBoite;
 	
 	int marge;
@@ -19,6 +19,7 @@ void afficher_plateau(BOITE plateau[NB_BOITE_PLATEAU][NB_BOITE_PLATEAU]){
 			
 			centreBoite.y = marge+(largeur_boite*y)+rayon_boite;
 
+			
 			for (cercle = 0;cercle < plateau[x][y].lisere;cercle++){
 				draw_circle(centreBoite,rayon_boite-(cercle*4),blanc);
 			}
@@ -46,7 +47,7 @@ void afficher_panel_score(){
 
 }
 
-void afficher_panel_jeu(BOITE plateau[NB_BOITE_PLATEAU][NB_BOITE_PLATEAU]){
+void afficher_panel_jeu(){
 	POINT pBG,pHD;
 	
 	pBG.x = 0;pBG.y=0;
@@ -58,7 +59,7 @@ void afficher_panel_jeu(BOITE plateau[NB_BOITE_PLATEAU][NB_BOITE_PLATEAU]){
 	
 	draw_fill_rectangle(pBG,pHD,couleur_RGB(129,116,98));
 	
-	afficher_plateau(plateau);
+	afficher_plateau();
 }
 
 void afficher_licorne(COUL coul,POINT centre){

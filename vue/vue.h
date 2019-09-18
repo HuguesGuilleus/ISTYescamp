@@ -32,9 +32,9 @@
 	// 2. FONCTIONS
 	// ###############################
 	
-	void afficher_plateau(BOITE plateau[NB_BOITE_PLATEAU][NB_BOITE_PLATEAU]);
+	void afficher_plateau();
 	void afficher_panel_score();
-	void afficher_panel_jeu(BOITE plateau[NB_BOITE_PLATEAU][NB_BOITE_PLATEAU]);
+	void afficher_panel_jeu();
 	
 	void afficher_licorne(COUL coul,POINT centre);
 	void afficher_paladin(COUL coul,POINT centre);
