@@ -21,12 +21,17 @@ void afficher_plateau(BOX plateau[NB_BOX_PLATEAU][NB_BOX_PLATEAU]){
 				draw_circle(centreBox,(largeur_box/2)-(cercle*4),blanc);
 			}
 			
+			if(plateau[y][x].typeP == LICORNE)
+				afficher_licorne(plateau[y][x].coulP,centreBox);
+			else if(plateau[y][x].typeP == PALADIN)
+				afficher_paladin(plateau[y][x].coulP,centreBox);
+			
+			
 		}
 	}
-	
-	
 	affiche_all();
 }
+
 
 void afficher_panel_score(){
 	POINT pBG,pHD;
@@ -39,7 +44,7 @@ void afficher_panel_score(){
 
 }
 
-void afficher_panel_jeu(){
+void afficher_panel_jeu(BOX plateau[NB_BOX_PLATEAU][NB_BOX_PLATEAU]){
 	POINT pBG,pHD;
 	
 	pBG.x = 0;pBG.y=0;
@@ -47,4 +52,33 @@ void afficher_panel_jeu(){
 	
 	draw_fill_rectangle(pBG,pHD,marron);
 	affiche_all();
+	
+	afficher_plateau(plateau);
 }
+
+void afficher_licorne(COUL coul,POINT centre){
+	COULEUR pCouleur = noir;
+	
+	if (coul == BLANC)
+		pCouleur = blanc;
+	else if(coul == NOIR)
+		pCouleur = noir;
+		
+	draw_fill_circle(centre,10,pCouleur);
+	affiche_all();
+	
+}
+
+void afficher_paladin(COUL coul,POINT centre){
+	COULEUR pCouleur = noir;
+	
+	if (coul == BLANC)
+		pCouleur = blanc;
+	else if(coul == NOIR)
+		pCouleur = noir;
+		
+	draw_fill_circle(centre,5,pCouleur);
+	affiche_all();
+	
+}
+
