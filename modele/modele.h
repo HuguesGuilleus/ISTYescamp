@@ -17,7 +17,7 @@
 	typedef struct  {
 		int lisere ; /* {1.2.3} */
 		TYPE typeP ; /* {VIDE, LICORNE , PALADIN} */
-		COUl coulP; /* {BLANC, NOIR} */
+		COUL coulP; /* {BLANC, NOIR} */
 	} BOX ;
 
 	BOX plateau [6][6] ;

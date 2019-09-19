@@ -9,6 +9,7 @@ void init_plateau() {
 			plateau[x][y].coulP = BLANC ;
 		}
 	}
+
 	plateau[0][0].lisere = 3 ;
 	plateau[1][1].lisere = 3 ;
 	plateau[2][2].lisere = 3 ;
