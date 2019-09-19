@@ -7,12 +7,12 @@ LIBS="`sdl-config --libs` -lm -lSDL_ttf"
 
 clear
 
-rm -f police.h
-touch police.h
-test -e /usr/include/SDL_ttf.h           && echo "#define SDL_TTF_OK" > police.h
-test -e /usr/include/SDL/SDL_ttf.h       && echo "#define SDL_TTF_OK" > police.h
-test -e /usr/local/include/SDL_ttf.h     && echo "#define SDL_TTF_OK" > police.h
-test -e /usr/local/include/SDL/SDL_ttf.h && echo "#define SDL_TTF_OK" > police.h
+rm -f vue/police.h
+touch vue/police.h
+test -e /usr/include/SDL_ttf.h           && echo "#define SDL_TTF_OK" > vue/police.h
+test -e /usr/include/SDL/SDL_ttf.h       && echo "#define SDL_TTF_OK" > vue/police.h
+test -e /usr/local/include/SDL_ttf.h     && echo "#define SDL_TTF_OK" > vue/police.h
+test -e /usr/local/include/SDL/SDL_ttf.h && echo "#define SDL_TTF_OK" > vue/police.h
 
 for prog in `find . -name '*.c' -print`
 do
