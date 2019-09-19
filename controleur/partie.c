@@ -64,7 +64,7 @@ NUMBOX point_ig2_to_numBoite(POINT P){
 	int largeur_box = (TAILLE_PLATEAU/NB_BOX_PLATEAU);
 
 	box.c = (P.y - marge)/(largeur_box);
-	box.l = 5-((P.x - marge)/(largeur_box));
+	box.l = (NB_BOX_PLATEAU-1)-((P.x - marge)/(largeur_box));
 
 	return box;
 }

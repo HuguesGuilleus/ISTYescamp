@@ -45,5 +45,6 @@
 	void afficher_lisere_pion(int ig, NUMBOX box);
 	
 	void afficher_btn(POINT bg, COULEUR couleur, char* text);
+	void afficher_menu();
 
 #endif

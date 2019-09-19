@@ -5,7 +5,8 @@
 
 	#include "../vue/graphics.h"
 	#include "../controleur/partie.h"
+	#include "../controleur/menu.h"
 	#include "../modele/modele.h"
 
-
+	void jouer(char * mod);
 #endif

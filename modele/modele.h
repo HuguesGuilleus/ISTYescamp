@@ -48,5 +48,5 @@
 
 	void deplacement_simple(NUMBOX origine, NUMBOX dest);
 	void imprime_box(BOX * b);
-
+	
 #endif

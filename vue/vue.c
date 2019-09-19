@@ -212,12 +212,41 @@ void afficher_lisere_pion(int ig, NUMBOX box){
 //prend en paramètre un un point, une couleur et un texte
 //Affiche un bouton
 void afficher_btn(POINT bg, COULEUR couleur, char* text){
-	POINT hd = (POINT){
-		x: bg.x+100,
-		y: (bg.y-L_FENETRE),
-	};
+	POINT hd;
+	hd.x = bg.x+(L_FENETRE-(bg.x*2));
+	hd.y = bg.y+100;
 	
-	draw_fill_rectangle(bg,hd,couleur_RGB(129,116,98));
+	draw_fill_rectangle(bg,hd,couleur);
+	hd.x -= 20;
+	hd.y -= 20;
+	bg.x += 20;
+	bg.y += 20;
+	draw_fill_rectangle(bg,hd,couleur_RGB(80,75,70));
+	
+	bg.y += 42;
+	bg.x += 39;
+	aff_pol(text, 18, bg, blanc);
+
+}
+
+void afficher_menu(){
+	fill_screen(couleur_RGB(129,116,98));
+	POINT pBtn;
+	pBtn.x = 50;
+	pBtn.y = 50;
+	
+	afficher_btn(pBtn,couleur_RGB(40,40,40),"Quitter");
+	pBtn.y += 150;
+	afficher_btn(pBtn,couleur_RGB(40,40,40),"Joueur VS IA");
+	pBtn.y += 150;
+	afficher_btn(pBtn,couleur_RGB(40,40,40),"Joueur VS joueur");
+	pBtn.y += 200;
+	pBtn.x += (L_FENETRE/2)-160;
+	aff_pol("ESCAMPE", 48, pBtn, blanc);
+
+
+	
+	affiche_all();
 }
 
 
