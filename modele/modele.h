@@ -20,8 +20,6 @@
 		COUL coulP; /* {BLANC, NOIR} */
 	} BOX ;
 
-	BOX plateau [6][6] ;
-
 	void init_plateau();
 
 #endif

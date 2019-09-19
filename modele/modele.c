@@ -1,5 +1,7 @@
 #include "modele.h"
 
+BOX plateau [6][6] ;
+
 void init_plateau() {
 	int x,y ;
 	for (x = 0; x < 6; x++) {
