@@ -1,4 +1,5 @@
 //Maxime VINCENT, Hugues GUILLEUS
+
 #include "vue.h"
 
 // Affiche les boxs du plateau, les paladins et les licornes.

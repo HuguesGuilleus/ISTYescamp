@@ -1,3 +1,5 @@
+//Maxime VINCENT, Hugues GUILLEUS
+
 #ifndef PARTIE_H
 	#define PARTIE_H 1
 

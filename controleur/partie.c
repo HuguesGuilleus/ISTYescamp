@@ -1,3 +1,5 @@
+//Maxime VINCENT, Hugues GUILLEUS
+
 #include "partie.h"
 
 POINT numBoite_to_pointBG_ig1(NUMBOX numboxB){

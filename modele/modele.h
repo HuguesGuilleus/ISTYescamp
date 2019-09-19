@@ -1,4 +1,4 @@
-// GUILLEUS Hugues <hugues.guilleus@ens.uvsq.fr>
+//Maxime VINCENT, Hugues GUILLEUS
 
 #ifndef MODELE_H
 	#define MODELE_H 1
