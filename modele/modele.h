@@ -2,8 +2,13 @@
 
 #ifndef MODELE_H
 	#define MODELE_H 1
-	
+
 	#define NB_BOX_PLATEAU 6
+
+	typedef struct {
+		int x ; // pour la colone
+		int y ; // pour la ligne
+	} NUMBOX ;
 
 	// La couleur d'un pion
 	typedef enum {
