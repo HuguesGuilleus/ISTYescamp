@@ -19,7 +19,7 @@ void afficher_plateau(int ig){
 			else
 				pBDBox = numBoite_to_pointBG_ig2(box);
 
-			afficher_lisere(pBDBox, plateau[x][y].lisere);
+			afficher_lisere(pBDBox, plateau[x][y].lisere,box);
 
 			switch (plateau[x][y].typeP){
 				case LICORNE:
@@ -158,7 +158,7 @@ void afficher_paladin(POINT bg, COUL coul){
 
 //prend en paramètre un point bas gauche et un nombre de lisère
 //affiche les liseres d'une case
-void afficher_lisere(POINT bg, int nbLisere){
+void afficher_lisere(POINT bg, int nbLisere,NUMBOX box){
 	int cercle;
 	int rayon_box = (TAILLE_PLATEAU/NB_BOX_PLATEAU)/2;
 
@@ -169,9 +169,17 @@ void afficher_lisere(POINT bg, int nbLisere){
 
 	bg.x += rayon_box;
 	bg.y += rayon_box;
+	
+	if(plateau[box.c][box.l].status == VALIDE)
+		draw_fill_circle(bg, rayon_box, bleumarine);
+	else if(plateau[box.c][box.l].status == SELECT)
+		draw_fill_circle(bg, rayon_box, rouge);
+
 	for (cercle = 0;cercle < nbLisere;cercle++){
 		draw_circle(bg, rayon_box-(cercle*4), blanc);
 	}
+	
+	
 }
 
 //prend en paramètre une box et une interface graphique
@@ -184,7 +192,7 @@ void afficher_lisere_pion(int ig, NUMBOX box){
 	else if(ig == 2)
 		pBGBox = numBoite_to_pointBG_ig2(box);
 
-	afficher_lisere(pBGBox,plateau[box.c][box.l].lisere);
+	afficher_lisere(pBGBox,plateau[box.c][box.l].lisere,box);
 
 	switch (plateau[box.c][box.l].typeP){
 		case LICORNE:
@@ -196,6 +204,20 @@ void afficher_lisere_pion(int ig, NUMBOX box){
 		default:
 			break;
 	}
+}
+
+
+/***********MENU************/
+
+//prend en paramètre un un point, une couleur et un texte
+//Affiche un bouton
+void afficher_btn(POINT bg, COULEUR couleur, char* text){
+	POINT hd = (POINT){
+		x: bg.x+100,
+		y: (bg.y-L_FENETRE),
+	};
+	
+	draw_fill_rectangle(bg,hd,couleur_RGB(129,116,98));
 }
 
 

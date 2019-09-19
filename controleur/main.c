@@ -14,7 +14,7 @@ int main(){
 
 	afficher_panneau_info();
 	afficher_panneau_jeu(ig);
-
+	
 	while (TRUE) {
 		do{
 			boxOrigine = attend_clic_numbox(ig);
