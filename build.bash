@@ -1,11 +1,17 @@
 #!/bin/bash
 
-
 CC="gcc"
 CFLAGS="-O2 -Wall `sdl-config --cflags`"
 LIBS="`sdl-config --libs` -lm -lSDL_ttf"
 
 clear
+
+if [[ $# == 1 && $1 == "netoyage" ]]; then
+	rm -f *.o vue/police.h doc.html
+	exit 0
+fi
+
+which getDoc >/dev/null && getDoc
 
 rm -f vue/police.h
 touch vue/police.h
