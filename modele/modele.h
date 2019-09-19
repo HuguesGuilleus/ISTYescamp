@@ -3,7 +3,7 @@
 #ifndef MODELE_H
 	#define MODELE_H 1
 	
-	#define NB_BOX_PLATEAU 6
+	#define NB_BOITE_PLATEAU 6
 
 	// La couleur d'un pion
 	typedef enum {
@@ -20,10 +20,13 @@
 		int lisere ; /* {1.2.3} */
 		TYPE typeP ; /* {VIDE, LICORNE , PALADIN} */
 		COUL coulP; /* {BLANC, NOIR} */
-	} BOX ;
+	} BOITE ;
+	
+	
+	BOITE plateau [6][6]; 
 
-	void init_plateau(BOX plateau[NB_BOX_PLATEAU][NB_BOX_PLATEAU]);
-	void init_piece1_debug(BOX plateau[NB_BOX_PLATEAU][NB_BOX_PLATEAU]);
-	void init_piece2_debug(BOX plateau[NB_BOX_PLATEAU][NB_BOX_PLATEAU]);
+	void init_plateau();
+	void init_piece1_debug();
+	void init_piece2_debug();
 
 #endif
