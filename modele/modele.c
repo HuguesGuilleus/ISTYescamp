@@ -101,26 +101,26 @@ void deplacement_simple(NUMBOX origine, NUMBOX dest) {
 }
 
 // Fonction pour la suite
-BOOL peut_selectioner_pion(NUMBOX entreBoite, COUL coul, int lisere) {
-	BOITE * plateauBoite = &plateau[entreBoite.c][entreBoite.l] ;
-	imprime_boite(plateauBoite);
-	if (plateauBoite->typeP == VIDE) {
+BOOL peut_selectioner_pion(NUMBOX entreBox, COUL coul, int lisere) {
+	BOX * plateauBox = &plateau[entreBox.c][entreBox.l] ;
+	imprime_box(plateauBox);
+	if (plateauBox->typeP == VIDE) {
 		printf("type\n");
 		return FALSE ;
 	}
-	if (plateauBoite->coulP != coul) {
+	if (plateauBox->coulP != coul) {
 		printf("couleur\n");
 		return FALSE ;
 	}
-	if (plateauBoite->lisere != lisere) {
+	if (plateauBox->lisere != lisere) {
 		printf("lisere\n");
 		return FALSE ;
 	}
 	return TRUE ;
 }
 
-// Pour le développement, écrit un boite dans la console.
-void imprime_boite(BOITE * b) {
+// Pour le développement, écrit un box dans la console.
+void imprime_box(BOX * b) {
 	printf("  %p\n", b);
 	printf("  type: %d\n", b->typeP);
 	printf("  couleur: %d\n", b->coulP);

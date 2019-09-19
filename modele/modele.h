@@ -5,7 +5,7 @@
 
 	#include "../vue/graphics.h"
 
-	#define NB_BOITE_PLATEAU 6
+	#define NB_BOX_PLATEAU 6
 
 	// Les coordonées d'une BOX du plateau
 	typedef struct {
@@ -28,18 +28,18 @@
 		int lisere; /* {1.2.3} */
 		TYPE typeP; /* {VIDE, LICORNE , PALADIN} */
 		COUL coulP; /* {BLANC, NOIR} */
-	} BOITE ;
+	} BOX ;
 
-	BOITE plateau [6][6];
+	BOX plateau [6][6];
 
 	void init_plateau();
 	void init_piece1_debug();
 	void init_piece2_debug();
 
 	BOOL est_numbox_vide(NUMBOX b);
-	BOOL peut_selectioner_pion(NUMBOX entreBoite, COUL coul, int lisere);
+	BOOL peut_selectioner_pion(NUMBOX entreBox, COUL coul, int lisere);
 
 	void deplacement_simple(NUMBOX origine, NUMBOX dest);
-	void imprime_boite(BOITE * b);
+	void imprime_box(BOX * b);
 
 #endif

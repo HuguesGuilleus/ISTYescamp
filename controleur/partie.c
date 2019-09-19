@@ -3,20 +3,20 @@
 POINT numBoite_to_pointBG_ig1(NUMBOX numboxB){
 	POINT P;
 	int marge = (H_FENETRE-TAILLE_PLATEAU)/2;
-	int largeur_boite = (TAILLE_PLATEAU/NB_BOITE_PLATEAU);
+	int largeur_box = (TAILLE_PLATEAU/NB_BOX_PLATEAU);
 
-	P.x = (numboxB.c*largeur_boite) + marge;
-	P.y = (numboxB.l*largeur_boite) + marge;
+	P.x = (numboxB.c*largeur_box) + marge;
+	P.y = (numboxB.l*largeur_box) + marge;
 	return P;
 }
 
 POINT numBoite_to_pointBG_ig2(NUMBOX numboxB){
 	POINT P;
 	int marge = (H_FENETRE-TAILLE_PLATEAU)/2;
-	int largeur_boite = (TAILLE_PLATEAU/NB_BOITE_PLATEAU);
+	int largeur_box = (TAILLE_PLATEAU/NB_BOX_PLATEAU);
 
-	P.x = (H_FENETRE-largeur_boite)-((numboxB.l*largeur_boite) + marge);
-	P.y = ((numboxB.c*largeur_boite) + marge);
+	P.x = (H_FENETRE-largeur_box)-((numboxB.l*largeur_box) + marge);
+	P.y = ((numboxB.c*largeur_box) + marge);
 
 	return P;
 }
@@ -45,24 +45,24 @@ BOOL estHors_plateau(POINT click) {
 }
 
 NUMBOX point_ig1_to_numBoite(POINT P){
-	NUMBOX boite;
+	NUMBOX box;
 
 	int marge = (H_FENETRE-TAILLE_PLATEAU)/2;
-	int largeur_boite = (TAILLE_PLATEAU/NB_BOITE_PLATEAU);
+	int largeur_box = (TAILLE_PLATEAU/NB_BOX_PLATEAU);
 
-	boite.c = (P.x - marge)/largeur_boite;
-	boite.l = (P.y - marge)/largeur_boite;
-	return boite;
+	box.c = (P.x - marge)/largeur_box;
+	box.l = (P.y - marge)/largeur_box;
+	return box;
 }
 
 NUMBOX point_ig2_to_numBoite(POINT P){
-	NUMBOX boite;
+	NUMBOX box;
 
 	int marge = (H_FENETRE-TAILLE_PLATEAU)/2;
-	int largeur_boite = (TAILLE_PLATEAU/NB_BOITE_PLATEAU);
+	int largeur_box = (TAILLE_PLATEAU/NB_BOX_PLATEAU);
 
-	boite.c = (P.y - marge)/(largeur_boite);
-	boite.l = 5-((P.x - marge)/(largeur_boite));
+	box.c = (P.y - marge)/(largeur_box);
+	box.l = 5-((P.x - marge)/(largeur_box));
 
-	return boite;
+	return box;
 }
