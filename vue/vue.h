@@ -1,3 +1,5 @@
+//Maxime VINCENT, Hugues GUILLEUS
+
 #ifndef VUE_H
 	#define VUE_H
 	#include "graphics.h"

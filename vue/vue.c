@@ -1,3 +1,4 @@
+//Maxime VINCENT, Hugues GUILLEUS
 #include "vue.h"
 
 //Prend en paramètre un entier 1 ou 2, pour a l'interface graphique (rotation plateau)
@@ -34,7 +35,7 @@ void afficher_plateau(int ig){
 }
 
 
-//Affiche le
+//Affiche le panneau droit avec les informations
 void afficher_panneau_info(){
 	POINT pBG,pHD;
 
@@ -46,6 +47,7 @@ void afficher_panneau_info(){
 
 }
 
+//Affiche le panneau de jeu avec le plateau de jeu et les pions
 void afficher_panneau_jeu(int ig){
 	POINT pBG,pHD;
 
@@ -65,44 +67,50 @@ void afficher_panneau_jeu(int ig){
 	afficher_plateau(ig);
 }
 
+//Prend en paramètre un entier pour l'interface graphique
+//affiche la légende autour du plateau (chiffres et lettres)
 void afficher_legende_plateau(int ig){
-	int i;
+	int i,chiffre =0;
 	POINT pLettre,pChiffre;
 	char lettre[2];
 	int largeur_boite = (TAILLE_PLATEAU/NB_BOITE_PLATEAU);
 
 	for(i=0;i<NB_BOITE_PLATEAU;i++){
 		lettre[0] = ('A'+i);
+		
 		if (ig == 1){
 			pLettre.x = (H_FENETRE-TAILLE_PLATEAU)/2+(i*largeur_boite)+largeur_boite/2-3;
 			pChiffre.y = (H_FENETRE-TAILLE_PLATEAU)/2+(i*largeur_boite)+largeur_boite/2+6;
-
+			
 			pLettre.y = (H_FENETRE-TAILLE_PLATEAU)/2-6;
 			pChiffre.x = (H_FENETRE-TAILLE_PLATEAU)/2-18;
-			aff_pol(lettre, 12, pLettre, blanc);
-			aff_int((i+1), 12, pChiffre, blanc);
-
-			pLettre.y = H_FENETRE-(H_FENETRE-TAILLE_PLATEAU)/2+20;
-			pChiffre.x = H_FENETRE-(H_FENETRE-TAILLE_PLATEAU)/2+5;
-			aff_pol(lettre, 12, pLettre, blanc);
-			aff_int((i+1), 12, pChiffre, blanc);
+			chiffre = (i+1);
+			
 		}else if (ig == 2){
 			pLettre.y = (H_FENETRE-TAILLE_PLATEAU)/2+(i*largeur_boite)+largeur_boite/2+6;
 			pChiffre.x = (H_FENETRE-TAILLE_PLATEAU)/2+(i*largeur_boite)+largeur_boite/2-3;
-
+			
 			pLettre.x = (H_FENETRE-TAILLE_PLATEAU)/2-18;
 			pChiffre.y = (H_FENETRE-TAILLE_PLATEAU)/2-6;
-			aff_pol(lettre, 12, pLettre, blanc);
-			aff_int((NB_BOITE_PLATEAU-i), 12, pChiffre, blanc);
-
+			chiffre = (NB_BOITE_PLATEAU-i);
+		}
+		aff_pol(lettre, 12, pLettre, blanc);
+		aff_int(chiffre, 12, pChiffre, blanc);
+		
+		if (ig == 1){
+			pLettre.y = H_FENETRE-(H_FENETRE-TAILLE_PLATEAU)/2+20;
+			pChiffre.x = H_FENETRE-(H_FENETRE-TAILLE_PLATEAU)/2+5;
+		}else if (ig == 2){
 			pLettre.x = H_FENETRE-(H_FENETRE-TAILLE_PLATEAU)/2+5;
 			pChiffre.y = H_FENETRE-(H_FENETRE-TAILLE_PLATEAU)/2+20;
-			aff_pol(lettre, 12, pLettre, blanc);
-			aff_int((NB_BOITE_PLATEAU-i), 12, pChiffre, blanc);
 		}
+		aff_pol(lettre, 12, pLettre, blanc);
+		aff_int(chiffre, 12, pChiffre, blanc);
 	}
 }
 
+// prend en paramètre un point bas gauche et une COUL (joueur)
+//affiche une licorne
 void afficher_licorne(POINT bg, COUL coul){
 	COULEUR pCouleur = noir;
 
@@ -123,6 +131,8 @@ void afficher_licorne(POINT bg, COUL coul){
 	}
 }
 
+// prend en paramètre un point bas gauche et une COUL (joueur)
+//affiche un paladin
 void afficher_paladin(POINT bg, COUL coul){
 	COULEUR pCouleur = noir;
 
@@ -144,6 +154,8 @@ void afficher_paladin(POINT bg, COUL coul){
 
 }
 
+//prend en paramètre un point bas gauche et un nombre de lisère
+//affiche les liseres d'une case
 void afficher_lisere(POINT bg, int nbLisere){
 	int cercle;
 	int rayon_boite = (TAILLE_PLATEAU/NB_BOITE_PLATEAU)/2;
@@ -162,6 +174,8 @@ void afficher_lisere(POINT bg, int nbLisere){
 
 }
 
+//prend en paramètre une boite et une interface graphique
+//affiche une lisère et le pion associer
 void afficher_lisere_pion(int ig, NUMBOX boite){
 	POINT pBGBox;
 
@@ -169,9 +183,8 @@ void afficher_lisere_pion(int ig, NUMBOX boite){
 		pBGBox = numBoite_to_pointBG_ig1(boite);
 	else if(ig == 2)
 		pBGBox = numBoite_to_pointBG_ig2(boite);
-
+		
 	afficher_lisere(pBGBox,plateau[boite.c][boite.l].lisere);
-
 
 	switch (plateau[boite.c][boite.l].typeP){
 		case LICORNE:

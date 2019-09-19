@@ -1,3 +1,4 @@
+//Maxime VINCENT, Hugues GUILLEUS
 #ifndef MAIN_H
 	#define MAIN_H
 
