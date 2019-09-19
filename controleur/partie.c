@@ -40,24 +40,26 @@ POINT numBoite_to_pointBG_ig2(NUMBOITE numboxB){
 }
 
 NUMBOITE attend_click_NUMBOITE(int ig) {
-	NUMBOITE boite ;
 	POINT clic ;
+
 	do {
 		clic = wait_clic();
-		// clic.x -= (TAILLE_PLATEAU/NB_BOITE_PLATEAU)/2 ;
-		// clic.y -= (TAILLE_PLATEAU/NB_BOITE_PLATEAU)/2 ;
-		if (ig == 1) {
-			boite = point_ig1_to_numBoite(clic) ;
-		} else {
-			boite = point_ig2_to_numBoite(clic) ;
-		}
-	} while(invalide_NUMBOITE(boite));
-	return boite ;
+	} while(estHors_plateau(clic));
+
+	if (ig == 1) {
+		return point_ig1_to_numBoite(clic) ;
+	} else {
+		return point_ig2_to_numBoite(clic) ;
+	}
 }
 
-// Test si les coordonées sont cooérentes. FALSE si coohérente.
-BOOL invalide_NUMBOITE(NUMBOITE boite) {
-	return boite.x < 0 || boite.x > 5 || boite.y < 0 || boite.y > 5 ;
+// Teste si les coordonées d'un point (comme un clic) sont dans le plateau.
+BOOL estHors_plateau(POINT click) {
+	int marge = (H_FENETRE-TAILLE_PLATEAU)/2;
+	int finPlateau = marge + TAILLE_PLATEAU ;
+
+	return click.x < marge || finPlateau < click.x ||
+		click.y < marge || finPlateau < click.y ;
 }
 
 NUMBOITE point_ig1_to_numBoite(POINT P){
@@ -65,7 +67,7 @@ NUMBOITE point_ig1_to_numBoite(POINT P){
 
 	int marge = (H_FENETRE-TAILLE_PLATEAU)/2;
 	int largeur_boite = (TAILLE_PLATEAU/NB_BOITE_PLATEAU);
-	
+
 	boite.x = (P.x - marge)/largeur_boite;
 	boite.y = (P.y - marge)/largeur_boite;
 	return boite;

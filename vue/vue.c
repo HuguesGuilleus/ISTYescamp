@@ -173,12 +173,12 @@ void afficher_lisere_pion(int ig,NUMBOITE boite){
 	afficher_lisere(pBGBox,plateau[boite.x][boite.y].lisere);
 	
 	
-	switch (plateau[boitex][boite.y].typeP){
+	switch (plateau[boite.x][boite.y].typeP){
 		case LICORNE:
-			afficher_licorne(pBGBox, plateau[boitex][boite.y].coulP);
+			afficher_licorne(pBGBox, plateau[boite.x][boite.y].coulP);
 			break;
 		case PALADIN:
-			afficher_paladin(pBGBox, plateau[boitex][boite.y].coulP);
+			afficher_paladin(pBGBox, plateau[boite.x][boite.y].coulP);
 			break;
 		default:
 			break;
