@@ -56,17 +56,17 @@ void init_piece1_debug(BOX plateau[NB_BOX_PLATEAU][NB_BOX_PLATEAU]) {
 
 
 	plateau[1][4].typeP = PALADIN ;
-	plateau[1][4].coulP = NOIR ;
+	plateau[1][4].coulP = BLANC ;
 	plateau[1][5].typeP = PALADIN ;
-	plateau[1][5].coulP = NOIR ;
+	plateau[1][5].coulP = BLANC ;
 	plateau[2][5].typeP = PALADIN ;
-	plateau[2][5].coulP = NOIR ;
+	plateau[2][5].coulP = BLANC ;
 	plateau[3][4].typeP = PALADIN ;
-	plateau[3][4].coulP = NOIR ;
+	plateau[3][4].coulP = BLANC ;
 	plateau[3][5].typeP = LICORNE ;
-	plateau[3][5].coulP = NOIR ;
+	plateau[3][5].coulP = BLANC ;
 	plateau[4][4].typeP = PALADIN ;
-	plateau[4][4].coulP = NOIR ;
+	plateau[4][4].coulP = BLANC ;
 }
 
 void init_piece2_debug(BOX plateau[NB_BOX_PLATEAU][NB_BOX_PLATEAU]) {
