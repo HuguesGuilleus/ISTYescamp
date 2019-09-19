@@ -1,3 +1,5 @@
+// Maxime VINCENT, Hugues GUILLEUS
+
 #include "modele.h"
 
 void init_plateau() {
@@ -54,7 +56,6 @@ void init_piece1_debug() {
 	plateau[5][1].typeP = PALADIN ;
 	plateau[5][1].coulP = NOIR ;
 
-
 	plateau[1][4].typeP = PALADIN ;
 	plateau[1][4].coulP = BLANC ;
 	plateau[1][5].typeP = PALADIN ;
@@ -87,17 +88,9 @@ void init_piece2_debug() {
 	plateau[5][3].typeP = LICORNE ;
 }
 
-// Renvoie vrai si b n'a pas de pion, sinon false.
+// Renvoie vrai si b n'a pas de pion sur la case, sinon false.
 BOOL est_numbox_vide(NUMBOX b) {
 	return plateau[b.c][b.l].typeP == VIDE ;
-}
-
-// Write in console the content of a box. Pour le développement.
-void imprime_boite(BOITE * b) {
-	printf("  %p\n", b );
-	printf("  type: %d\n", b->typeP);
-	printf("  couleur: %d\n", b->coulP );
-	printf("  lisere: %d\n", b->lisere );
 }
 
 // Deplace un pion d'une case à une autre. Pas de vérication de validité.
@@ -107,6 +100,7 @@ void deplacement_simple(NUMBOX origine, NUMBOX dest) {
 	plateau[origine.c][origine.l].typeP = VIDE ;
 }
 
+// Fonction pour la suite
 BOOL peut_selectioner_pion(NUMBOX entreBoite, COUL coul, int lisere) {
 	BOITE * plateauBoite = &plateau[entreBoite.c][entreBoite.l] ;
 	imprime_boite(plateauBoite);
@@ -123,4 +117,12 @@ BOOL peut_selectioner_pion(NUMBOX entreBoite, COUL coul, int lisere) {
 		return FALSE ;
 	}
 	return TRUE ;
+}
+
+// Pour le développement, écrit un boite dans la console.
+void imprime_boite(BOITE * b) {
+	printf("  %p\n", b);
+	printf("  type: %d\n", b->typeP);
+	printf("  couleur: %d\n", b->coulP);
+	printf("  lisere: %d\n", b->lisere);
 }
