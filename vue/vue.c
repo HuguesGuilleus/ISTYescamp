@@ -197,3 +197,5 @@ void afficher_lisere_pion(int ig, NUMBOX box){
 			break;
 	}
 }
+
+
