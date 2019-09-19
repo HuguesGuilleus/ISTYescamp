@@ -874,10 +874,11 @@ void writeln() { write_text(NULL); }
 int lire_entier_clavier()
 {
 	int n;
-	int ret;
+	//int ret;
 	printf("Donner un entier : ");
 	fflush(stdout);
-	ret = scanf("%d",&n);
+	//ret = 
+	scanf("%d",&n);
 	return n;
 }
 

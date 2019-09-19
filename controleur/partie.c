@@ -21,8 +21,8 @@ POINT numBoite_to_pointBG_ig2(NUMBOX numboxB){
 	return P;
 }
 
-NUMBOX attend_click_numbox(int ig) {
-	POINT clic ;
+NUMBOX attend_clic_numbox(int ig) {
+	POINT clic;
 
 	do {
 		clic = wait_clic();

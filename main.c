@@ -16,9 +16,9 @@ int main(){
 
 	while (TRUE) {
 		do{
-			boiteOrigine = attend_click_numbox(ig);
+			boiteOrigine = attend_clic_numbox(ig);
 		}while(est_numbox_vide(boiteOrigine));
-		boiteDest = attend_click_numbox(ig);
+		boiteDest = attend_clic_numbox(ig);
 		deplacement_simple(boiteOrigine, boiteDest);
 
 		afficher_lisere_pion(ig, boiteOrigine);
