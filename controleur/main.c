@@ -10,6 +10,7 @@ int main(){
 	affiche_auto_off();
 
 	init_piece1_debug();
+	//init_piece2_debug();
 
 	afficher_panneau_info();
 	afficher_panneau_jeu(ig);
