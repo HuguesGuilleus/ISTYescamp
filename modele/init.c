@@ -68,3 +68,21 @@ void init_piece1_debug() {
 	plateau[4][4].typeP = PALADIN ;
 	plateau[4][4].coulP = NOIR ;
 }
+
+void init_piece2_debug() {
+	int y;
+
+	init_plateau();
+
+	for (y = 0; y < 6; y++) {
+		plateau[0][y].typeP = PALADIN ;
+		plateau[0][y].coulP = BLANC ;
+	}
+	plateau[0][0].typeP = LICORNE ;
+
+	for (y = 0; y < 6; y++) {
+		plateau[0][y].typeP = PALADIN ;
+		plateau[0][y].coulP = NOIR;
+	}
+	plateau[5][3].typeP = LICORNE ;
+}
