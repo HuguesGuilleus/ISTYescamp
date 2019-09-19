@@ -25,10 +25,17 @@
 		int lisere ; /* {1.2.3} */
 		TYPE typeP ; /* {VIDE, LICORNE , PALADIN} */
 		COUL coulP; /* {BLANC, NOIR} */
-	} BOX ;
+	} BOITE ;
 
-	void init_plateau(BOX plateau[NB_BOX_PLATEAU][NB_BOX_PLATEAU]);
-	void init_piece1_debug(BOX plateau[NB_BOX_PLATEAU][NB_BOX_PLATEAU]);
-	void init_piece2_debug(BOX plateau[NB_BOX_PLATEAU][NB_BOX_PLATEAU]);
+	typedef struct {
+		int angle;
+		COUL coulJ;
+	} JOUEUR;
+
+	BOITE plateau [6][6];
+
+	void init_plateau();
+	void init_piece1_debug();
+	void init_piece2_debug();
 
 #endif
