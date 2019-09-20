@@ -86,3 +86,10 @@ void init_piece2_debug() {
 	}
 	plateau[5][3].typeP = LICORNE ;
 }
+
+// Deplace un pion d'une case à une autre. Pas de vérication de validité.
+void deplacement_simple(NUMBOITE origine, NUMBOITE dest) {
+	plateau[dest.x][dest.y].coulP = plateau[origine.x][origine.y].coulP ;
+	plateau[dest.x][dest.y].typeP = plateau[origine.x][origine.y].typeP ;
+	plateau[origine.x][origine.y].typeP = VIDE ;
+}
