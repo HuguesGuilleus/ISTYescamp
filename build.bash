@@ -8,10 +8,9 @@ clear
 
 if [[ $# == 1 && $1 == "netoyage" ]]; then
 	rm -f *.o vue/police.h doc.html
-	exit 0
 fi
 
-which getDoc >/dev/null && getDoc
+which getDocxx &>/dev/null && getDoc
 
 rm -f vue/police.h
 touch vue/police.h
@@ -27,6 +26,8 @@ do
 		$CC $CFLAGS -c $prog
 	fi
 done
+
+echo "Édition de lien"
 
 gcc -o escampe `find . -name '*.o' -print` $LIBS
 
