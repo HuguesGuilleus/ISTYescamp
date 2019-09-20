@@ -13,7 +13,7 @@
 	NUMBOITE point_ig2_to_numBoite(POINT P);
 
 	NUMBOITE attend_click_NUMBOITE(int ig);
-	BOOL invalide_NUMBOITE(NUMBOITE boite);
+	BOOL estHors_plateau(POINT click);
 
 
 #endif
