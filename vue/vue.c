@@ -7,7 +7,7 @@ void afficher_plateau(){
 	int marge;
 	int largeur_boite = (TAILLE_PLATEAU/NB_BOITE_PLATEAU);
 	int rayon_boite = largeur_boite/2;
-	int x,y,cercle;
+	int x,y;
 	
 	for(x=0;x<NB_BOITE_PLATEAU;x++){
 		marge = (L_PANEL_JEU-TAILLE_PLATEAU)/2;
@@ -16,18 +16,14 @@ void afficher_plateau(){
 		
 		for(y=0;y<NB_BOITE_PLATEAU;y++){
 			marge = (H_FENETRE-TAILLE_PLATEAU)/2;
-			
 			centreBoite.y = marge+(largeur_boite*y)+rayon_boite;
-
 			
-			for (cercle = 0;cercle < plateau[x][y].lisere;cercle++){
-				draw_circle(centreBoite,rayon_boite-(cercle*4),blanc);
-			}
+			affiche_lisere(centreBoite, plateau[x][y].lisere);
 			
 			if(plateau[x][y].typeP == LICORNE)
-				afficher_licorne(plateau[x][y].coulP,centreBoite);
+				afficher_licorne(centreBoite, plateau[x][y].coulP);
 			else if(plateau[x][y].typeP == PALADIN)
-				afficher_paladin(plateau[x][y].coulP,centreBoite);
+				afficher_paladin(centreBoite, plateau[x][y].coulP);
 			
 			
 		}
@@ -62,7 +58,7 @@ void afficher_panel_jeu(){
 	afficher_plateau();
 }
 
-void afficher_licorne(COUL coul,POINT centre){
+void afficher_licorne(POINT centre, COUL coul){
 	COULEUR pCouleur = noir;
 	
 	if (coul == BLANC)
@@ -73,7 +69,7 @@ void afficher_licorne(COUL coul,POINT centre){
 	draw_fill_circle(centre,10,pCouleur);
 }
 
-void afficher_paladin(COUL coul,POINT centre){
+void afficher_paladin(POINT centre, COUL coul){
 	COULEUR pCouleur = noir;
 	
 	if (coul == BLANC)
@@ -83,5 +79,16 @@ void afficher_paladin(COUL coul,POINT centre){
 		
 	draw_fill_circle(centre,5,pCouleur);
 
+}
+
+void affiche_lisere(POINT centre, int nbLisere){
+	int cercle;
+	int rayon_boite = (TAILLE_PLATEAU/NB_BOITE_PLATEAU)/2;
+	
+	for (cercle = 0;cercle < nbLisere;cercle++){
+		draw_circle(centre,rayon_boite-(cercle*4),blanc);
+	}
+	
+	
 }
 

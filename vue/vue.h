@@ -1,7 +1,6 @@
 #ifndef VUE_H
 	#define VUE_H
 	#include "graphics.h"
-	#include "../main.h"
 	#include "../modele/modele.h"
 
 	// ############################################
@@ -36,7 +35,8 @@
 	void afficher_panel_score();
 	void afficher_panel_jeu();
 	
-	void afficher_licorne(COUL coul,POINT centre);
-	void afficher_paladin(COUL coul,POINT centre);
+	void afficher_licorne(POINT centre, COUL coul);
+	void afficher_paladin(POINT centre, COUL coul);
+	void affiche_lisere(POINT centre, int nbLisere);
 
 #endif

@@ -8,7 +8,7 @@
 	typedef struct {
 		int x ; // pour la colone
 		int y ; // pour la ligne
-	} NUMBOX ;
+	} NUMBOITE ;
 
 	// La couleur d'un pion
 	typedef enum {
@@ -27,10 +27,10 @@
 		COUL coulP; /* {BLANC, NOIR} */
 	} BOITE ;
 
-	typedef struct {
-		int angle;
-		COUL coulJ;
-	} JOUEUR;
+	// typedef struct {
+	// 	int angle;
+	// 	COUL coulJ;
+	// } JOUEUR;
 
 	BOITE plateau [6][6];
 
