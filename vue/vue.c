@@ -1,29 +1,32 @@
 #include "vue.h"
 
 
-void afficher_plateau(){
+void afficher_plateau(int ig){
 	POINT centreBoite;
+	NUMBOITE boite;
 	
-	int marge;
+	int marge = (H_FENETRE-TAILLE_PLATEAU)/2;
 	int largeur_boite = (TAILLE_PLATEAU/NB_BOITE_PLATEAU);
 	int rayon_boite = largeur_boite/2;
 	int x,y;
 	
 	for(x=0;x<NB_BOITE_PLATEAU;x++){
-		marge = (L_PANEL_JEU-TAILLE_PLATEAU)/2;
-		
 		centreBoite.x = marge+( largeur_boite*x)+rayon_boite;
 		
 		for(y=0;y<NB_BOITE_PLATEAU;y++){
-			marge = (H_FENETRE-TAILLE_PLATEAU)/2;
 			centreBoite.y = marge+(largeur_boite*y)+rayon_boite;
 			
-			affiche_lisere(centreBoite, plateau[x][y].lisere);
+			if (ig == 1)
+				boite = point_ig1_to_numBoite(centreBoite);
+			else
+				boite = point_ig2_to_numBoite(centreBoite);
+				
+			affiche_lisere(centreBoite, plateau[boite.x][boite.y].lisere);
 			
-			if(plateau[x][y].typeP == LICORNE)
-				afficher_licorne(centreBoite, plateau[x][y].coulP);
-			else if(plateau[x][y].typeP == PALADIN)
-				afficher_paladin(centreBoite, plateau[x][y].coulP);
+			if(plateau[boite.x][boite.y].typeP == LICORNE)
+				afficher_licorne(centreBoite, plateau[boite.x][boite.y].coulP);
+			else if(plateau[boite.x][boite.y].typeP == PALADIN)
+				afficher_paladin(centreBoite, plateau[boite.x][boite.y].coulP);
 			
 			
 		}
@@ -35,7 +38,7 @@ void afficher_plateau(){
 void afficher_panel_score(){
 	POINT pBG,pHD;
 	
-	pBG.x = L_PANEL_JEU;pBG.y=0;
+	pBG.x = H_FENETRE;pBG.y=0;
 	pHD.x = L_FENETRE;pHD.y=H_FENETRE;
 	
 	draw_fill_rectangle(pBG,pHD,blanc);
@@ -43,19 +46,19 @@ void afficher_panel_score(){
 
 }
 
-void afficher_panel_jeu(){
+void afficher_panel_jeu(int ig){
 	POINT pBG,pHD;
 	
 	pBG.x = 0;pBG.y=0;
-	pHD.x = L_PANEL_JEU;pHD.y=H_FENETRE;
+	pHD.x = H_FENETRE;pHD.y=H_FENETRE;
 	draw_fill_rectangle(pBG,pHD,couleur_RGB(232,210,160));
 	
-	pBG.x += (L_PANEL_JEU-TAILLE_PLATEAU)/2-25;pBG.y+=(H_FENETRE-TAILLE_PLATEAU)/2-25;
-	pHD.x -= (L_PANEL_JEU-TAILLE_PLATEAU)/2-18;pHD.y-=(H_FENETRE-TAILLE_PLATEAU)/2-18;
+	pBG.x += (H_FENETRE-TAILLE_PLATEAU)/2-25;pBG.y+=(H_FENETRE-TAILLE_PLATEAU)/2-25;
+	pHD.x -= (H_FENETRE-TAILLE_PLATEAU)/2-18;pHD.y-=(H_FENETRE-TAILLE_PLATEAU)/2-18;
 	
 	draw_fill_rectangle(pBG,pHD,couleur_RGB(129,116,98));
 	
-	afficher_plateau();
+	afficher_plateau(ig);
 }
 
 void afficher_licorne(POINT centre, COUL coul){
