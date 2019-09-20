@@ -29,15 +29,19 @@ void afficher_plateau(int ig){
 				boite = point_ig1_to_numBoite(centreBoite);
 			else
 				boite = point_ig2_to_numBoite(centreBoite);
-				
+			
 			affiche_lisere(centreBoite, plateau[boite.x][boite.y].lisere);
 			
-			if(plateau[boite.x][boite.y].typeP == LICORNE)
-				afficher_licorne(centreBoite, plateau[boite.x][boite.y].coulP);
-			else if(plateau[boite.x][boite.y].typeP == PALADIN)
-				afficher_paladin(centreBoite, plateau[boite.x][boite.y].coulP);
-			
-			
+			switch (plateau[boite.x][boite.y].typeP){
+				case LICORNE:
+					afficher_licorne(centreBoite, plateau[boite.x][boite.y].coulP);
+					break;
+				case PALADIN:
+					afficher_paladin(centreBoite, plateau[boite.x][boite.y].coulP);
+					break;
+				default:
+					break;
+			}
 		}
 	}
 	affiche_all();
@@ -69,6 +73,13 @@ void afficher_panneau_jeu(int ig){
 	
 	draw_fill_rectangle(pBG,pHD,couleur_RGB(129,116,98));
 	
+	afficher_legende_plateau(ig);
+	
+	
+	afficher_plateau(ig);
+}
+
+void afficher_legende_plateau(int ig){
 	int i;
 	POINT pLettre,pChiffre;
 	char lettre[2];
@@ -104,30 +115,42 @@ void afficher_panneau_jeu(int ig){
 			aff_int((NB_BOITE_PLATEAU-i), 12, pChiffre, blanc);
 		}
 	}
-	
-	afficher_plateau(ig);
 }
 
 void afficher_licorne(POINT centre, COUL coul){
 	COULEUR pCouleur = noir;
 	
 	if (coul == BLANC)
-		pCouleur = blanc;
+		pCouleur = blanc-(0x646464);
 	else if(coul == NOIR)
 		pCouleur = noir;
-		
-	draw_fill_circle(centre,10,pCouleur);
+	
+	int i;
+	for(i = 20;i>5;i--){
+		pCouleur += 0x050505;
+		centre.y += 2;
+		if (i%2 == 0)
+			centre.x += 2;
+		draw_fill_circle(centre,i, pCouleur);
+	}
 }
 
 void afficher_paladin(POINT centre, COUL coul){
 	COULEUR pCouleur = noir;
 	
 	if (coul == BLANC)
-		pCouleur = blanc;
+		pCouleur = blanc-(0x747474);
 	else if(coul == NOIR)
 		pCouleur = noir;
 		
-	draw_fill_circle(centre,5,pCouleur);
+	int i;
+	for(i = 15;i>10;i--){
+		pCouleur += 0x0F0F0F;
+		centre.y += 2;
+		if (i%2 == 0)
+			centre.x += 2;
+		draw_fill_circle(centre,i, pCouleur);
+	}
 
 }
 
