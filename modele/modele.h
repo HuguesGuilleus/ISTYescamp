@@ -37,6 +37,6 @@
 	void init_piece2_debug();
 
 	void deplacement_simple(NUMBOITE origine, NUMBOITE dest);
-	BOOL peut_seletiner_pion(NUMBOITE entreBoite, COUL coul, int lisere);
+	BOOL peut_selectioner_pion(NUMBOITE entreBoite, COUL coul, int lisere);
 
 #endif

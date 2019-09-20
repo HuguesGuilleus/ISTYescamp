@@ -102,7 +102,7 @@ void deplacement_simple(NUMBOITE origine, NUMBOITE dest) {
 	plateau[origine.x][origine.y].typeP = VIDE ;
 }
 
-BOOL peut_seletiner_pion(NUMBOITE entreBoite, COUL coul, int lisere) {
+BOOL peut_selectioner_pion(NUMBOITE entreBoite, COUL coul, int lisere) {
 	BOITE * plateauBoite = &plateau[entreBoite.x][entreBoite.y] ;
 	imprime_boite(plateauBoite);
 	if (plateauBoite->typeP == VIDE) {
