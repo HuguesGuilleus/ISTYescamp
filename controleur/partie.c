@@ -44,8 +44,8 @@ NUMBOITE attend_click_NUMBOITE(int ig) {
 	POINT clic ;
 	do {
 		clic = wait_clic();
-		clic.x -= (TAILLE_PLATEAU/NB_BOITE_PLATEAU)/2 ;
-		clic.y -= (TAILLE_PLATEAU/NB_BOITE_PLATEAU)/2 ;
+		// clic.x -= (TAILLE_PLATEAU/NB_BOITE_PLATEAU)/2 ;
+		// clic.y -= (TAILLE_PLATEAU/NB_BOITE_PLATEAU)/2 ;
 		if (ig == 1) {
 			boite = point_ig1_to_numBoite(clic) ;
 		} else {
