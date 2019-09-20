@@ -3,7 +3,10 @@
 #ifndef MODELE_H
 	#define MODELE_H 1
 
+	#include "../vue/graphics.h"
+
 	#define NB_BOITE_PLATEAU 6
+
 
 	typedef struct {
 		int x ; // pour la colone
@@ -34,5 +37,6 @@
 	void init_piece2_debug();
 
 	void deplacement_simple(NUMBOITE origine, NUMBOITE dest);
+	BOOL peut_seletiner_pion(NUMBOITE entreBoite, COUL coul, int lisere);
 
 #endif
