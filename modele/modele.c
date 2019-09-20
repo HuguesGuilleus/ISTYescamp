@@ -2,6 +2,7 @@
 
 void init_plateau() {
 	int x,y ;
+
 	for (x = 0; x < 6; x++) {
 		for (y = 0; y < 6; y++) {
 			plateau[x][y].lisere = 1 ;
@@ -37,7 +38,6 @@ void init_plateau() {
 	plateau[5][5].lisere = 2 ;
 }
 
-// Initlialise le plateau et place des pièces pour le débug.
 void init_piece1_debug() {
 	init_plateau(plateau);
 
@@ -81,9 +81,8 @@ void init_piece2_debug() {
 	plateau[0][0].typeP = LICORNE ;
 
 	for (y = 0; y < 6; y++) {
-		plateau[0][y].typeP = PALADIN ;
-		plateau[0][y].coulP = NOIR;
+		plateau[5][y].typeP = PALADIN ;
+		plateau[5][y].coulP = NOIR;
 	}
 	plateau[5][3].typeP = LICORNE ;
 }
-
