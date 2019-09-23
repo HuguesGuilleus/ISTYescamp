@@ -123,6 +123,6 @@ BOOL peut_selectioner_pion(NUMBOX entreBoite, COUL coul, int lisere) {
 void imprime_boite(BOITE * b) {
 	printf("  %p\n", b);
 	printf("  type: %d\n", b->typeP);
-	printf("  couleur: %d\n", b->coul);
+	printf("  couleur: %d\n", b->coulP);
 	printf("  lisere: %d\n", b->lisere);
 }
