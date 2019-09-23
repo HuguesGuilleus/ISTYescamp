@@ -1,5 +1,3 @@
-#ifndef GRAPHICS_H
-	#define GRAPHICS_H
 // ############################################
 //                    ISTY
 //
@@ -44,13 +42,13 @@
 
 // 1.1 TYPES
 
-	// Définition du type POINT
+	// DÃ©finition du type POINT
 	typedef struct point {int x,y;} POINT;
 
-	// Définition du type COULEUR
+	// DÃ©finition du type COULEUR
 	typedef Uint32 COULEUR;
 
-	// Les booléens
+	// Les boolÃ©ens
 	typedef int BOOL;
 	
 // 1.2 VARIABLES
@@ -60,13 +58,13 @@
 
 // 1.3 CONSTANTES
 
-	// Déplacement minimal lorsque l'on utilise les flèches.
+	// DÃ©placement minimal lorsque l'on utilise les flÃ¨ches.
 	#define MINDEP 1
 
 	// Constantes de couleur
 	#include "couleur.h"
 
-	// Constantes booléennes
+	// Constantes boolÃ©ennes
 	#define TRUE 1
 	#define True 1
 	#define true 1
@@ -79,21 +77,21 @@
 // 2. AFFICHAGE
 // ############
 
-	// 2.1 Initialisation de la fenêtre sur laquelle on dessine
+	// 2.1 Initialisation de la fenÃªtre sur laquelle on dessine
 	void init_graphics(int W, int H);
 
 	// 2.2 Affichage automatique ou manuel
-	// Si l'affichage est automatique, chaque objet dessiné
-	// est automatiquement affiché.
+	// Si l'affichage est automatique, chaque objet dessinÃ©
+	// est automatiquement affichÃ©.
 	// Sinon, il faut explicitement appeler la fonction
 	// affiche_all() pour afficher les objets
-	// synchro() est identique à affiche_all()
+	// synchro() est identique Ã  affiche_all()
 	void affiche_auto_on();
 	void affiche_auto_off();
 	void affiche_all();
 	void synchro();
 
-	// 2.3 Création de couleur
+	// 2.3 CrÃ©ation de couleur
 	// r g et b dans l'intervalle 0 .. 255
 	COULEUR couleur_RGB(int r, int g, int b);
 
@@ -105,17 +103,17 @@
 // #######################
 
 	// 3.1 Renvoie le ou les fleches appuyees
-	// sous forme d'un déplacement en 
-	// x négatif = nombre d'appuis sur la flèche gauche
-	// x positif = nombre d'appuis sur la flèche droite
-	// y négatif = nombre d'appuis sur la flèche bas
-	// y positif = nombre d'appuis sur la flèche haut
-	// Instruction non bloquante, si aucune flèche n'a été
-	// appuyée les champs x et y vaudront 0.
+	// sous forme d'un dÃ©placement en 
+	// x nÃ©gatif = nombre d'appuis sur la flÃ¨che gauche
+	// x positif = nombre d'appuis sur la flÃ¨che droite
+	// y nÃ©gatif = nombre d'appuis sur la flÃ¨che bas
+	// y positif = nombre d'appuis sur la flÃ¨che haut
+	// Instruction non bloquante, si aucune flÃ¨che n'a Ã©tÃ©
+	// appuyÃ©e les champs x et y vaudront 0.
 	POINT get_arrow();
 
 	// 3.2 Renvoie deplacement de souris
-	// Meme sémantique que get_arrow()
+	// Meme sÃ©mantique que get_arrow()
 	// Instruction non bloquante, si la souris n'a pas bouge,
 	// les champs x et y vaudront 0.
 	POINT get_mouse();
@@ -140,7 +138,7 @@
 // 4. DESSIN D'OBJETS
 // ##################
 
-	// 4.1 Remplissage de tout l'écran
+	// 4.1 Remplissage de tout l'Ã©cran
 	void fill_screen(COULEUR color);
 
 	// 4.2 Dessine un pixel
@@ -185,21 +183,21 @@
 // 5. ECRITURE DE TEXTE
 // ####################
 
-// L'affichage se fait dans la fenetre graphique si SDL_ttf est installŽ.
+// L'affichage se fait dans la fenetre graphique si SDL_ttf est installÂŽ.
 // Sinon il se fait dans dans la fenetre shell
 
 	// 5.1 Affiche du texte avec
-	// Le texte est passŽ dans l'argument "a_ecrire" 
-	// la police est celle définie par la constante POLICE_NAME 
+	// Le texte est passÂŽ dans l'argument "a_ecrire" 
+	// la police est celle dÃ©finie par la constante POLICE_NAME 
 	//           dans graphics.c
-	// la taille est passŽe en argument
-	// l'argument p de type POINT est le point en haut ˆ gauche
-	// ˆ partir duquel le texte s'affiche
-	// la COULEUR C passée en argument est la couleur d'affichage
+	// la taille est passÂŽe en argument
+	// l'argument p de type POINT est le point en haut Âˆ gauche
+	// Âˆ partir duquel le texte s'affiche
+	// la COULEUR C passÃ©e en argument est la couleur d'affichage
 	void aff_pol(char *a_ecrire, int taille, POINT p, COULEUR C);
 
 	// 5.2 Affiche un entier
-	// Meme sémantique que aff_pol()
+	// Meme sÃ©mantique que aff_pol()
 	void aff_int(int n, int taille, POINT p, COULEUR C);
 
 	// 5.3 Affiche dans la fenetre graphique comme dans une fenetre
@@ -215,7 +213,7 @@
 // 6. LECTURE D'ENTIER
 // ###################
 
-	// 6.1 Renvoie l'entier tapé au clavier.
+	// 6.1 Renvoie l'entier tapÃ© au clavier.
 	// Cette fonction est bloquante
 	int lire_entier_clavier();
 
@@ -243,7 +241,7 @@
 
 
 // ####################
-// 8. VALEUR ALÉATOIRES
+// 8. VALEUR ALÃ‰ATOIRES
 // ####################
 
 	// 8.1 Renvoie un float dans l'intervalle [0;1[
@@ -259,5 +257,3 @@
 
 	// 9.1 Renvoie la distance entre deux points
 	int distance(POINT P1, POINT P2);
-
-#endif
