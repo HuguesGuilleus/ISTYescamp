@@ -13,6 +13,9 @@ int main(){
 
 
 	while(TRUE){
+		go= FALSE;
+		joueur = BLANC;
+		
 		init_plateau();
 		afficher_menu();
 		clic_menu = wait_clic();
