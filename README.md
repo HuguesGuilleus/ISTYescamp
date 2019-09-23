@@ -10,7 +10,7 @@ Les autres fichiers ont été écrit par:
 - Hugues GUILLEUS
 
 ## Compilation
-Pour compiler veuillez utiliser `build.bash` à la racine du projet qui compile tous les fichier `.c`, créé l'exécutable `escampe` et le lance.
+Pour compiler veuillez utiliser `build.bash` à la racine du projet qui compile tous les fichiers `.c`, crée l'exécutable `escampe` et le lance.
 
 Exemple:
 ```bash
@@ -18,7 +18,8 @@ Exemple:
 $ ./build.bash
 ```
 
-Pour supprimer les fichiers objets, il lancé build.bash avec l'argument `clean`.
+Pour supprimer les fichiers objets, il faut lancer `build.bash` avec l'argument `clean`.
 ```bash
+# À la racine du projet
 $ ./build.bash clean
 ```
