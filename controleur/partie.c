@@ -18,28 +18,28 @@ void jouer(){
 	wait_clic();
 }
 
-POINT numBoite_to_pointBG_ig1(NUMBOITE numboxB){
+POINT numBoite_to_pointBG_ig1(NUMBOX numboxB){
 	POINT P;
 	int marge = (H_FENETRE-TAILLE_PLATEAU)/2;
 	int largeur_boite = (TAILLE_PLATEAU/NB_BOITE_PLATEAU);
 
-	P.x = (numboxB.x*largeur_boite) + marge;
-	P.y = (numboxB.y*largeur_boite) + marge;
+	P.x = (numboxB.c*largeur_boite) + marge;
+	P.y = (numboxB.l*largeur_boite) + marge;
 	return P;
 }
 
-POINT numBoite_to_pointBG_ig2(NUMBOITE numboxB){
+POINT numBoite_to_pointBG_ig2(NUMBOX numboxB){
 	POINT P;
 	int marge = (H_FENETRE-TAILLE_PLATEAU)/2;
 	int largeur_boite = (TAILLE_PLATEAU/NB_BOITE_PLATEAU);
 
-	P.x = (H_FENETRE-largeur_boite)-((numboxB.y*largeur_boite) + marge);
-	P.y = ((numboxB.x*largeur_boite) + marge);
+	P.x = (H_FENETRE-largeur_boite)-((numboxB.l*largeur_boite) + marge);
+	P.y = ((numboxB.c*largeur_boite) + marge);
 
 	return P;
 }
 
-NUMBOITE attend_click_NUMBOITE(int ig) {
+NUMBOX attend_click_numbox(int ig) {
 	POINT clic ;
 
 	do {
@@ -62,25 +62,25 @@ BOOL estHors_plateau(POINT click) {
 		click.y < marge || finPlateau < click.y ;
 }
 
-NUMBOITE point_ig1_to_numBoite(POINT P){
-	NUMBOITE boite;
+NUMBOX point_ig1_to_numBoite(POINT P){
+	NUMBOX boite;
 
 	int marge = (H_FENETRE-TAILLE_PLATEAU)/2;
 	int largeur_boite = (TAILLE_PLATEAU/NB_BOITE_PLATEAU);
 
-	boite.x = (P.x - marge)/largeur_boite;
-	boite.y = (P.y - marge)/largeur_boite;
+	boite.c = (P.x - marge)/largeur_boite;
+	boite.l = (P.y - marge)/largeur_boite;
 	return boite;
 }
 
-NUMBOITE point_ig2_to_numBoite(POINT P){
-	NUMBOITE boite;
+NUMBOX point_ig2_to_numBoite(POINT P){
+	NUMBOX boite;
 
 	int marge = (H_FENETRE-TAILLE_PLATEAU)/2;
 	int largeur_boite = (TAILLE_PLATEAU/NB_BOITE_PLATEAU);
 
-	boite.x = (P.y - marge)/(largeur_boite);
-	boite.y = 5-((P.x - marge)/(largeur_boite));
+	boite.c = (P.y - marge)/(largeur_boite);
+	boite.l = 5-((P.x - marge)/(largeur_boite));
 
 	return boite;
 }

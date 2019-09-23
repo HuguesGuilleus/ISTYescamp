@@ -2,7 +2,7 @@
 
 int main(){
 	int ig = 1 ;
-	NUMBOITE boiteOrigine, boiteDest ;
+	NUMBOX boiteOrigine, boiteDest ;
 
 	init_graphics(L_FENETRE,H_FENETRE);
 	affiche_auto_off();
@@ -13,10 +13,8 @@ int main(){
 	//jouer();
 
 	while (TRUE) {
-		boiteOrigine = attend_click_NUMBOITE(ig);
-		printf("boite: (%d,%d)\n", boiteOrigine.x, boiteOrigine.y ); /////////////////
-		boiteDest    = attend_click_NUMBOITE(ig);
-		printf("boite: (%d,%d)\n", boiteDest.x, boiteDest.y ); /////////////////
+		boiteOrigine = attend_click_numbox(ig);
+		boiteDest    = attend_click_numbox(ig);
 		deplacement_simple(boiteOrigine, boiteDest);
 		afficher_plateau(ig);
 	}

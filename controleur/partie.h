@@ -7,12 +7,12 @@
 
 	void jouer();
 
-	POINT numBoite_to_pointBG_ig1(NUMBOITE numboxB);
-	POINT numBoite_to_pointBG_ig2(NUMBOITE numboxB);
-	NUMBOITE point_ig1_to_numBoite(POINT P);
-	NUMBOITE point_ig2_to_numBoite(POINT P);
+	POINT numBoite_to_pointBG_ig1(NUMBOX numboxB);
+	POINT numBoite_to_pointBG_ig2(NUMBOX numboxB);
+	NUMBOX point_ig1_to_numBoite(POINT P);
+	NUMBOX point_ig2_to_numBoite(POINT P);
 
-	NUMBOITE attend_click_NUMBOITE(int ig);
+	NUMBOX attend_click_numbox(int ig);
 	BOOL estHors_plateau(POINT click);
 
 

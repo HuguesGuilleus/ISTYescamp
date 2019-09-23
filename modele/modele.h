@@ -9,9 +9,9 @@
 
 
 	typedef struct {
-		int x ; // pour la colone
-		int y ; // pour la ligne
-	} NUMBOITE ;
+		int c ; // pour la colone
+		int l ; // pour la ligne
+	} NUMBOX ;
 
 	// La couleur d'un pion
 	typedef enum {
@@ -36,7 +36,7 @@
 	void init_piece1_debug();
 	void init_piece2_debug();
 
-	void deplacement_simple(NUMBOITE origine, NUMBOITE dest);
-	BOOL peut_selectioner_pion(NUMBOITE entreBoite, COUL coul, int lisere);
+	void deplacement_simple(NUMBOX origine, NUMBOX dest);
+	BOOL peut_selectioner_pion(NUMBOX entreBoite, COUL coul, int lisere);
 
 #endif

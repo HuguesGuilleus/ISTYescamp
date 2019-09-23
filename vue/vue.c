@@ -4,20 +4,20 @@
 //Affiche les boites du plateau, les paladins et les licornes
 void afficher_plateau(int ig){
 	int x,y;
-	
+
 	POINT pBDBox;
-	NUMBOITE boite;
-	
+	NUMBOX boite;
+
 	for(x=0;x<NB_BOITE_PLATEAU;x++){
 		for(y=0;y<NB_BOITE_PLATEAU;y++){
-			boite.y = y;boite.x = x;
+			boite.l = y;boite.c = x;
 			if (ig == 1)
 				pBDBox = numBoite_to_pointBG_ig1(boite);
 			else
 				pBDBox = numBoite_to_pointBG_ig2(boite);
-				
+
 			afficher_lisere(pBDBox, plateau[x][y].lisere);
-			
+
 			switch (plateau[x][y].typeP){
 				case LICORNE:
 					afficher_licorne(pBDBox, plateau[x][y].coulP);
@@ -34,13 +34,13 @@ void afficher_plateau(int ig){
 }
 
 
-//Affiche le 
+//Affiche le
 void afficher_panneau_info(){
 	POINT pBG,pHD;
-	
+
 	pBG.x = H_FENETRE;pBG.y=0;
 	pHD.x = L_FENETRE;pHD.y=H_FENETRE;
-	
+
 	draw_fill_rectangle(pBG,pHD,blanc);
 	affiche_all();
 
@@ -48,18 +48,18 @@ void afficher_panneau_info(){
 
 void afficher_panneau_jeu(int ig){
 	POINT pBG,pHD;
-	
+
 	pBG.x = 0;pBG.y=0;
 	pHD.x = H_FENETRE;pHD.y=H_FENETRE;
 	draw_fill_rectangle(pBG,pHD,couleur_RGB(232,210,160));
-	
+
 	pBG.x += (H_FENETRE-TAILLE_PLATEAU)/2-25;
 	pBG.y+=(H_FENETRE-TAILLE_PLATEAU)/2-25;
 	pHD.x -= (H_FENETRE-TAILLE_PLATEAU)/2-20;
 	pHD.y-=(H_FENETRE-TAILLE_PLATEAU)/2-20;
-	
+
 	draw_fill_rectangle(pBG,pHD,couleur_RGB(129,116,98));
-	
+
 	afficher_legende_plateau(ig);
 
 	afficher_plateau(ig);
@@ -70,13 +70,13 @@ void afficher_legende_plateau(int ig){
 	POINT pLettre,pChiffre;
 	char lettre[2];
 	int largeur_boite = (TAILLE_PLATEAU/NB_BOITE_PLATEAU);
-	
+
 	for(i=0;i<NB_BOITE_PLATEAU;i++){
 		lettre[0] = ('A'+i);
 		if (ig == 1){
 			pLettre.x = (H_FENETRE-TAILLE_PLATEAU)/2+(i*largeur_boite)+largeur_boite/2-3;
 			pChiffre.y = (H_FENETRE-TAILLE_PLATEAU)/2+(i*largeur_boite)+largeur_boite/2+6;
-		
+
 			pLettre.y = (H_FENETRE-TAILLE_PLATEAU)/2-6;
 			pChiffre.x = (H_FENETRE-TAILLE_PLATEAU)/2-18;
 			aff_pol(lettre, 12, pLettre, blanc);
@@ -89,7 +89,7 @@ void afficher_legende_plateau(int ig){
 		}else if (ig == 2){
 			pLettre.y = (H_FENETRE-TAILLE_PLATEAU)/2+(i*largeur_boite)+largeur_boite/2+6;
 			pChiffre.x = (H_FENETRE-TAILLE_PLATEAU)/2+(i*largeur_boite)+largeur_boite/2-3;
-		
+
 			pLettre.x = (H_FENETRE-TAILLE_PLATEAU)/2-18;
 			pChiffre.y = (H_FENETRE-TAILLE_PLATEAU)/2-6;
 			aff_pol(lettre, 12, pLettre, blanc);
@@ -105,12 +105,12 @@ void afficher_legende_plateau(int ig){
 
 void afficher_licorne(POINT bg, COUL coul){
 	COULEUR pCouleur = noir;
-	
+
 	if (coul == BLANC)
 		pCouleur = blanc-(0x646464);
 	else if(coul == NOIR)
 		pCouleur = noir;
-		
+
 	bg.x += (TAILLE_PLATEAU/NB_BOITE_PLATEAU)/2;
 	bg.y += (TAILLE_PLATEAU/NB_BOITE_PLATEAU)/2;
 	int i;
@@ -125,12 +125,12 @@ void afficher_licorne(POINT bg, COUL coul){
 
 void afficher_paladin(POINT bg, COUL coul){
 	COULEUR pCouleur = noir;
-	
+
 	if (coul == BLANC)
 		pCouleur = blanc-(0x747474);
 	else if(coul == NOIR)
 		pCouleur = noir;
-		
+
 	bg.x += (TAILLE_PLATEAU/NB_BOITE_PLATEAU)/2;
 	bg.y += (TAILLE_PLATEAU/NB_BOITE_PLATEAU)/2;
 	int i;
@@ -152,36 +152,35 @@ void afficher_lisere(POINT bg, int nbLisere){
 		x:bg.x+rayon_boite*2,
 		y:bg.y+rayon_boite*2
 	},couleur_RGB(129,116,98));
-	
-	
+
+
 	bg.x += rayon_boite;
 	bg.y += rayon_boite;
 	for (cercle = 0;cercle < nbLisere;cercle++){
 		draw_circle(bg,rayon_boite-(cercle*4),blanc);
 	}
-	
+
 }
 
-void afficher_lisere_pion(int ig,NUMBOITE boite){
+void afficher_lisere_pion(int ig, NUMBOX boite){
 	POINT pBGBox;
-	
+
 	if (ig ==1)
 		pBGBox = numBoite_to_pointBG_ig1(boite);
 	else if(ig == 2)
 		pBGBox = numBoite_to_pointBG_ig2(boite);
-		
-	afficher_lisere(pBGBox,plateau[boite.x][boite.y].lisere);
-	
-	
-	switch (plateau[boite.x][boite.y].typeP){
+
+	afficher_lisere(pBGBox,plateau[boite.c][boite.l].lisere);
+
+
+	switch (plateau[boite.c][boite.l].typeP){
 		case LICORNE:
-			afficher_licorne(pBGBox, plateau[boite.x][boite.y].coulP);
+			afficher_licorne(pBGBox, plateau[boite.c][boite.l].coulP);
 			break;
 		case PALADIN:
-			afficher_paladin(pBGBox, plateau[boite.x][boite.y].coulP);
+			afficher_paladin(pBGBox, plateau[boite.c][boite.l].coulP);
 			break;
 		default:
 			break;
 	}
 }
-

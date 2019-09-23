@@ -96,14 +96,14 @@ void imprime_boite(BOITE * b) {
 }
 
 // Deplace un pion d'une case à une autre. Pas de vérication de validité.
-void deplacement_simple(NUMBOITE origine, NUMBOITE dest) {
-	plateau[dest.x][dest.y].coulP = plateau[origine.x][origine.y].coulP ;
-	plateau[dest.x][dest.y].typeP = plateau[origine.x][origine.y].typeP ;
-	plateau[origine.x][origine.y].typeP = VIDE ;
+void deplacement_simple(NUMBOX origine, NUMBOX dest) {
+	plateau[dest.c][dest.l].coulP = plateau[origine.c][origine.l].coulP ;
+	plateau[dest.c][dest.l].typeP = plateau[origine.c][origine.l].typeP ;
+	plateau[origine.c][origine.l].typeP = VIDE ;
 }
 
-BOOL peut_selectioner_pion(NUMBOITE entreBoite, COUL coul, int lisere) {
-	BOITE * plateauBoite = &plateau[entreBoite.x][entreBoite.y] ;
+BOOL peut_selectioner_pion(NUMBOX entreBoite, COUL coul, int lisere) {
+	BOITE * plateauBoite = &plateau[entreBoite.c][entreBoite.l] ;
 	imprime_boite(plateauBoite);
 	if (plateauBoite->typeP == VIDE) {
 		printf("type\n");

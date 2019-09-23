@@ -40,6 +40,6 @@
 	void afficher_licorne(POINT bg, COUL coul);
 	void afficher_paladin(POINT bg, COUL coul);
 	void afficher_lisere(POINT bg, int nbLisere);
-	void afficher_lisere_pion(int ig,NUMBOITE boite);
+	void afficher_lisere_pion(int ig, NUMBOX boite);
 
 #endif
