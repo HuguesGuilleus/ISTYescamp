@@ -16,7 +16,7 @@ function print() {
 
 if [[ $# == 1 && $1 == "clean" ]]; then
 	print "Netoyage"
-	rm -f *.o vue/police.h doc.html escampe
+	rm -f *.o */*.o vue/police.h doc.html escampe
 	exit 0
 fi
 
@@ -35,9 +35,11 @@ validation=true
 
 for prog in `find . -name '*.c' -print`
 do
-	if [[ ${prog%%.c}.o -ot $prog ]]; then
-		print $prog
+	if [[ `sed -r 's#.*/(\w*).c#\1.o#' <<< $prog` -ot $prog ]]; then
+		print "Compilation:" $prog
 		$CC $CFLAGS -c $prog || validation=false
+	else
+		print "Déjà compilé:" $prog
 	fi
 done
 
