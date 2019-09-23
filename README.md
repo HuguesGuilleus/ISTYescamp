@@ -19,6 +19,8 @@ $ ./build.bash
 ```
 
 Pour supprimer les fichiers objets, il faut lancer `build.bash` avec l'argument `clean`.
+
+Exemple:
 ```bash
 # À la racine du projet
 $ ./build.bash clean
