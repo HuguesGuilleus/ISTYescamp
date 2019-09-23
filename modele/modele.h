@@ -43,6 +43,8 @@
 	void init_piece1_debug();
 	void init_piece2_debug();
 
+	BOOL est_pas_invalide(NUMBOX b);
+	BOOL est_pion(NUMBOX b);
 	BOOL est_numbox_vide(NUMBOX b);
 	BOOL peut_selectioner_pion(NUMBOX entreBox, COUL coul, int lisere);
 
@@ -50,9 +52,13 @@
 	void imprime_box(BOX * b);
 
 	void init_status();
-	void selectionne_pion(COUL coul, int lisere);
+	void selectionne_pion(COUL coul, int lisere, NUMBOX * select);
 
 	void change_joueur(COUL * j);
 	int change_lisere(NUMBOX b);
+
+	void selection_possibilite(NUMBOX b);
+
+	void imprime_numbox(NUMBOX b);
 
 #endif

@@ -102,7 +102,7 @@ void init_status() {
 }
 
 // Si lisere est nulle alors tous les pions peuvent être séléctionnés.
-void selectionne_pion(COUL coul, int lisere) {
+void selectionne_pion(COUL coul, int lisere, NUMBOX * select) {
 	int c,l ;
 	BOX * b ;
 
@@ -118,11 +118,43 @@ void selectionne_pion(COUL coul, int lisere) {
 			}
 		}
 	}
+
+	if (select) {
+		plateau[select->c][select->l].status = SELECT ;
+	}
 }
+
+// BOX* getBox(int c, int l) {
+// 	return &plateau[c][l] ;
+// }
+//
+// void valide_deplacement(NUMBOX b, int lisere) {
+//
+// 	b.x++ ;
+// 	if (plateau[b.x][b.y].status == VIDE) {
+//
+// 	}
+// }
+
+void selection_possibilite(NUMBOX b) {
+	int lisere = plateau[b.c+1][b.l].lisere ;
+	plateau[b.c+1][b.l].status = VALIDE ;
+	// valide_deplacement(b, plateau[b.c+1][b.l].lisere)
+}
+
+
 
 // Renvoie vrai si b n'a pas de pion sur la case, sinon false.
 BOOL est_numbox_vide(NUMBOX b) {
 	return plateau[b.c][b.l].typeP == VIDE ;
+}
+
+BOOL est_pas_invalide(NUMBOX b) {
+	return plateau[b.c][b.l].status != INVALIDE ;
+}
+
+BOOL est_pion(NUMBOX b) {
+	return plateau[b.c][b.l].typeP != VIDE ;
 }
 
 // Deplace un pion d'une case à une autre. Pas de vérication de validité.
@@ -157,6 +189,12 @@ void imprime_box(BOX * b) {
 	printf("  type: %d\n", b->typeP);
 	printf("  couleur: %d\n", b->coulP);
 	printf("  lisere: %d\n", b->lisere);
+	printf("  status: %d\n", b->status);
+}
+
+// Pour le développement, écrit un NUMBOX dans la console.
+void imprime_numbox(NUMBOX b) {
+	printf("NUMBOX: (%d,%d)\n", b.c, b.l);
 }
 
 // Inverse la couleur du joueur courant
