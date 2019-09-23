@@ -7,10 +7,8 @@
 	#include "../modele/modele.h"
 	#include "../vue/vue.h"
 
-	POINT numBoite_to_pointBG_ig1(NUMBOX numboxB);
-	POINT numBoite_to_pointBG_ig2(NUMBOX numboxB);
-	NUMBOX point_ig1_to_numBoite(POINT P);
-	NUMBOX point_ig2_to_numBoite(POINT P);
+	NUMBOX point_ig_to_numBoite(int ig, POINT P);
+	POINT numBoite_to_pointBG_ig(int ig, NUMBOX numboxB);
 
 	NUMBOX attend_click_non_invalide(int ig);
 	NUMBOX attend_clic_numbox(int ig);
