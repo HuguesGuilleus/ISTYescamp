@@ -87,6 +87,11 @@ void init_piece2_debug() {
 	plateau[5][3].typeP = LICORNE ;
 }
 
+// Renvoie vrai si b n'a pas de pion, sinon false.
+BOOL est_numbox_vide(NUMBOX b) {
+	return plateau[b.c][b.l].typeP == VIDE ;
+}
+
 // Write in console the content of a box. Pour le développement.
 void imprime_boite(BOITE * b) {
 	printf("  %p\n", b );

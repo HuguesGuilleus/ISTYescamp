@@ -36,6 +36,8 @@
 	void init_piece1_debug();
 	void init_piece2_debug();
 
+	BOOL est_numbox_vide(NUMBOX b);
+
 	void deplacement_simple(NUMBOX origine, NUMBOX dest);
 	BOOL peut_selectioner_pion(NUMBOX entreBoite, COUL coul, int lisere);
 
