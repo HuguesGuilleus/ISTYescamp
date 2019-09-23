@@ -229,6 +229,51 @@ void afficher_btn(POINT bg, COULEUR couleur, char* text){
 
 }
 
+
+void afficher_btn_select_ig(POINT bg, COULEUR couleur, int ig){
+	POINT p2, p3,ptxt;
+	
+	bg.y += 50;
+	p2.y=bg.y+50;p2.x=bg.x+50;
+	p3.y=bg.y-50;p3.x=bg.x+50;
+	draw_triangle(bg, p2, p3, noir);
+	
+	ptxt.x = L_FENETRE/2;
+	ptxt.y = bg.y-5;
+	aff_int(ig, 18, ptxt, blanc);
+	ptxt.y += 18;
+	ptxt.x -= 35;
+	aff_pol("Interface", 18, ptxt, blanc);
+	
+	bg.x += L_FENETRE-(bg.x*2);
+	p2.x = bg.x-50;
+	p3.x = bg.x-50;
+	draw_triangle(bg, p2, p3, noir);
+}
+
+
+void afficher_btn_select_joueur(POINT bg, COULEUR couleur, COUL joueur){
+	POINT p2, p3,centre;
+	
+	bg.y += 50;
+	p2.y=bg.y+50;p2.x=bg.x+50;
+	p3.y=bg.y-50;p3.x=bg.x+50;
+	draw_triangle(bg, p2, p3, noir);
+	
+	centre.x = L_FENETRE/2;
+	centre.y = bg.y;
+	if (joueur == BLANC)
+		draw_fill_circle(centre,40,blanc);
+	else
+		draw_fill_circle(centre,40,noir);
+
+	
+	bg.x += L_FENETRE-(bg.x*2);
+	p2.x = bg.x-50;
+	p3.x = bg.x-50;
+	draw_triangle(bg, p2, p3, noir);
+}
+
 void afficher_menu(){
 	fill_screen(couleur_RGB(129,116,98));
 	POINT pBtn;
@@ -265,43 +310,4 @@ void afficher_menu_select_joueur(COUL joueur,int ig){
 	affiche_all();
 }
 
-void afficher_btn_select_ig(POINT bg, COULEUR couleur, int ig){
-	POINT p2, p3,ptxt;
-	
-	bg.y += 50;
-	p2.y=bg.y+50;p2.x=bg.x+50;
-	p3.y=bg.y-50;p3.x=bg.x+50;
-	draw_triangle(bg, p2, p3, noir);
-	
-	ptxt.x = L_FENETRE/2;
-	ptxt.y = bg.y+9;
-	aff_int(ig, 18, ptxt, blanc);
-	
-	bg.x += L_FENETRE-(bg.x*2);
-	p2.x = bg.x-50;
-	p3.x = bg.x-50;
-	draw_triangle(bg, p2, p3, noir);
-}
-
-void afficher_btn_select_joueur(POINT bg, COULEUR couleur, COUL joueur){
-	POINT p2, p3,centre;
-	
-	bg.y += 50;
-	p2.y=bg.y+50;p2.x=bg.x+50;
-	p3.y=bg.y-50;p3.x=bg.x+50;
-	draw_triangle(bg, p2, p3, noir);
-	
-	centre.x = L_FENETRE/2;
-	centre.y = bg.y;
-	if (joueur == BLANC)
-		draw_fill_circle(centre,30,blanc);
-	else
-		draw_fill_circle(centre,30,noir);
-
-	
-	bg.x += L_FENETRE-(bg.x*2);
-	p2.x = bg.x-50;
-	p3.x = bg.x-50;
-	draw_triangle(bg, p2, p3, noir);
-}
 
