@@ -5,8 +5,8 @@
 void init_plateau() {
 	int x,y ;
 
-	for (x = 0; x < 6; x++) {
-		for (y = 0; y < 6; y++) {
+	for (x = 0; x < NB_BOX_PLATEAU; x++) {
+		for (y = 0; y < NB_BOX_PLATEAU; y++) {
 			plateau[x][y].lisere = 1 ;
 			plateau[x][y].typeP = VIDE ;
 			plateau[x][y].coulP = BLANC ;
@@ -76,13 +76,13 @@ void init_piece2_debug() {
 
 	init_plateau(plateau);
 
-	for (y = 0; y < 6; y++) {
+	for (y = 0; y < NB_BOX_PLATEAU; y++) {
 		plateau[0][y].typeP = PALADIN ;
 		plateau[0][y].coulP = BLANC ;
 	}
 	plateau[0][0].typeP = LICORNE ;
 
-	for (y = 0; y < 6; y++) {
+	for (y = 0; y < NB_BOX_PLATEAU; y++) {
 		plateau[5][y].typeP = PALADIN ;
 		plateau[5][y].coulP = NOIR;
 	}
@@ -91,8 +91,8 @@ void init_piece2_debug() {
 
 void init_status() {
 	int c,l;
-	for (c = 0; c < 6; c++) {
-		for (l = 0; l < 6; l++) {
+	for (c = 0; c < NB_BOX_PLATEAU; c++) {
+		for (l = 0; l < NB_BOX_PLATEAU; l++) {
 			plateau[c][l].status = INVALIDE ;
 		}
 	}
@@ -105,8 +105,8 @@ void selectionne_pion(COUL coul, int lisere) {
 
 	init_status();
 
-	for (c = 0; c < 6; c++) {
-		for (l = 0; l < 6; l++) {
+	for (c = 0; c < NB_BOX_PLATEAU; c++) {
+		for (l = 0; l < NB_BOX_PLATEAU; l++) {
 			b = &plateau[c][l] ;
 			if (b->typeP != VIDE && b->coulP == coul) {
 				if (lisere == 0 || lisere == b->lisere) {

@@ -37,7 +37,7 @@
 		STATUS status ;
 	} BOX ;
 
-	BOX plateau [6][6];
+	BOX plateau [NB_BOX_PLATEAU][NB_BOX_PLATEAU];
 
 	void init_plateau();
 	void init_piece1_debug();
