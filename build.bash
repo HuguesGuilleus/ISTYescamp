@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Issue de Makefile de Franck QUESSETTE et Laurence PILARD
+# Modifié par Hugues GUILLEUS
+
 CC="gcc"
 CFLAGS="-O2 -Wall `sdl-config --cflags`"
 LIBS="`sdl-config --libs` -lm -lSDL_ttf"
