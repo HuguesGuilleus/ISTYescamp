@@ -46,11 +46,14 @@ void init_piece1_debug() {
 
 	plateau[0][1].typeP = PALADIN ;
 	plateau[0][1].coulP = NOIR ;
+	plateau[0][1].status = VALIDE ;
 	plateau[1][1].typeP = LICORNE ;
 	plateau[1][1].coulP = NOIR ;
+	plateau[1][1].status = SELECT;
 	plateau[2][0].typeP = PALADIN ;
 	plateau[2][0].coulP = NOIR ;
 	plateau[2][1].typeP = PALADIN ;
+	plateau[2][1].status = VALIDE ;
 	plateau[2][1].coulP = NOIR ;
 	plateau[4][0].typeP = PALADIN ;
 	plateau[4][0].coulP = NOIR ;

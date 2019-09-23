@@ -14,7 +14,7 @@ int main(){
 
 	afficher_panneau_info();
 	afficher_panneau_jeu(ig);
-
+	
 	while (TRUE) {
 		selectionne_pion(BLANC, 1);
 		afficher_plateau(ig);
