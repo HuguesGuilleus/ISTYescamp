@@ -5,6 +5,7 @@
 	#include "graphics.h"
 	#include "../modele/modele.h"
 	#include "../controleur/partie.h"
+	#include "../controleur/menu.h"
 
 	// ############################################
 	//                    ISTY
@@ -44,6 +45,7 @@
 	void afficher_lisere(POINT bg, int nbLisere,NUMBOX box);
 	void afficher_lisere_pion(int ig, NUMBOX box);
 	
+	void afficher_victoire(COUL joueur);
 	void afficher_coups_impossible();
 	void afficher_joueur_courant(COUL joueur);
 	
@@ -52,6 +54,6 @@
 	void afficher_menu_select_joueur(COUL joueur,int i,int mod);
 	void afficher_btn_select_joueur(POINT bg, COULEUR couleur, COUL joueur);
 	void afficher_btn_select_ig(POINT bg, COULEUR couleur, int ig);
-
+	void afficher_plateau_mini(int ig);
 
 #endif

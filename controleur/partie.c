@@ -33,6 +33,7 @@ BOOL estHors_plateau(POINT click) {
 
 POINT numBoite_to_pointBG_ig(int ig, NUMBOX numboxB){
 	POINT P;
+	P.x=0;P.y=0;
 	int marge = (H_FENETRE-TAILLE_PLATEAU)/2;
 	int largeur_box = (TAILLE_PLATEAU/NB_BOX_PLATEAU);
 	
@@ -59,7 +60,7 @@ POINT numBoite_to_pointBG_ig(int ig, NUMBOX numboxB){
 }
 NUMBOX point_ig_to_numBoite(int ig, POINT P){
 	NUMBOX box;
-
+	box.c=0;box.l=0;
 	int marge = (H_FENETRE-TAILLE_PLATEAU)/2;
 	int largeur_box = (TAILLE_PLATEAU/NB_BOX_PLATEAU);
 	

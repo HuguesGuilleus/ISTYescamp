@@ -11,8 +11,9 @@ int main(){
 	int ig = 1;
 	COUL joueur = BLANC;
 
+	init_plateau();
 	afficher_menu();
-
+	
 	while(TRUE){
 		clic_menu = wait_clic();
 		if (est_dans_bouton_quitter(clic_menu)){
@@ -94,7 +95,7 @@ void jouer(int mod,COUL joueur,int ig) {
 			afficher_coups_impossible();
 			wait_clic();
 		}
-
+	
 		change_joueur(&joueur);
 	}
 }
