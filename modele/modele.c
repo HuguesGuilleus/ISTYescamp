@@ -10,6 +10,7 @@ void init_plateau() {
 			plateau[x][y].lisere = 1 ;
 			plateau[x][y].typeP = VIDE ;
 			plateau[x][y].coulP = BLANC ;
+			plateau[x][y].status = INVALIDE ;
 		}
 	}
 
@@ -87,6 +88,21 @@ void init_piece2_debug() {
 	}
 	plateau[5][3].typeP = LICORNE ;
 }
+
+// void netoye_plateau_status() {
+// 	int c,l;
+// 	for (c = 0; c < 6; c++) {
+// 		for (l = 0; l < 6; l++) {
+// 			plateau[c][l].status = INVALIDE ;
+// 		}
+// 	}
+// }
+//
+// // Si lisere est nul alors tous les pions peuvent être séléctionnés.
+// void selectionne_pion(COUL coul, int lisere) {
+// 	netoye_plateau_status();
+// }
+
 
 // Renvoie vrai si b n'a pas de pion sur la case, sinon false.
 BOOL est_numbox_vide(NUMBOX b) {

@@ -23,11 +23,18 @@
 		VIDE, LICORNE, PALADIN
 	} TYPE ;
 
+	typedef enum {
+		INVALIDE, // case non séléctionnable
+		VALIDE, // case clicable
+		SELECT // case séléctionné
+	} STATUS ;
+
 	// Une case du plateau
 	typedef struct  {
 		int lisere; /* {1.2.3} */
 		TYPE typeP; /* {VIDE, LICORNE , PALADIN} */
 		COUL coulP; /* {BLANC, NOIR} */
+		STATUS status ;
 	} BOX ;
 
 	BOX plateau [6][6];
