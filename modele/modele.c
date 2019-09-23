@@ -124,25 +124,51 @@ void selectionne_pion(COUL coul, int lisere, NUMBOX * select) {
 	}
 }
 
-// BOX* getBox(int c, int l) {
-// 	return &plateau[c][l] ;
-// }
-//
-// void valide_deplacement(NUMBOX b, int lisere) {
-//
-// 	b.x++ ;
-// 	if (plateau[b.x][b.y].status == VIDE) {
-//
-// 	}
-// }
+///// DÉBUT À RELIRE /////
 
-void selection_possibilite(NUMBOX b) {
-	int lisere = plateau[b.c+1][b.l].lisere ;
-	plateau[b.c+1][b.l].status = VALIDE ;
-	// valide_deplacement(b, plateau[b.c+1][b.l].lisere)
+BOX* getBox(int c, int l) {
+	if (c<0 || c>=NB_BOX_PLATEAU || l<0 || l>=NB_BOX_PLATEAU) {
+		return NULL ;
+	} else {
+		return &plateau[c][l] ;
+	}
 }
 
+void valide_deplacement(int c, int l, int lisere) {
+	BOX* b = NULL ;
 
+	if (lisere == 0) {
+		return ;
+	}
+
+	b = getBox(c+1, l);
+	if (b && b->status == INVALIDE && b->typeP == VIDE) {
+		b->status = SELECT ;
+		valide_deplacement(c+1, l, lisere-1);
+	}
+	b = getBox(c-1, l);
+	if (b && b->status == INVALIDE && b->typeP == VIDE) {
+		b->status = SELECT ;
+		valide_deplacement(c-1, l, lisere-1);
+	}
+	b = getBox(c, l+1);
+	if (b && b->status == INVALIDE && b->typeP == VIDE) {
+		b->status = SELECT ;
+		valide_deplacement(c, l+1, lisere-1);
+	}
+	b = getBox(c, l-1);
+	if (b && b->status == INVALIDE && b->typeP == VIDE) {
+		b->status = SELECT ;
+		valide_deplacement(c, l-1, lisere-1);
+	}
+	getBox(c, l)->status = INVALIDE ;
+}
+
+void selection_possibilite(NUMBOX b) {
+	valide_deplacement(b.c, b.l, getBox(b.c, b.l)->lisere);
+}
+
+///// FIN À RELIRE /////
 
 // Renvoie vrai si b n'a pas de pion sur la case, sinon false.
 BOOL est_numbox_vide(NUMBOX b) {
