@@ -52,4 +52,7 @@
 	void init_status();
 	void selectionne_pion(COUL coul, int lisere);
 
+	void change_joueur(COUL * j);
+	int change_lisere(NUMBOX b);
+
 #endif

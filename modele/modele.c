@@ -158,3 +158,17 @@ void imprime_box(BOX * b) {
 	printf("  couleur: %d\n", b->coulP);
 	printf("  lisere: %d\n", b->lisere);
 }
+
+// Inverse la couleur du joueur courant
+void change_joueur(COUL * j) {
+	if (*j == BLANC) {
+		*j = NOIR ;
+	} else {
+		*j = BLANC ;
+	}
+}
+
+// Retourne le lisere pour le tour suivant
+int change_lisere(NUMBOX b) {
+	return plateau[b.c][b.l].lisere ;
+}

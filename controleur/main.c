@@ -5,6 +5,8 @@
 int main(){
 	int ig = 2 ;
 	NUMBOX boxOrigine, boxDest ;
+	COUL joueur = BLANC ;
+	int lisere = 0;
 
 	init_graphics(L_FENETRE,H_FENETRE);
 	affiche_auto_off();
@@ -14,9 +16,9 @@ int main(){
 
 	afficher_panneau_info();
 	afficher_panneau_jeu(ig);
-	
+
 	while (TRUE) {
-		selectionne_pion(BLANC, 1);
+		selectionne_pion(joueur,lisere);
 		afficher_plateau(ig);
 		do{
 			boxOrigine = attend_clic_numbox(ig);
@@ -27,5 +29,7 @@ int main(){
 		afficher_lisere_pion(ig, boxOrigine);
 		afficher_lisere_pion(ig, boxDest);
 		affiche_all();
+		lisere = change_lisere(boxDest);
+		change_joueur(&joueur);
 	}
 }
