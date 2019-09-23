@@ -89,20 +89,33 @@ void init_piece2_debug() {
 	plateau[5][3].typeP = LICORNE ;
 }
 
-// void netoye_plateau_status() {
-// 	int c,l;
-// 	for (c = 0; c < 6; c++) {
-// 		for (l = 0; l < 6; l++) {
-// 			plateau[c][l].status = INVALIDE ;
-// 		}
-// 	}
-// }
-//
-// // Si lisere est nul alors tous les pions peuvent être séléctionnés.
-// void selectionne_pion(COUL coul, int lisere) {
-// 	netoye_plateau_status();
-// }
+void init_status() {
+	int c,l;
+	for (c = 0; c < 6; c++) {
+		for (l = 0; l < 6; l++) {
+			plateau[c][l].status = INVALIDE ;
+		}
+	}
+}
 
+// Si lisere est nulle alors tous les pions peuvent être séléctionnés.
+void selectionne_pion(COUL coul, int lisere) {
+	int c,l ;
+	BOX * b ;
+
+	init_status();
+
+	for (c = 0; c < 6; c++) {
+		for (l = 0; l < 6; l++) {
+			b = &plateau[c][l] ;
+			if (b->typeP != VIDE && b->coulP == coul) {
+				if (lisere == 0 || lisere == b->lisere) {
+					plateau[c][l].status = VALIDE ;
+				}
+			}
+		}
+	}
+}
 
 // Renvoie vrai si b n'a pas de pion sur la case, sinon false.
 BOOL est_numbox_vide(NUMBOX b) {

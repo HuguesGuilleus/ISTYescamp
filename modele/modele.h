@@ -49,4 +49,7 @@
 	void deplacement_simple(NUMBOX origine, NUMBOX dest);
 	void imprime_box(BOX * b);
 
+	void init_status();
+	void selectionne_pion(COUL coul, int lisere);
+
 #endif
