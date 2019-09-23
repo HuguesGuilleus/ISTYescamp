@@ -7,7 +7,7 @@
 
 	#define NB_BOITE_PLATEAU 6
 
-
+	// Les coordonées d'une BOX du plateau
 	typedef struct {
 		int c ; // pour la colone
 		int l ; // pour la ligne
@@ -37,8 +37,9 @@
 	void init_piece2_debug();
 
 	BOOL est_numbox_vide(NUMBOX b);
+	BOOL peut_selectioner_pion(NUMBOX entreBoite, COUL coul, int lisere);
 
 	void deplacement_simple(NUMBOX origine, NUMBOX dest);
-	BOOL peut_selectioner_pion(NUMBOX entreBoite, COUL coul, int lisere);
+	void imprime_boite(BOITE * b);
 
 #endif

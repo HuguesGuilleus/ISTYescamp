@@ -7,6 +7,7 @@ LIBS="`sdl-config --libs` -lm -lSDL_ttf"
 clear
 
 if [[ $# == 1 && $1 == "netoyage" ]]; then
+	printf "\t\033[01;34m Notoyage \033[0m\n"
 	rm -f *.o vue/police.h doc.html
 fi
 
