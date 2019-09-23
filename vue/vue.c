@@ -247,6 +247,24 @@ void afficher_lisere_pion(int ig, NUMBOX box){
 	}
 }
 
+void afficher_joueur_courant(COUL joueur){
+	POINT hg;
+	hg.x = H_FENETRE+50;
+	hg.y = H_FENETRE-30;
+	
+	if (joueur == BLANC){
+		aff_pol("Joueur", 24, hg, noir);
+		hg.x += 150;hg.y-=15;
+		draw_fill_circle(hg, 32,noir);
+		draw_fill_circle(hg, 30,blanc);
+	}else{
+		aff_pol("Joueur", 24, hg, noir);
+		hg.x += 150;hg.y-=15;
+		draw_fill_circle(hg, 32,noir);
+		draw_fill_circle(hg, 30,noir);
+	}
+}
+
 
 /***********MENU************/
 

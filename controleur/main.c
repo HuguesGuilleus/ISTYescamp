@@ -57,10 +57,11 @@ void jouer(char * mod,COUL joueur,int ig) {
 	afficher_panneau_jeu(ig);
 
 	while (TRUE) {
+		afficher_joueur_courant(joueur);
+		
 		if (selectionne_pion(joueur, lisere, NULL)) {
 			afficher_plateau(ig);
 			clic = attend_click_non_invalide(ig);
-
 			do {
 				boxOrigine = clic ;
 				selectionne_pion(joueur,lisere, &boxOrigine);
