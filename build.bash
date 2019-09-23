@@ -19,16 +19,16 @@ test -e /usr/include/SDL/SDL_ttf.h       && echo "#define SDL_TTF_OK" > vue/poli
 test -e /usr/local/include/SDL_ttf.h     && echo "#define SDL_TTF_OK" > vue/police.h
 test -e /usr/local/include/SDL/SDL_ttf.h && echo "#define SDL_TTF_OK" > vue/police.h
 
+validation=true
+
 for prog in `find . -name '*.c' -print`
 do
 	if [[ ${prog%%.c}.o -ot $prog ]]; then
 		printf "\t\033[01;34m$prog\033[0m\n"
-		$CC $CFLAGS -c $prog
+		$CC $CFLAGS -c $prog || validation=false
 	fi
 done
 
-echo "Édition de lien"
+# echo "Édition de lien"
 
-gcc -o escampe `find . -name '*.o' -print` $LIBS
-
-./escampe
+validation && gcc -o escampe `find . -name '*.o' -print` $LIBS && ./escampe
