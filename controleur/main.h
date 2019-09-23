@@ -8,5 +8,5 @@
 	#include "../controleur/menu.h"
 	#include "../modele/modele.h"
 
-	void jouer(char * mod);
+	void jouer(char * mod,COUL joueur,int ig);
 #endif

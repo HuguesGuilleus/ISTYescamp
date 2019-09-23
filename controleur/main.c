@@ -40,16 +40,15 @@ int main(){
 					afficher_menu_select_joueur(joueur,ig);
 				}
 			}
-			jouer("j");
+			jouer("j",joueur,ig);
 		}else if(est_dans_bouton_JvsIA(clic_menu)){
-			jouer("ia");
+			jouer("ia",joueur,ig);
 		}
 	}
 
 }
 
-void jouer(char * mod){
-	int ig = 2;
+void jouer(char * mod,COUL joueur,int ig){
 	NUMBOX boxOrigine, boxDest ;
 
 	//init_piece1_debug();

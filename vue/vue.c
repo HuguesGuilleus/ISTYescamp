@@ -266,20 +266,21 @@ void afficher_menu_select_joueur(COUL joueur,int ig){
 }
 
 void afficher_btn_select_ig(POINT bg, COULEUR couleur, int ig){
-	POINT hd;
-	hd.x = bg.x+(L_FENETRE-(bg.x*2));
-	hd.y = bg.y+100;
+	POINT p2, p3,ptxt;
 	
-	draw_fill_rectangle(bg,hd,couleur);
-	hd.x -= 20;
-	hd.y -= 20;
-	bg.x += 20;
-	bg.y += 20;
-	draw_fill_rectangle(bg,hd,couleur_RGB(80,75,70));
+	bg.y += 50;
+	p2.y=bg.y+50;p2.x=bg.x+50;
+	p3.y=bg.y-50;p3.x=bg.x+50;
+	draw_triangle(bg, p2, p3, noir);
 	
-	bg.y += 42;
-	bg.x += 39;
-	aff_int(ig, 18, bg, blanc);
+	ptxt.x = L_FENETRE/2;
+	ptxt.y = bg.y+9;
+	aff_int(ig, 18, ptxt, blanc);
+	
+	bg.x += L_FENETRE-(bg.x*2);
+	p2.x = bg.x-50;
+	p3.x = bg.x-50;
+	draw_triangle(bg, p2, p3, noir);
 }
 
 void afficher_btn_select_joueur(POINT bg, COULEUR couleur, COUL joueur){
