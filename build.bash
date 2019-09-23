@@ -31,4 +31,4 @@ done
 
 # echo "Édition de lien"
 
-validation && gcc -o escampe `find . -name '*.o' -print` $LIBS && ./escampe
+$validation && gcc -o escampe `find . -name '*.o' -print` $LIBS && ./escampe
