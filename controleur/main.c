@@ -18,7 +18,25 @@ int main(){
 		if (est_dans_bouton_quitter(clic_menu)){
 			return 0;
 		}else if(est_dans_bouton_JvsJ(clic_menu)){
-			afficher_menu_select_joueur(joueur,ig);
+			afficher_menu_select_joueur(joueur,ig,1);
+
+			while(!go){
+				clic_menu = wait_clic();
+
+				if(est_dans_bouton_valider(clic_menu)){
+					go = TRUE;
+				}else if(est_dans_bouton_ig(clic_menu)){
+					if (est_dans_bouton_ig_gauche(clic_menu))
+						ig = (((ig-1)+3)%4)+1;
+					else
+						ig = (ig%4)+1;
+
+					afficher_menu_select_joueur(joueur,ig,1);
+				}
+			}
+			jouer(1,joueur,ig);
+		}else if(est_dans_bouton_JvsIA(clic_menu)){
+			afficher_menu_select_joueur(joueur,ig,2);
 
 			while(!go){
 				clic_menu = wait_clic();
@@ -30,24 +48,22 @@ int main(){
 					joueur = NOIR;
 					else
 					joueur = BLANC;
-					afficher_menu_select_joueur(joueur,ig);
+					afficher_menu_select_joueur(joueur,ig,2);
 				}else if(est_dans_bouton_ig(clic_menu)){
 					if (est_dans_bouton_ig_gauche(clic_menu))
 						ig = (((ig-1)+3)%4)+1;
 					else
 						ig = (ig%4)+1;
 
-					afficher_menu_select_joueur(joueur,ig);
+					afficher_menu_select_joueur(joueur,ig,2);
 				}
 			}
-			jouer("j",joueur,ig);
-		}else if(est_dans_bouton_JvsIA(clic_menu)){
-			jouer("ia",joueur,ig);
+			jouer(2,joueur,ig);
 		}
 	}
 }
 
-void jouer(char * mod,COUL joueur,int ig) {
+void jouer(int mod,COUL joueur,int ig) {
 	NUMBOX boxOrigine, boxDest, clic ;
 	int lisere = 0;
 
