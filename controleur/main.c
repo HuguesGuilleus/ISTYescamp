@@ -32,10 +32,11 @@ int main(){
 					joueur = BLANC;
 					afficher_menu_select_joueur(joueur,ig);
 				}else if(est_dans_bouton_ig(clic_menu)){
-					if (ig == 1)
-					ig = 2;
+					if (est_dans_bouton_ig_gauche(clic_menu))
+						ig = (((ig-1)+3)%4)+1;
 					else
-					ig = 1;
+						ig = (ig%4)+1;
+
 					afficher_menu_select_joueur(joueur,ig);
 				}
 			}

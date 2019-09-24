@@ -12,6 +12,7 @@
 	BOOL est_dans_bouton_JvsIA(POINT clic);
 	BOOL est_dans_bouton_valider(POINT clic);
 	BOOL est_dans_bouton_ig(POINT clic);
+	BOOL est_dans_bouton_ig_gauche(POINT clic);
 	BOOL est_dans_bouton_coul(POINT clic);
 	
 #endif

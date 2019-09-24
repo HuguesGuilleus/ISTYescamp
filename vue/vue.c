@@ -14,11 +14,13 @@ void afficher_plateau(int ig){
 	for(x=0;x<NB_BOX_PLATEAU;x++){
 		for(y=0;y<NB_BOX_PLATEAU;y++){
 			box.l = y; box.c = x;
+			/*
 			if (ig == 1)
 				pBDBox = numBoite_to_pointBG_ig1(box);
 			else
 				pBDBox = numBoite_to_pointBG_ig2(box);
-
+				*/
+			pBDBox = numBoite_to_pointBG_ig(ig,box);
 			afficher_lisere(pBDBox, plateau[x][y].lisere,box);
 
 			switch (plateau[x][y].typeP){
@@ -39,12 +41,17 @@ void afficher_plateau(int ig){
 
 void afficher_coups_impossible(){
 	POINT pHG;
-	pHG.x = (H_FENETRE-TAILLE_PLATEAU)/2+(TAILLE_PLATEAU/2)-59;
-	pHG.y = (H_FENETRE-TAILLE_PLATEAU)/2+(TAILLE_PLATEAU/2);
+	pHG.x = (H_FENETRE-TAILLE_PLATEAU)/2+(TAILLE_PLATEAU/2)-245;
+	pHG.y = (H_FENETRE-TAILLE_PLATEAU)/2+(TAILLE_PLATEAU/2)+44;
 
-	aff_pol("Pas de coups possible", 48, pHG, noir);
-	pHG.y -= 58;
+	aff_pol("Pas de coups possible", 44, pHG, noir);
+	pHG.y += 1;pHG.x += 2;
+	aff_pol("Pas de coups possible", 44, pHG, blanc);
+
+	pHG.y -= 54;pHG.x += 28;
 	aff_pol("Cliquer n'importe ou pour continuer", 24, pHG, noir);
+	pHG.y += 1;pHG.x += 2;
+	aff_pol("Cliquer n'importe ou pour continuer", 24, pHG, blanc);
 
 	affiche_all();
 }
@@ -89,7 +96,6 @@ void afficher_legende_plateau(int ig){
 	int largeur_box = (TAILLE_PLATEAU/NB_BOX_PLATEAU);
 
 	for(i=0;i<NB_BOX_PLATEAU;i++){
-		lettre[0] = ('A'+i);
 
 		if (ig == 1) {
 			pLettre.x = (H_FENETRE-TAILLE_PLATEAU)/2+(i*largeur_box)+largeur_box/2-3;
@@ -98,6 +104,7 @@ void afficher_legende_plateau(int ig){
 			pLettre.y = (H_FENETRE-TAILLE_PLATEAU)/2-6;
 			pChiffre.x = (H_FENETRE-TAILLE_PLATEAU)/2-18;
 			chiffre = (i+1);
+			lettre[0] = ('A'+i);
 
 		} else if (ig == 2) {
 			pLettre.y = (H_FENETRE-TAILLE_PLATEAU)/2+(i*largeur_box)+largeur_box/2+6;
@@ -106,6 +113,23 @@ void afficher_legende_plateau(int ig){
 			pLettre.x = (H_FENETRE-TAILLE_PLATEAU)/2-18;
 			pChiffre.y = (H_FENETRE-TAILLE_PLATEAU)/2-6;
 			chiffre = (NB_BOX_PLATEAU-i);
+			lettre[0] = ('A'+i);
+		} else if (ig == 3) {
+			pLettre.x = (H_FENETRE-TAILLE_PLATEAU)/2+(i*largeur_box)+largeur_box/2-3;
+			pChiffre.y = (H_FENETRE-TAILLE_PLATEAU)/2+(i*largeur_box)+largeur_box/2+6;
+
+			pLettre.y = (H_FENETRE-TAILLE_PLATEAU)/2-6;
+			pChiffre.x = (H_FENETRE-TAILLE_PLATEAU)/2-18;
+			chiffre = NB_BOX_PLATEAU-i;
+			lettre[0] = ('F'-i);
+		}else if (ig == 4) {
+			pLettre.y = (H_FENETRE-TAILLE_PLATEAU)/2+(i*largeur_box)+largeur_box/2+6;
+			pChiffre.x = (H_FENETRE-TAILLE_PLATEAU)/2+(i*largeur_box)+largeur_box/2-3;
+
+			pLettre.x = (H_FENETRE-TAILLE_PLATEAU)/2-18;
+			pChiffre.y = (H_FENETRE-TAILLE_PLATEAU)/2-6;
+			chiffre = i+1;
+			lettre[0] = ('F'-i);
 		}
 		aff_pol(lettre, 12, pLettre, blanc);
 		aff_int(chiffre, 12, pChiffre, blanc);
@@ -114,6 +138,12 @@ void afficher_legende_plateau(int ig){
 			pLettre.y = H_FENETRE-(H_FENETRE-TAILLE_PLATEAU)/2+20;
 			pChiffre.x = H_FENETRE-(H_FENETRE-TAILLE_PLATEAU)/2+5;
 		} else if (ig == 2) {
+			pLettre.x = H_FENETRE-(H_FENETRE-TAILLE_PLATEAU)/2+5;
+			pChiffre.y = H_FENETRE-(H_FENETRE-TAILLE_PLATEAU)/2+20;
+		}else if (ig == 3) {
+			pLettre.y = H_FENETRE-(H_FENETRE-TAILLE_PLATEAU)/2+20;
+			pChiffre.x = H_FENETRE-(H_FENETRE-TAILLE_PLATEAU)/2+5;
+		}else if (ig == 4) {
 			pLettre.x = H_FENETRE-(H_FENETRE-TAILLE_PLATEAU)/2+5;
 			pChiffre.y = H_FENETRE-(H_FENETRE-TAILLE_PLATEAU)/2+20;
 		}
@@ -201,10 +231,7 @@ void afficher_lisere(POINT bg, int nbLisere,NUMBOX box){
 void afficher_lisere_pion(int ig, NUMBOX box){
 	POINT pBGBox;
 
-	if (ig ==1)
-		pBGBox = numBoite_to_pointBG_ig1(box);
-	else if(ig == 2)
-		pBGBox = numBoite_to_pointBG_ig2(box);
+	pBGBox = numBoite_to_pointBG_ig(ig,box);
 
 	afficher_lisere(pBGBox,plateau[box.c][box.l].lisere,box);
 
