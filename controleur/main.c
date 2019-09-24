@@ -2,6 +2,10 @@
 
 #include "main.h"
 
+void change_ig(int * ig){
+	*ig = (*ig + 2) % 4 ;
+}
+
 int main(){
 	init_graphics(L_FENETRE,H_FENETRE);
 	affiche_auto_off();
@@ -15,7 +19,7 @@ int main(){
 	while(TRUE){
 		go= FALSE;
 		joueur = BLANC;
-		
+
 		init_plateau();
 		afficher_menu();
 		clic_menu = wait_clic();
@@ -77,6 +81,7 @@ void jouer(int mod,COUL joueur,int ig) {
 	afficher_panneau_jeu(ig);
 
 	while (TRUE) {
+		afficher_panneau_jeu(ig);
 		afficher_joueur_courant(joueur);
 
 		if (selectionne_pion(joueur, lisere, NULL)) {
@@ -108,5 +113,6 @@ void jouer(int mod,COUL joueur,int ig) {
 		}
 
 		change_joueur(&joueur);
+		change_ig(&ig);
 	}
 }
