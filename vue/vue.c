@@ -37,6 +37,18 @@ void afficher_plateau(int ig){
 }
 
 
+void afficher_coups_impossible(){
+	POINT pHG;
+	pHG.x = (H_FENETRE-TAILLE_PLATEAU)/2+(TAILLE_PLATEAU/2)-59;
+	pHG.y = (H_FENETRE-TAILLE_PLATEAU)/2+(TAILLE_PLATEAU/2);
+	
+	aff_pol("Pas de coups possible", 48, pHG, noir);
+	pHG.y -= 58;
+	aff_pol("Cliquer n'importe ou pour continuer", 24, pHG, noir);
+
+	affiche_all();
+}
+
 //Affiche le panneau droit avec les informations
 void afficher_panneau_info(){
 	POINT pBG,pHD;
@@ -174,6 +186,8 @@ void afficher_lisere(POINT bg, int nbLisere,NUMBOX box){
 		draw_fill_circle(bg, rayon_box, bleumarine);
 	else if(plateau[box.c][box.l].status == SELECT)
 		draw_fill_circle(bg, rayon_box, rouge);
+	else if(plateau[box.c][box.l].status == ACCESSIBLE)
+		draw_fill_circle(bg, rayon_box, vertclair);
 
 	for (cercle = 0;cercle < nbLisere;cercle++){
 		draw_circle(bg, rayon_box-(cercle*4), blanc);

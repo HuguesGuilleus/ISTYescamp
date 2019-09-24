@@ -56,9 +56,14 @@ void jouer(char * mod,COUL joueur,int ig) {
 	afficher_panneau_jeu(ig);
 
 	while (TRUE) {
+		
+		
 		selectionne_pion(joueur,lisere, NULL);
 		afficher_plateau(ig);
-
+		
+		afficher_coups_impossible();
+		wait_clic();
+		
 		clic = attend_click_non_invalide(ig);
 
 		do {

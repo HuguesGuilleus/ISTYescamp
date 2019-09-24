@@ -44,6 +44,8 @@
 	void afficher_lisere(POINT bg, int nbLisere,NUMBOX box);
 	void afficher_lisere_pion(int ig, NUMBOX box);
 	
+	void afficher_coups_impossible();
+	
 	void afficher_btn(POINT bg, COULEUR couleur, char* text);
 	void afficher_menu();
 	void afficher_menu_select_joueur(COUL joueur,int i);
