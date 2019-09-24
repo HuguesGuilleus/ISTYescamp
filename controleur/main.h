@@ -7,5 +7,6 @@
 	#include "../controleur/partie.h"
 	#include "../modele/modele.h"
 
+	void jouer(void);
 
 #endif
