@@ -11,10 +11,10 @@ int main(){
 	int ig = 1;
 	COUL joueur = BLANC;
 
-	init_plateau();
-	afficher_menu();
-	
+
 	while(TRUE){
+		init_plateau();
+		afficher_menu();
 		clic_menu = wait_clic();
 		if (est_dans_bouton_quitter(clic_menu)){
 			return 0;
@@ -85,7 +85,11 @@ void jouer(int mod,COUL joueur,int ig) {
 				afficher_plateau(ig);
 				clic = attend_click_non_invalide(ig);
 				if (est_licorne_adverse(clic, joueur)) {
-					printf("\e[01;32mVous avez gagné (%d)\e[0m\n", joueur);
+					boxDest = clic ;
+					deplacement_simple(boxOrigine, boxDest);
+					afficher_plateau(ig);
+					afficher_victoire(joueur);
+					wait_clic();
 					return ;
 				}
 			} while(est_pion(clic));
@@ -99,7 +103,7 @@ void jouer(int mod,COUL joueur,int ig) {
 			afficher_coups_impossible();
 			wait_clic();
 		}
-	
+
 		change_joueur(&joueur);
 	}
 }
