@@ -26,7 +26,8 @@
 	typedef enum {
 		INVALIDE, // case non séléctionnable
 		VALIDE, // case clicable
-		SELECT // case séléctionné
+		SELECT, // case séléctionné
+		ACCESSIBLE, // case vide où l'on peut envoyer une pièce
 	} STATUS ;
 
 	// Une case du plateau
