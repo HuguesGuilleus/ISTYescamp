@@ -37,7 +37,27 @@ void afficher_plateau(int ig){
 	}
 	affiche_all();
 }
+void afficher_victoire(COUL joueur){
+	POINT pHG;
+	pHG.x = (H_FENETRE-TAILLE_PLATEAU)/2+(TAILLE_PLATEAU/2)-200;
+	pHG.y = (H_FENETRE-TAILLE_PLATEAU)/2+(TAILLE_PLATEAU/2)+44;
 
+	aff_pol("VICTOIRE", 76, pHG, noir);
+	pHG.y += 1;pHG.x += 2;
+	aff_pol("VICTOIRE", 76, pHG, vert);
+	
+	char texte[50];
+	strcpy(texte,"Bravo joueur blanc !");
+	if (joueur == NOIR)
+		strcpy(texte,"Bravo joueur noir ! ");
+		
+	pHG.y -= 86;pHG.x += 34;
+	aff_pol(texte, 31, pHG, noir);
+	pHG.y += 1;pHG.x += 2;
+	aff_pol(texte, 31, pHG, vert);
+
+	affiche_all();
+}
 
 void afficher_coups_impossible(){
 	POINT pHG;
@@ -298,12 +318,13 @@ void afficher_btn_select_ig(POINT bg, COULEUR couleur, int ig){
 	p3.y=bg.y-50;p3.x=bg.x+50;
 	draw_triangle(bg, p2, p3, noir);
 
-	ptxt.x = L_FENETRE/2;
+	ptxt.x = L_FENETRE/2-156;
 	ptxt.y = bg.y-5;
 	aff_int(ig, 18, ptxt, blanc);
 	ptxt.y += 18;
 	ptxt.x -= 35;
 	aff_pol("Interface", 18, ptxt, blanc);
+	afficher_plateau_mini(ig);
 
 	bg.x += L_FENETRE-(bg.x*2);
 	p2.x = bg.x-50;
@@ -365,36 +386,42 @@ void afficher_menu_select_joueur(COUL joueur,int ig,int mod){
 	}
 	pBtn.y += 150;
 	afficher_btn_select_ig(pBtn,couleur_RGB(40,40,40),ig);
-	pBtn.y += 200;
-	pBtn.x += (L_FENETRE/2)-160;
-	aff_pol("Joueur 1 :", 48, pBtn, blanc);
-
+	
+	if (mod == 1){
+		pBtn.y += 182;
+		pBtn.x += (L_FENETRE/2)-200;
+		draw_fill_circle(pBtn,36,noir);
+		pBtn.x = (L_FENETRE/2)-270;
+		pBtn.y += 18;
+		aff_pol("Joueur NOIR selectionnez le sens du plateau :", 24, pBtn, blanc);
+	}else{
+		pBtn.y += 200;
+		pBtn.x = (L_FENETRE/2)-245;
+		aff_pol("Selectionnez votre couleur et le plateau :", 24, pBtn, blanc);
+	}
+	
 	affiche_all();
 }
 
 void afficher_plateau_mini(int ig){
 	int x,y;
-
+	int cercle;
+	int rayon_box = 10;
+	
 	POINT pBDBox;
 	NUMBOX box;
 
 	for(x=0;x<NB_BOX_PLATEAU;x++){
 		for(y=0;y<NB_BOX_PLATEAU;y++){
 			box.l = y; box.c = x;
-			pBDBox = numBoite_to_pointBG_ig(ig,box);
-			afficher_lisere(pBDBox, plateau[x][y].lisere,box);
+			pBDBox = numBoite_to_pointBG_ig_mini(ig,box);
 
-			switch (plateau[x][y].typeP){
-				case LICORNE:
-					afficher_licorne(pBDBox, plateau[x][y].coulP);
-					break;
-				case PALADIN:
-					afficher_paladin(pBDBox, plateau[x][y].coulP);
-					break;
-				default:
-					break;
+			pBDBox.x += rayon_box;
+			pBDBox.y += rayon_box;
+
+			for (cercle = 0;cercle < plateau[x][y].lisere;cercle++){
+				draw_circle(pBDBox, rayon_box-(cercle*3), blanc);
 			}
 		}
 	}
-	affiche_all();
 }

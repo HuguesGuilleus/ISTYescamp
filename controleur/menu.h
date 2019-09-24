@@ -15,4 +15,5 @@
 	BOOL est_dans_bouton_ig_gauche(POINT clic);
 	BOOL est_dans_bouton_coul(POINT clic);
 	
+	POINT numBoite_to_pointBG_ig_mini(int ig, NUMBOX numboxB);
 #endif
