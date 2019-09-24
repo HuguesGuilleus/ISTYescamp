@@ -53,7 +53,7 @@
 	void imprime_box(BOX * b);
 
 	void init_status();
-	void selectionne_pion(COUL coul, int lisere, NUMBOX * select);
+	BOOL selectionne_pion(COUL coul, int lisere, NUMBOX * select);
 
 	void change_joueur(COUL * j);
 	int change_lisere(NUMBOX b);
