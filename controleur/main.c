@@ -2,10 +2,6 @@
 
 #include "main.h"
 
-void change_ig(int * ig){
-	*ig = (*ig + 2) % 4 ;
-}
-
 int main(){
 	init_graphics(L_FENETRE,H_FENETRE);
 	affiche_auto_off();
@@ -114,5 +110,6 @@ void jouer(int mod,COUL joueur,int ig) {
 
 		change_joueur(&joueur);
 		change_ig(&ig);
+		ig = (ig + 2) % 4 ;
 	}
 }
