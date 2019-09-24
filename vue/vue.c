@@ -212,12 +212,102 @@ void afficher_lisere_pion(int ig, NUMBOX box){
 //prend en paramètre un un point, une couleur et un texte
 //Affiche un bouton
 void afficher_btn(POINT bg, COULEUR couleur, char* text){
-	POINT hd = (POINT){
-		x: bg.x+100,
-		y: (bg.y-L_FENETRE),
-	};
+	POINT hd;
+	hd.x = bg.x+(L_FENETRE-(bg.x*2));
+	hd.y = bg.y+100;
 	
-	draw_fill_rectangle(bg,hd,couleur_RGB(129,116,98));
+	draw_fill_rectangle(bg,hd,couleur);
+	hd.x -= 20;
+	hd.y -= 20;
+	bg.x += 20;
+	bg.y += 20;
+	draw_fill_rectangle(bg,hd,couleur_RGB(80,75,70));
+	
+	bg.y += 42;
+	bg.x += 39;
+	aff_pol(text, 18, bg, blanc);
+
+}
+
+
+void afficher_btn_select_ig(POINT bg, COULEUR couleur, int ig){
+	POINT p2, p3,ptxt;
+	
+	bg.y += 50;
+	p2.y=bg.y+50;p2.x=bg.x+50;
+	p3.y=bg.y-50;p3.x=bg.x+50;
+	draw_triangle(bg, p2, p3, noir);
+	
+	ptxt.x = L_FENETRE/2;
+	ptxt.y = bg.y-5;
+	aff_int(ig, 18, ptxt, blanc);
+	ptxt.y += 18;
+	ptxt.x -= 35;
+	aff_pol("Interface", 18, ptxt, blanc);
+	
+	bg.x += L_FENETRE-(bg.x*2);
+	p2.x = bg.x-50;
+	p3.x = bg.x-50;
+	draw_triangle(bg, p2, p3, noir);
+}
+
+
+void afficher_btn_select_joueur(POINT bg, COULEUR couleur, COUL joueur){
+	POINT p2, p3,centre;
+	
+	bg.y += 50;
+	p2.y=bg.y+50;p2.x=bg.x+50;
+	p3.y=bg.y-50;p3.x=bg.x+50;
+	draw_triangle(bg, p2, p3, noir);
+	
+	centre.x = L_FENETRE/2;
+	centre.y = bg.y;
+	if (joueur == BLANC)
+		draw_fill_circle(centre,40,blanc);
+	else
+		draw_fill_circle(centre,40,noir);
+
+	
+	bg.x += L_FENETRE-(bg.x*2);
+	p2.x = bg.x-50;
+	p3.x = bg.x-50;
+	draw_triangle(bg, p2, p3, noir);
+}
+
+void afficher_menu(){
+	fill_screen(couleur_RGB(129,116,98));
+	POINT pBtn;
+	pBtn.x = 50;
+	pBtn.y = 50;
+	
+	afficher_btn(pBtn,couleur_RGB(40,40,40),"Quitter");
+	pBtn.y += 150;
+	afficher_btn(pBtn,couleur_RGB(40,40,40),"Joueur VS IA");
+	pBtn.y += 150;
+	afficher_btn(pBtn,couleur_RGB(40,40,40),"Joueur VS joueur");
+	pBtn.y += 200;
+	pBtn.x += (L_FENETRE/2)-160;
+	aff_pol("ESCAMPE", 48, pBtn, blanc);
+
+	affiche_all();
+}
+
+void afficher_menu_select_joueur(COUL joueur,int ig){
+	fill_screen(couleur_RGB(129,116,98));
+	POINT pBtn;
+	pBtn.x = 50;
+	pBtn.y = 50;
+	
+	afficher_btn(pBtn,couleur_RGB(40,40,40),"Valider");
+	pBtn.y += 150;
+	afficher_btn_select_joueur(pBtn,couleur_RGB(40,40,40),joueur);
+	pBtn.y += 150;
+	afficher_btn_select_ig(pBtn,couleur_RGB(40,40,40),ig);
+	pBtn.y += 200;
+	pBtn.x += (L_FENETRE/2)-160;
+	aff_pol("Joueur 1 :", 48, pBtn, blanc);
+
+	affiche_all();
 }
 
 

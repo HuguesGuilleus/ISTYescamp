@@ -11,16 +11,103 @@ NUMBOX attend_click_non_invalide(int ig) {
 }
 
 int main(){
+	// init_graphics(L_FENETRE,H_FENETRE);
+	// affiche_auto_off();
+	// jouer();
 	init_graphics(L_FENETRE,H_FENETRE);
 	affiche_auto_off();
-	jouer();
+
+	POINT clic_menu;
+	BOOL go = FALSE;
+	int ig = 1;
+	COUL joueur = BLANC;
+
+	afficher_menu();
+
+	while(TRUE){
+		clic_menu = wait_clic();
+		if (est_dans_bouton_quitter(clic_menu)){
+			return 0;
+		}else if(est_dans_bouton_JvsJ(clic_menu)){
+			afficher_menu_select_joueur(joueur,ig);
+
+			while(!go){
+				clic_menu = wait_clic();
+
+				if(est_dans_bouton_valider(clic_menu)){
+					go = TRUE;
+				}else if(est_dans_bouton_coul(clic_menu)){
+					if (joueur == BLANC)
+					joueur = NOIR;
+					else
+					joueur = BLANC;
+					afficher_menu_select_joueur(joueur,ig);
+				}else if(est_dans_bouton_ig(clic_menu)){
+					if (ig == 1)
+					ig = 2;
+					else
+					ig = 1;
+					afficher_menu_select_joueur(joueur,ig);
+				}
+			}
+			jouer("j",joueur,ig);
+		}else if(est_dans_bouton_JvsIA(clic_menu)){
+			jouer("ia",joueur,ig);
+		}
+	}
 }
 
+// void jouer(void) {
+// 	int ig = 1 ;
+// 	NUMBOX boxOrigine, boxDest, clic ;
+// 	COUL joueur = BLANC ;
+// 	int lisere = 0;
+//
+// 	POINT clic_menu;
+// 	BOOL go = FALSE;
+// 	int ig = 1;
+// 	COUL joueur = BLANC;
+//
+// 	afficher_menu();
+//
+// 	while(TRUE){
+// 		clic_menu = wait_clic();
+// 		if (est_dans_bouton_quitter(clic_menu)){
+// 			return 0;
+// 		}else if(est_dans_bouton_JvsJ(clic_menu)){
+// 			afficher_menu_select_joueur(joueur,ig);
+//
+// 			while(!go){
+// 				clic_menu = wait_clic();
+//
+// 				if(est_dans_bouton_valider(clic_menu)){
+// 					go = TRUE;
+// 				}else if(est_dans_bouton_coul(clic_menu)){
+// 					if (joueur == BLANC)
+// 						joueur = NOIR;
+// 					else
+// 						joueur = BLANC;
+// 					afficher_menu_select_joueur(joueur,ig);
+// 				}else if(est_dans_bouton_ig(clic_menu)){
+// 					if (ig == 1)
+// 						ig = 2;
+// 					else
+// 						ig = 1;
+// 					afficher_menu_select_joueur(joueur,ig);
+// 				}
+// 			}
+// 			jouer("j",joueur,ig);
+// 		}else if(est_dans_bouton_JvsIA(clic_menu)){
+// 			jouer("ia",joueur,ig);
+// 		}
+// 	}
+//
+// }
 
-void jouer(void) {
-	int ig = 1 ;
+void jouer(char * mod,COUL joueur,int ig) {
+	// int ig = 1 ;
 	NUMBOX boxOrigine, boxDest, clic ;
-	COUL joueur = BLANC ;
+	// COUL joueur = BLANC ;
 	int lisere = 0;
 
 	init_piece1_debug();

@@ -45,5 +45,10 @@
 	void afficher_lisere_pion(int ig, NUMBOX box);
 	
 	void afficher_btn(POINT bg, COULEUR couleur, char* text);
+	void afficher_menu();
+	void afficher_menu_select_joueur(COUL joueur,int i);
+	void afficher_btn_select_joueur(POINT bg, COULEUR couleur, COUL joueur);
+	void afficher_btn_select_ig(POINT bg, COULEUR couleur, int ig);
+
 
 #endif
