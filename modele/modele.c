@@ -124,7 +124,9 @@ BOOL selectionne_pion(COUL coul, int lisere, NUMBOX * select) {
 	}
 
 	if (select) {
+		selection_possibilite(*select);
 		plateau[select->c][select->l].status = SELECT ;
+		printf("plateau[select->c][select->l].status: %d\n", plateau[select->c][select->l].status );
 	}
 
 	return peutJouer ;

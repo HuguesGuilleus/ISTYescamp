@@ -50,35 +50,33 @@ void jouer(char * mod,COUL joueur,int ig) {
 	NUMBOX boxOrigine, boxDest, clic ;
 	int lisere = 0;
 
-	init_piece1_debug();
+	init_piece2_debug();
 
 	afficher_panneau_info();
 	afficher_panneau_jeu(ig);
 
 	while (TRUE) {
-		
-		
-		selectionne_pion(joueur,lisere, NULL);
-		afficher_plateau(ig);
-		
-		afficher_coups_impossible();
-		wait_clic();
-		
-		clic = attend_click_non_invalide(ig);
-
-		do {
-			boxOrigine = clic ;
-
-			selectionne_pion(joueur,lisere, &boxOrigine);
-			selection_possibilite(boxOrigine);
+		if (selectionne_pion(joueur, lisere, NULL)) {
 			afficher_plateau(ig);
 			clic = attend_click_non_invalide(ig);
-		} while(est_pion(clic));
 
-		boxDest = clic ;
-		deplacement_simple(boxOrigine, boxDest);
+			do {
+				boxOrigine = clic ;
+				selectionne_pion(joueur,lisere, &boxOrigine);
+				afficher_plateau(ig);
+				clic = attend_click_non_invalide(ig);
+			} while(est_pion(clic));
 
-		lisere = change_lisere(boxDest);
+			boxDest = clic ;
+			deplacement_simple(boxOrigine, boxDest);
+			lisere = change_lisere(boxDest);
+
+		} else {
+			afficher_plateau(ig);
+			afficher_coups_impossible();
+			wait_clic();
+		}
+
 		change_joueur(&joueur);
 	}
 }

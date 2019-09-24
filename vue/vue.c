@@ -41,7 +41,7 @@ void afficher_coups_impossible(){
 	POINT pHG;
 	pHG.x = (H_FENETRE-TAILLE_PLATEAU)/2+(TAILLE_PLATEAU/2)-59;
 	pHG.y = (H_FENETRE-TAILLE_PLATEAU)/2+(TAILLE_PLATEAU/2);
-	
+
 	aff_pol("Pas de coups possible", 48, pHG, noir);
 	pHG.y -= 58;
 	aff_pol("Cliquer n'importe ou pour continuer", 24, pHG, noir);
@@ -181,7 +181,7 @@ void afficher_lisere(POINT bg, int nbLisere,NUMBOX box){
 
 	bg.x += rayon_box;
 	bg.y += rayon_box;
-	
+
 	if(plateau[box.c][box.l].status == VALIDE)
 		draw_fill_circle(bg, rayon_box, bleumarine);
 	else if(plateau[box.c][box.l].status == SELECT)
@@ -192,8 +192,8 @@ void afficher_lisere(POINT bg, int nbLisere,NUMBOX box){
 	for (cercle = 0;cercle < nbLisere;cercle++){
 		draw_circle(bg, rayon_box-(cercle*4), blanc);
 	}
-	
-	
+
+
 }
 
 //prend en paramètre une box et une interface graphique
@@ -229,14 +229,14 @@ void afficher_btn(POINT bg, COULEUR couleur, char* text){
 	POINT hd;
 	hd.x = bg.x+(L_FENETRE-(bg.x*2));
 	hd.y = bg.y+100;
-	
+
 	draw_fill_rectangle(bg,hd,couleur);
 	hd.x -= 20;
 	hd.y -= 20;
 	bg.x += 20;
 	bg.y += 20;
 	draw_fill_rectangle(bg,hd,couleur_RGB(80,75,70));
-	
+
 	bg.y += 42;
 	bg.x += 39;
 	aff_pol(text, 18, bg, blanc);
@@ -246,19 +246,19 @@ void afficher_btn(POINT bg, COULEUR couleur, char* text){
 
 void afficher_btn_select_ig(POINT bg, COULEUR couleur, int ig){
 	POINT p2, p3,ptxt;
-	
+
 	bg.y += 50;
 	p2.y=bg.y+50;p2.x=bg.x+50;
 	p3.y=bg.y-50;p3.x=bg.x+50;
 	draw_triangle(bg, p2, p3, noir);
-	
+
 	ptxt.x = L_FENETRE/2;
 	ptxt.y = bg.y-5;
 	aff_int(ig, 18, ptxt, blanc);
 	ptxt.y += 18;
 	ptxt.x -= 35;
 	aff_pol("Interface", 18, ptxt, blanc);
-	
+
 	bg.x += L_FENETRE-(bg.x*2);
 	p2.x = bg.x-50;
 	p3.x = bg.x-50;
@@ -268,12 +268,12 @@ void afficher_btn_select_ig(POINT bg, COULEUR couleur, int ig){
 
 void afficher_btn_select_joueur(POINT bg, COULEUR couleur, COUL joueur){
 	POINT p2, p3,centre;
-	
+
 	bg.y += 50;
 	p2.y=bg.y+50;p2.x=bg.x+50;
 	p3.y=bg.y-50;p3.x=bg.x+50;
 	draw_triangle(bg, p2, p3, noir);
-	
+
 	centre.x = L_FENETRE/2;
 	centre.y = bg.y;
 	if (joueur == BLANC)
@@ -281,7 +281,7 @@ void afficher_btn_select_joueur(POINT bg, COULEUR couleur, COUL joueur){
 	else
 		draw_fill_circle(centre,40,noir);
 
-	
+
 	bg.x += L_FENETRE-(bg.x*2);
 	p2.x = bg.x-50;
 	p3.x = bg.x-50;
@@ -293,7 +293,7 @@ void afficher_menu(){
 	POINT pBtn;
 	pBtn.x = 50;
 	pBtn.y = 50;
-	
+
 	afficher_btn(pBtn,couleur_RGB(40,40,40),"Quitter");
 	pBtn.y += 150;
 	afficher_btn(pBtn,couleur_RGB(40,40,40),"Joueur VS IA");
@@ -311,7 +311,7 @@ void afficher_menu_select_joueur(COUL joueur,int ig){
 	POINT pBtn;
 	pBtn.x = 50;
 	pBtn.y = 50;
-	
+
 	afficher_btn(pBtn,couleur_RGB(40,40,40),"Valider");
 	pBtn.y += 150;
 	afficher_btn_select_joueur(pBtn,couleur_RGB(40,40,40),joueur);
@@ -323,5 +323,3 @@ void afficher_menu_select_joueur(COUL joueur,int ig){
 
 	affiche_all();
 }
-
-
