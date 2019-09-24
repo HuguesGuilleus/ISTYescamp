@@ -28,6 +28,7 @@
 		VALIDE, // case clicable
 		SELECT, // case séléctionné
 		ACCESSIBLE, // case vide où l'on peut envoyer une pièce
+		PARCOUR, // case sur un trajet
 	} STATUS ;
 
 	// Une case du plateau
@@ -59,6 +60,9 @@
 	int change_lisere(NUMBOX b);
 
 	void selection_possibilite(NUMBOX b);
+	void valide_deplacement(int c, int l, COUL coul, TYPE pion, int lisere);
+	BOOL peut_aller(BOX * b, COUL c, TYPE pion);
+	BOX* getBox(int c, int l);
 
 	void imprime_numbox(NUMBOX b);
 

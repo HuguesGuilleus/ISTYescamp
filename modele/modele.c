@@ -132,8 +132,61 @@ BOOL selectionne_pion(COUL coul, int lisere, NUMBOX * select) {
 	return peutJouer ;
 }
 
-///// DÉBUT À RELIRE /////
+// séléctionne les cases accessibles
+void selection_possibilite(NUMBOX coord) {
+	BOX * b = getBox(coord.c, coord.l) ;
+	valide_deplacement(coord.c, coord.l, b->coulP, b->typeP, b->lisere) ;
+}
 
+// Déplacement pour la séléction des possibilité
+void valide_deplacement(int c, int l, COUL coul, TYPE pion, int lisere) {
+	BOX* b = NULL ;
+
+	if (lisere == 0) {
+		getBox(c, l)->status = ACCESSIBLE ;
+		return ;
+	}
+
+	b = getBox(c+1, l);
+	if (peut_aller(b, coul, pion)) {
+		b->status = PARCOUR ;
+		valide_deplacement(c+1, l, coul, pion, lisere-1);
+	}
+	b = getBox(c-1, l);
+	if (peut_aller(b, coul, pion)) {
+		b->status = PARCOUR ;
+		valide_deplacement(c-1, l, coul, pion, lisere-1);
+	}
+	b = getBox(c, l+1);
+	if (peut_aller(b, coul, pion)) {
+		b->status = PARCOUR ;
+		valide_deplacement(c, l+1, coul, pion, lisere-1);
+	}
+	b = getBox(c, l-1);
+	if (peut_aller(b, coul, pion)) {
+		b->status = PARCOUR ;
+		valide_deplacement(c, l-1, coul, pion, lisere-1);
+	}
+
+	b = getBox(c, l) ;
+	if (b->status == PARCOUR ) {
+		b->status = INVALIDE ;
+	}
+}
+
+// indique si un pion peut aller sur une case
+BOOL peut_aller(BOX * b, COUL c, TYPE pion) {
+	if (b == NULL || b->status != INVALIDE) {
+		return FALSE ;
+	}
+	if (pion == LICORNE) {
+		return b->typeP == VIDE ;
+	} else {
+		return b->typeP == VIDE || ( b->typeP == LICORNE && b->coulP != c ) ;
+	}
+}
+
+// Récuère l'addresse d'une c ase du plateau. Renvoie NULL si en dehors.
 BOX* getBox(int c, int l) {
 	if (c<0 || c>=NB_BOX_PLATEAU || l<0 || l>=NB_BOX_PLATEAU) {
 		return NULL ;
@@ -141,42 +194,6 @@ BOX* getBox(int c, int l) {
 		return &plateau[c][l] ;
 	}
 }
-
-void valide_deplacement(int c, int l, int lisere) {
-	BOX* b = NULL ;
-
-	if (lisere == 0) {
-		return ;
-	}
-
-	b = getBox(c+1, l);
-	if (b && b->status == INVALIDE && b->typeP == VIDE) {
-		b->status = ACCESSIBLE ;
-		valide_deplacement(c+1, l, lisere-1);
-	}
-	b = getBox(c-1, l);
-	if (b && b->status == INVALIDE && b->typeP == VIDE) {
-		b->status = ACCESSIBLE ;
-		valide_deplacement(c-1, l, lisere-1);
-	}
-	b = getBox(c, l+1);
-	if (b && b->status == INVALIDE && b->typeP == VIDE) {
-		b->status = ACCESSIBLE ;
-		valide_deplacement(c, l+1, lisere-1);
-	}
-	b = getBox(c, l-1);
-	if (b && b->status == INVALIDE && b->typeP == VIDE) {
-		b->status = ACCESSIBLE ;
-		valide_deplacement(c, l-1, lisere-1);
-	}
-	getBox(c, l)->status = INVALIDE ;
-}
-
-void selection_possibilite(NUMBOX b) {
-	valide_deplacement(b.c, b.l, getBox(b.c, b.l)->lisere);
-}
-
-///// FIN À RELIRE /////
 
 // Renvoie vrai si b n'a pas de pion sur la case, sinon false.
 BOOL est_numbox_vide(NUMBOX b) {
