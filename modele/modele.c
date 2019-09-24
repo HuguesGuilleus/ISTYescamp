@@ -92,6 +92,33 @@ void init_piece2_debug() {
 	plateau[5][3].typeP = LICORNE ;
 }
 
+void init_piece3_debug() {
+	int y;
+
+	init_plateau(plateau);
+
+	for (y = 3; y < NB_BOX_PLATEAU; y++) {
+		plateau[0][y].typeP = PALADIN ;
+		plateau[0][y].coulP = BLANC ;
+	}
+	plateau[0][0].coulP = BLANC ;
+	plateau[0][0].typeP = LICORNE ;
+
+	plateau[1][1].coulP = BLANC ;
+	plateau[1][1].typeP = PALADIN ;
+	plateau[2][2].coulP = BLANC ;
+	plateau[2][2].typeP = PALADIN ;
+
+	for (y = 0; y < NB_BOX_PLATEAU; y++) {
+		plateau[5][y].typeP = PALADIN ;
+		plateau[5][y].coulP = NOIR;
+	}
+	plateau[5][3].typeP = VIDE ;
+
+	plateau[2][3].typeP = LICORNE ;
+	plateau[2][3].coulP = NOIR ;
+}
+
 // Met tout les status à invalide
 void init_status() {
 	int c,l;
@@ -136,10 +163,10 @@ BOOL selectionne_pion(COUL coul, int lisere, NUMBOX * select) {
 
 // Déplacement pour la séléction des possibilités
 void parcourt_plusieurs_cases(int c, int l, COUL coul, TYPE pion, int lisere) {
-	BOX* b = NULL ;
+	BOX* b = getBox(c, l) ;
 
 	if (lisere == 0) {
-		getBox(c, l)->status = ACCESSIBLE ;
+		b->status = ACCESSIBLE ;
 		return ;
 	}
 
@@ -148,30 +175,36 @@ void parcourt_plusieurs_cases(int c, int l, COUL coul, TYPE pion, int lisere) {
 	parcourt_une_case(c-1, l, coul, pion, lisere-1);
 	parcourt_une_case(c+1, l, coul, pion, lisere-1);
 
-	b = getBox(c, l) ;
 	if (b->status == PARCOUR ) {
 		b->status = INVALIDE ;
 	}
 }
 
+// Regarde si on peut parourire cette case et si oui, parcour les cases adjacentes.
 void parcourt_une_case(int c, int l, COUL coul, TYPE pion, int lisere) {
 	BOX * b = getBox(c, l);
 
-	if (peut_aller(b, coul, pion)) {
-		b->status = PARCOUR ;
+	if (b == NULL) {
+		return ;
+	}
+
+	if (peut_parourir(b, coul, pion, lisere)) {
+		if (b->status != ACCESSIBLE) {
+			b->status = PARCOUR ;
+		}
 		parcourt_plusieurs_cases(c, l, coul, pion, lisere);
 	}
 }
 
-// indique si un pion peut aller sur une case
-BOOL peut_aller(BOX * b, COUL c, TYPE pion) {
-	if (b == NULL || b->status != INVALIDE) {
+// indique si un pion peut parcourire sur une case
+BOOL peut_parourir(BOX * b, COUL c, TYPE pion, int lisere) {
+	if (b == NULL || b->status == PARCOUR) {
 		return FALSE ;
 	}
 	if (pion == LICORNE) {
 		return b->typeP == VIDE ;
 	} else {
-		return b->typeP == VIDE || ( b->typeP == LICORNE && b->coulP != c ) ;
+		return b->typeP == VIDE || (b->typeP == LICORNE && b->coulP != c && lisere == 0) ;
 	}
 }
 

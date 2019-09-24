@@ -67,7 +67,7 @@ void jouer(int mod,COUL joueur,int ig) {
 	NUMBOX boxOrigine, boxDest, clic ;
 	int lisere = 0;
 
-	init_piece2_debug();
+	init_piece3_debug();
 
 	afficher_panneau_info();
 	afficher_panneau_jeu(ig);

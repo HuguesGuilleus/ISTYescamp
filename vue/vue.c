@@ -217,6 +217,8 @@ void afficher_lisere(POINT bg, int nbLisere,NUMBOX box){
 		draw_fill_circle(bg, rayon_box, rouge);
 	else if(plateau[box.c][box.l].status == ACCESSIBLE)
 		draw_fill_circle(bg, rayon_box, vertclair);
+	else if(plateau[box.c][box.l].status == PARCOUR)
+		draw_fill_circle(bg, rayon_box, jaune);
 
 	for (cercle = 0;cercle < nbLisere;cercle++){
 		draw_circle(bg, rayon_box-(cercle*4), blanc);
@@ -250,7 +252,7 @@ void afficher_joueur_courant(COUL joueur){
 	POINT hg;
 	hg.x = H_FENETRE+50;
 	hg.y = H_FENETRE-30;
-	
+
 	if (joueur == BLANC){
 		aff_pol("Joueur", 24, hg, noir);
 		hg.x += 150;hg.y-=15;

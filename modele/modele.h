@@ -44,6 +44,7 @@
 	void init_plateau();
 	void init_piece1_debug();
 	void init_piece2_debug();
+	void init_piece3_debug();
 
 	void init_status();
 	BOOL selectionne_pion(COUL coul, int lisere, NUMBOX * select);
@@ -52,7 +53,6 @@
 	BOOL est_pion(NUMBOX b);
 	BOOL est_licorne_adverse(NUMBOX coord, COUL coul);
 	BOOL est_numbox_vide(NUMBOX b);
-	BOOL peut_aller(BOX * b, COUL c, TYPE pion);
 	BOOL peut_selectioner_pion(NUMBOX entreBox, COUL coul, int lisere);
 
 	void deplacement_simple(NUMBOX origine, NUMBOX dest);
@@ -61,6 +61,7 @@
 
 	void parcourt_plusieurs_cases(int c, int l, COUL coul, TYPE pion, int lisere);
 	void parcourt_une_case(int c, int l, COUL coul, TYPE pion, int lisere);
+	BOOL peut_parourir(BOX * b, COUL c, TYPE pion, int lisere);
 
 	BOX* getBox(int c, int l);
 
