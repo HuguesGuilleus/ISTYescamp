@@ -74,15 +74,19 @@ void jouer(int mod,COUL joueur,int ig) {
 
 	while (TRUE) {
 		afficher_joueur_courant(joueur);
-		
+
 		if (selectionne_pion(joueur, lisere, NULL)) {
 			afficher_plateau(ig);
 			clic = attend_click_non_invalide(ig);
 			do {
 				boxOrigine = clic ;
-				selectionne_pion(joueur,lisere, &boxOrigine);
+				selectionne_pion(joueur, lisere, &boxOrigine);
 				afficher_plateau(ig);
 				clic = attend_click_non_invalide(ig);
+				if (est_licorne_adverse(clic, joueur)) {
+					printf("\e[01;32mVous avez gagné (%d)\e[0m\n", joueur);
+					return ;
+				}
 			} while(est_pion(clic));
 
 			boxDest = clic ;

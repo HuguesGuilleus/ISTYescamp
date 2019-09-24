@@ -92,6 +92,7 @@ void init_piece2_debug() {
 	plateau[5][3].typeP = LICORNE ;
 }
 
+// Met tout les status à invalide
 void init_status() {
 	int c,l;
 	for (c = 0; c < NB_BOX_PLATEAU; c++) {
@@ -101,9 +102,10 @@ void init_status() {
 	}
 }
 
-// Si lisere est nulle alors tous les pions peuvent être séléctionnés.
-// select est la case séléctionnée.
-// Renvoie TRUE si il y a des pions déplacable.
+// Séléctionne les pions déplacable, et les cases d'arrivés en fonction
+// de coul: la couleur du joueur actuel; lisere: la case d'arrivé de la
+// dernière pièce, 0 au premier tour; select: la case séléctionné ou NULL.
+// Renvoie TRUE si il y a des pions déplaçable.
 BOOL selectionne_pion(COUL coul, int lisere, NUMBOX * select) {
 	int c,l ;
 	BOX * b ;
@@ -124,22 +126,16 @@ BOOL selectionne_pion(COUL coul, int lisere, NUMBOX * select) {
 	}
 
 	if (select) {
-		selection_possibilite(*select);
-		plateau[select->c][select->l].status = SELECT ;
-		printf("plateau[select->c][select->l].status: %d\n", plateau[select->c][select->l].status );
+		b = &plateau[select->c][select->l] ;
+		parcourt_plusieurs_cases(select->c, select->l, b->coulP, b->typeP, b->lisere) ;
+		b->status = SELECT ;
 	}
 
 	return peutJouer ;
 }
 
-// séléctionne les cases accessibles
-void selection_possibilite(NUMBOX coord) {
-	BOX * b = getBox(coord.c, coord.l) ;
-	valide_deplacement(coord.c, coord.l, b->coulP, b->typeP, b->lisere) ;
-}
-
-// Déplacement pour la séléction des possibilité
-void valide_deplacement(int c, int l, COUL coul, TYPE pion, int lisere) {
+// Déplacement pour la séléction des possibilités
+void parcourt_plusieurs_cases(int c, int l, COUL coul, TYPE pion, int lisere) {
 	BOX* b = NULL ;
 
 	if (lisere == 0) {
@@ -147,30 +143,23 @@ void valide_deplacement(int c, int l, COUL coul, TYPE pion, int lisere) {
 		return ;
 	}
 
-	b = getBox(c+1, l);
-	if (peut_aller(b, coul, pion)) {
-		b->status = PARCOUR ;
-		valide_deplacement(c+1, l, coul, pion, lisere-1);
-	}
-	b = getBox(c-1, l);
-	if (peut_aller(b, coul, pion)) {
-		b->status = PARCOUR ;
-		valide_deplacement(c-1, l, coul, pion, lisere-1);
-	}
-	b = getBox(c, l+1);
-	if (peut_aller(b, coul, pion)) {
-		b->status = PARCOUR ;
-		valide_deplacement(c, l+1, coul, pion, lisere-1);
-	}
-	b = getBox(c, l-1);
-	if (peut_aller(b, coul, pion)) {
-		b->status = PARCOUR ;
-		valide_deplacement(c, l-1, coul, pion, lisere-1);
-	}
+	parcourt_une_case(c, l-1, coul, pion, lisere-1);
+	parcourt_une_case(c, l+1, coul, pion, lisere-1);
+	parcourt_une_case(c-1, l, coul, pion, lisere-1);
+	parcourt_une_case(c+1, l, coul, pion, lisere-1);
 
 	b = getBox(c, l) ;
 	if (b->status == PARCOUR ) {
 		b->status = INVALIDE ;
+	}
+}
+
+void parcourt_une_case(int c, int l, COUL coul, TYPE pion, int lisere) {
+	BOX * b = getBox(c, l);
+
+	if (peut_aller(b, coul, pion)) {
+		b->status = PARCOUR ;
+		parcourt_plusieurs_cases(c, l, coul, pion, lisere);
 	}
 }
 
@@ -186,7 +175,7 @@ BOOL peut_aller(BOX * b, COUL c, TYPE pion) {
 	}
 }
 
-// Récuère l'addresse d'une c ase du plateau. Renvoie NULL si en dehors.
+// Récuère l'addresse d'une case du plateau. Renvoie NULL si en dehors.
 BOX* getBox(int c, int l) {
 	if (c<0 || c>=NB_BOX_PLATEAU || l<0 || l>=NB_BOX_PLATEAU) {
 		return NULL ;
@@ -206,6 +195,11 @@ BOOL est_pas_invalide(NUMBOX b) {
 
 BOOL est_pion(NUMBOX b) {
 	return plateau[b.c][b.l].typeP != VIDE ;
+}
+
+BOOL est_licorne_adverse(NUMBOX coord, COUL coul) {
+	BOX * b = &plateau[coord.c][coord.l] ;
+	return b->typeP == LICORNE && coul != b->coulP ;
 }
 
 // Deplace un pion d'une case à une autre. Pas de vérication de validité.
@@ -234,20 +228,6 @@ BOOL peut_selectioner_pion(NUMBOX entreBox, COUL coul, int lisere) {
 	return TRUE ;
 }
 
-// Pour le développement, écrit un box dans la console.
-void imprime_box(BOX * b) {
-	printf("  %p\n", b);
-	printf("  type: %d\n", b->typeP);
-	printf("  couleur: %d\n", b->coulP);
-	printf("  lisere: %d\n", b->lisere);
-	printf("  status: %d\n", b->status);
-}
-
-// Pour le développement, écrit un NUMBOX dans la console.
-void imprime_numbox(NUMBOX b) {
-	printf("NUMBOX: (%d,%d)\n", b.c, b.l);
-}
-
 // Inverse la couleur du joueur courant
 void change_joueur(COUL * j) {
 	if (*j == BLANC) {
@@ -260,4 +240,19 @@ void change_joueur(COUL * j) {
 // Retourne le lisere pour le tour suivant
 int change_lisere(NUMBOX b) {
 	return plateau[b.c][b.l].lisere ;
+}
+
+
+// Pour le développement, écrit un box dans la console.
+void imprime_box(BOX * b) {
+	printf("  %p\n", b);
+	printf("  type: %d\n", b->typeP);
+	printf("  couleur: %d\n", b->coulP);
+	printf("  lisere: %d\n", b->lisere);
+	printf("  status: %d\n", b->status);
+}
+
+// Pour le développement, écrit un NUMBOX dans la console.
+void imprime_numbox(NUMBOX b) {
+	printf("NUMBOX: (%d,%d)\n", b.c, b.l);
 }
