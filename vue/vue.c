@@ -64,7 +64,6 @@ void afficher_panneau_info(){
 	pHD.x = L_FENETRE ; pHD.y = H_FENETRE ;
 
 	draw_fill_rectangle(pBG,pHD,blanc);
-	affiche_all();
 }
 
 //Affiche le panneau de jeu avec le plateau de jeu et les pions
@@ -247,6 +246,24 @@ void afficher_lisere_pion(int ig, NUMBOX box){
 	}
 }
 
+void afficher_joueur_courant(COUL joueur){
+	POINT hg;
+	hg.x = H_FENETRE+50;
+	hg.y = H_FENETRE-30;
+	
+	if (joueur == BLANC){
+		aff_pol("Joueur", 24, hg, noir);
+		hg.x += 150;hg.y-=15;
+		draw_fill_circle(hg, 32,noir);
+		draw_fill_circle(hg, 30,blanc);
+	}else{
+		aff_pol("Joueur", 24, hg, noir);
+		hg.x += 150;hg.y-=15;
+		draw_fill_circle(hg, 32,noir);
+		draw_fill_circle(hg, 30,noir);
+	}
+}
+
 
 /***********MENU************/
 
@@ -333,7 +350,7 @@ void afficher_menu(){
 	affiche_all();
 }
 
-void afficher_menu_select_joueur(COUL joueur,int ig){
+void afficher_menu_select_joueur(COUL joueur,int ig,int mod){
 	fill_screen(couleur_RGB(129,116,98));
 	POINT pBtn;
 	pBtn.x = 50;
@@ -341,12 +358,41 @@ void afficher_menu_select_joueur(COUL joueur,int ig){
 
 	afficher_btn(pBtn,couleur_RGB(40,40,40),"Valider");
 	pBtn.y += 150;
-	afficher_btn_select_joueur(pBtn,couleur_RGB(40,40,40),joueur);
+	if (mod == 2){
+		afficher_btn_select_joueur(pBtn,couleur_RGB(40,40,40),joueur);
+	}
 	pBtn.y += 150;
 	afficher_btn_select_ig(pBtn,couleur_RGB(40,40,40),ig);
 	pBtn.y += 200;
 	pBtn.x += (L_FENETRE/2)-160;
 	aff_pol("Joueur 1 :", 48, pBtn, blanc);
 
+	affiche_all();
+}
+
+void afficher_plateau_mini(int ig){
+	int x,y;
+
+	POINT pBDBox;
+	NUMBOX box;
+
+	for(x=0;x<NB_BOX_PLATEAU;x++){
+		for(y=0;y<NB_BOX_PLATEAU;y++){
+			box.l = y; box.c = x;
+			pBDBox = numBoite_to_pointBG_ig(ig,box);
+			afficher_lisere(pBDBox, plateau[x][y].lisere,box);
+
+			switch (plateau[x][y].typeP){
+				case LICORNE:
+					afficher_licorne(pBDBox, plateau[x][y].coulP);
+					break;
+				case PALADIN:
+					afficher_paladin(pBDBox, plateau[x][y].coulP);
+					break;
+				default:
+					break;
+			}
+		}
+	}
 	affiche_all();
 }
