@@ -12,8 +12,8 @@
 	NUMBOX point_ig1_to_numBoite(POINT P);
 	NUMBOX point_ig2_to_numBoite(POINT P);
 
+	NUMBOX attend_click_non_invalide(int ig);
 	NUMBOX attend_clic_numbox(int ig);
 	BOOL estHors_plateau(POINT click);
-
 
 #endif
