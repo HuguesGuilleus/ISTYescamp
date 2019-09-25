@@ -15,7 +15,6 @@
 	BOOL estHors_plateau(POINT click);
 	BOOL estDans_btn_info(POINT p);
 
-	NUMBOX attend_click_non_invalide(int ig);
-	NUMBOX attend_clic_numbox(int ig);
+	BOOL attend_clic_numbox_valide(int ig, NUMBOX* box);
 
 #endif

@@ -43,24 +43,22 @@ void positionne_pions(int ig, COUL joueur) {
 	}
 }
 
-NUMBOX attend_clic_numbox(int ig) {
+BOOL attend_clic_numbox_valide(int ig, NUMBOX* box) {
 	POINT clic;
 
 	do {
 		clic = wait_clic();
-	} while(estHors_plateau(clic));
+		
+		if (estDans_btn_info(clic)){
+			return TRUE;
+		}
+		*box = point_ig_to_numBoite(ig,clic) ;
+	} while(estHors_plateau(clic) || !est_pas_invalide(*box));
 
-	return point_ig_to_numBoite(ig,clic) ;
-
+	
+	return FALSE;
 }
 
-NUMBOX attend_click_non_invalide(int ig) {
-	NUMBOX b ;
-	do {
-		b = attend_clic_numbox(ig);
-	} while(!est_pas_invalide(b));
-	return b ;
-}
 
 BOOL estHors_plateau(POINT click) {
 	int marge = (H_FENETRE-TAILLE_PLATEAU)/2;

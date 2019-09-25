@@ -77,12 +77,14 @@ void jouer(int mod,COUL joueur,int ig) {
 
 		if (selectionne_pion(joueur, lisere, NULL)) {
 			afficher_plateau(ig);
-			clic = attend_click_non_invalide(ig);
+			if (attend_clic_numbox_valide(ig,&clic))
+				return ;
 			do {
 				boxOrigine = clic ;
 				selectionne_pion(joueur, lisere, &boxOrigine);
 				afficher_plateau(ig);
-				clic = attend_click_non_invalide(ig);
+				if (attend_clic_numbox_valide(ig,&clic))
+					return ;
 				if (est_licorne_adverse(clic, joueur)) {
 					boxDest = clic ;
 					deplacement_simple(boxOrigine, boxDest);

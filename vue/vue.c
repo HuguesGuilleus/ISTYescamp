@@ -274,12 +274,14 @@ void afficher_joueur_courant(COUL joueur){
 		aff_pol("Joueur", 24, hg, noir);
 		hg.x +=2;hg.y+=2;
 		aff_pol("Joueur", 24, hg, blanc);
+		
 		hg.x += 150;hg.y-=15;
 		draw_fill_circle(hg, 30,blanc);
 	}else{
-		aff_pol("Joueur", 24, hg, gris);
-		hg.x +=1;hg.y+=1;
+		aff_pol("Joueur", 24, hg, noir);
+		hg.x +=2;hg.y+=2;
 		aff_pol("Joueur", 24, hg, blanc);
+		
 		hg.x += 150;hg.y-=15;
 		draw_fill_circle(hg, 30,noir);
 	}
