@@ -72,8 +72,8 @@ void jouer(int mod,COUL joueur,int ig) {
 	int lisere = 0;
 
 	// init_piece3_debug();
-
-	positionne_pions(ig, joueur);
+	positionne_pions(ig, BLANC);
+	positionne_pions(ig, NOIR);
 
 	afficher_panneau_info();
 	afficher_panneau_jeu(ig);
@@ -111,6 +111,6 @@ void jouer(int mod,COUL joueur,int ig) {
 		}
 
 		change_joueur(&joueur);
-		ig = (ig + 2) % 4 ;
+		// ig = (ig + 2) % 4 ;
 	}
 }

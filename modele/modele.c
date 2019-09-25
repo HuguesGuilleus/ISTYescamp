@@ -119,6 +119,20 @@ void init_piece3_debug() {
 	plateau[2][3].coulP = NOIR ;
 }
 
+void regle_case_accessible_position(int ig, COUL joueur) {
+	NUMBOX coord ;
+
+	init_status();
+
+	for (coord.c = 0; coord.c < NB_BOX_PLATEAU; coord.c++) {
+		for (coord.l = 0; coord.l < NB_BOX_PLATEAU; coord.l++) {
+			if (est_accessible_positionnement(coord, ig, joueur)) {
+				plateau[coord.c][coord.l].status = ACCESSIBLE ;
+			}
+		}
+	}
+}
+
 void ajoute_paladin(NUMBOX coord, COUL coul) {
 	plateau[coord.c][coord.l].typeP = PALADIN ;
 	plateau[coord.c][coord.l].coulP = coul ;

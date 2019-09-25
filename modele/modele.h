@@ -46,6 +46,9 @@
 	void init_piece2_debug();
 	void init_piece3_debug();
 
+	// void regle_case_accessible_position(int ig);
+	void regle_case_accessible_position(int ig, COUL joueur);
+
 	void ajoute_paladin(NUMBOX coord, COUL coul);
 	void ajoute_licorne(NUMBOX coord, COUL coul);
 	void supprime_pion(NUMBOX coord);
