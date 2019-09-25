@@ -14,12 +14,7 @@ void afficher_plateau(int ig){
 	for(x=0;x<NB_BOX_PLATEAU;x++){
 		for(y=0;y<NB_BOX_PLATEAU;y++){
 			box.l = y; box.c = x;
-			/*
-			if (ig == 1)
-				pBDBox = numBoite_to_pointBG_ig1(box);
-			else
-				pBDBox = numBoite_to_pointBG_ig2(box);
-				*/
+			
 			pBDBox = numBoite_to_pointBG_ig(ig,box);
 			afficher_lisere(pBDBox, plateau[x][y].lisere,box);
 
@@ -83,7 +78,9 @@ void afficher_panneau_info(){
 	pBG.x = H_FENETRE ; pBG.y = 0 ;
 	pHD.x = L_FENETRE ; pHD.y = H_FENETRE ;
 
-	draw_fill_rectangle(pBG,pHD,blanc);
+	draw_fill_rectangle(pBG,pHD,COULEUR_PRIMAIRE);
+	
+	afficher_btn_info("Quitter", 1);
 }
 
 //Affiche le panneau de jeu avec le plateau de jeu et les pions
@@ -99,7 +96,7 @@ void afficher_panneau_jeu(int ig){
 	pHD.x -= (H_FENETRE-TAILLE_PLATEAU)/2-20;
 	pHD.y -= (H_FENETRE-TAILLE_PLATEAU)/2-20;
 
-	draw_fill_rectangle(pBG, pHD, couleur_RGB(129,116,98));
+	draw_fill_rectangle(pBG, pHD, COULEUR_PRIMAIRE);
 
 	afficher_legende_plateau(ig);
 
@@ -226,7 +223,7 @@ void afficher_lisere(POINT bg, int nbLisere,NUMBOX box){
 	draw_fill_rectangle(bg,(POINT){
 		x: bg.x+rayon_box*2,
 		y: bg.y+rayon_box*2,
-	}, couleur_RGB(129,116,98));
+	}, COULEUR_PRIMAIRE);
 
 	bg.x += rayon_box;
 	bg.y += rayon_box;
@@ -275,14 +272,90 @@ void afficher_joueur_courant(COUL joueur){
 
 	if (joueur == BLANC){
 		aff_pol("Joueur", 24, hg, noir);
+		hg.x +=2;hg.y+=2;
+		aff_pol("Joueur", 24, hg, blanc);
 		hg.x += 150;hg.y-=15;
-		draw_fill_circle(hg, 32,noir);
 		draw_fill_circle(hg, 30,blanc);
 	}else{
-		aff_pol("Joueur", 24, hg, noir);
+		aff_pol("Joueur", 24, hg, gris);
+		hg.x +=1;hg.y+=1;
+		aff_pol("Joueur", 24, hg, blanc);
 		hg.x += 150;hg.y-=15;
-		draw_fill_circle(hg, 32,noir);
 		draw_fill_circle(hg, 30,noir);
+	}
+}
+
+void afficher_btn_info(char* texte, BOOL etat){
+	POINT bg,hd;
+	bg.x = H_FENETRE+50;
+	bg.y = 50;
+	hd.x = (L_FENETRE-50);
+	hd.y = bg.y +50;
+	if (etat == 0){
+		draw_fill_rectangle(bg,hd,rouge);
+	}else{
+		draw_fill_rectangle(bg,hd,vert);
+	}
+	bg.x += 68;
+	bg.y += 40;
+	aff_pol(texte, 18, bg, blanc);
+}
+
+void afficher_texte_info(char* texte){
+	/*POINT hd;
+	hd.x = bg.x+(L_FENETRE-(bg.x*2));
+	hd.y = bg.y+100;
+
+	draw_fill_rectangle(bg,hd,red);*/
+}
+void afficher_pion_info(COUL coul){
+	POINT bg;
+	bg.x = H_FENETRE+25; bg.y = H_FENETRE/2;
+	afficher_paladin(bg, coul);
+	
+	bg.x += (L_FENETRE-H_FENETRE)/2;
+	afficher_licorne(bg, coul);
+}
+
+void afficher_placement_pions(int paladin, int licorne) {
+	POINT texteHG,texteBD;
+	texteHG.x = H_FENETRE+50; texteHG.y = H_FENETRE/2;
+	
+	char text[25];
+	COULEUR couleur;
+	
+	couleur = blanc;
+	if (paladin == 5) {
+		couleur = vert;
+	} else if (paladin > 5) {
+		couleur = rouge;
+	}
+	texteBD.y = texteHG.y-24; texteBD.x = texteHG.x+(L_FENETRE-H_FENETRE)-30;
+	draw_fill_rectangle(texteHG,texteBD,COULEUR_PRIMAIRE);
+	
+	sprintf(text,"%d / 5", paladin);
+	aff_pol(text, 18, texteHG, noir);
+	texteHG.x +=2;texteHG.y +=2;
+	aff_pol(text, 18, texteHG, couleur);
+	
+	couleur = blanc;
+	if (licorne == 1) {
+		couleur = vert;
+	} else if (licorne > 1) {
+		couleur = rouge;
+	}
+	texteHG.x += (L_FENETRE-H_FENETRE)/2;
+	texteBD.y = texteHG.y-24; texteBD.x = texteHG.x+(L_FENETRE-H_FENETRE)-30;
+	
+	sprintf(text,"%d / 1", licorne);
+	aff_pol(text, 18, texteHG, noir);
+	texteHG.x +=2;texteHG.y +=2;
+	aff_pol(text, 18, texteHG, couleur);
+	
+	if (licorne == 1 && paladin == 5){
+		afficher_btn_info("Valider", 1);
+	}else{
+		afficher_btn_info("Valider", 0);
 	}
 }
 
@@ -356,7 +429,7 @@ void afficher_btn_select_joueur(POINT bg, COULEUR couleur, COUL joueur){
 }
 
 void afficher_menu(){
-	fill_screen(couleur_RGB(129,116,98));
+	fill_screen(COULEUR_PRIMAIRE);
 	POINT pBtn;
 	pBtn.x = 50;
 	pBtn.y = 50;
@@ -374,7 +447,7 @@ void afficher_menu(){
 }
 
 void afficher_menu_select_joueur(COUL joueur,int ig,int mod){
-	fill_screen(couleur_RGB(129,116,98));
+	fill_screen(COULEUR_PRIMAIRE);
 	POINT pBtn;
 	pBtn.x = 50;
 	pBtn.y = 50;
@@ -426,20 +499,4 @@ void afficher_plateau_mini(int ig){
 	}
 }
 
-void afficher_placement_pions(int paladin, int licorne) {
-	if (paladin == 5) {
-		printf("\e[1;32m=== PALADIN: %d/5\n", paladin);
-	} else if (paladin > 5) {
-		printf("\e[1;31m=== PALADIN: %d/5\n", paladin);
-	} else {
-		printf("\e[1;34m=== PALADIN: %d/5\n", paladin);
-	}
-	if (licorne == 1) {
-		printf("\e[1;32m=== LICORNE: %d/1\n", licorne);
-	} else if (licorne > 1) {
-		printf("\e[1;31m=== LICORNE: %d/1\n", licorne);
-	} else {
-		printf("\e[1;34m=== LICORNE: %d/1\n", licorne);
-	}
-	printf("\e[0m\n");
-}
+

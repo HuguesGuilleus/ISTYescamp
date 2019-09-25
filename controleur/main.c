@@ -104,6 +104,5 @@ void jouer(int mod,COUL joueur,int ig) {
 		}
 
 		change_joueur(&joueur);
-		// ig = (ig + 2) % 4 ;
 	}
 }
