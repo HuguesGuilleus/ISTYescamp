@@ -23,7 +23,7 @@ void positionne_pions(int ig, COUL joueur) {
 				return ;
 			}
 			coord = point_ig_to_numBoite(ig, clic);
-		} while(!est_accessible_positionnement(coord, ig, joueur));
+		} while(estHors_plateau(clic) || !est_accessible_positionnement(coord, ig, joueur));
 		switch (plateau[coord.c][coord.l].typeP) {
 			case VIDE:
 				ajoute_paladin(coord,joueur) ;
