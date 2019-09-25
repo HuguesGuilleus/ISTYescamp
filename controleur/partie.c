@@ -12,14 +12,15 @@ void positionne_pions(int ig, COUL joueur) {
 	afficher_panneau_jeu(ig);
 	afficher_panneau_info();
 	afficher_joueur_courant(joueur);
-
+	afficher_pion_info(joueur);
+	
 	while (TRUE) {
 		afficher_placement_pions(paladin, licorne);
 		afficher_plateau(ig);
 		affiche_all();
 		do {
 			clic = wait_clic();
-			if (estDans_panneau_info(clic) && licorne == 1 && paladin == 5) {
+			if (estDans_btn_info(clic) && licorne == 1 && paladin == 5) {
 				return ;
 			}
 			coord = point_ig_to_numBoite(ig, clic);
@@ -69,8 +70,8 @@ BOOL estHors_plateau(POINT click) {
 		click.y < marge || finPlateau < click.y ;
 }
 
-BOOL estDans_panneau_info(POINT p) {
-	return p.x > H_FENETRE ;
+BOOL estDans_btn_info(POINT p) {
+	return p.x > H_FENETRE+50 && p.x < L_FENETRE-50 && p.y > 50 && p.y < 100;
 }
 
 POINT numBoite_to_pointBG_ig(int ig, NUMBOX numboxB){

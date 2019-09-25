@@ -29,6 +29,8 @@
 	#define L_FENETRE 900
 	#define L_PANEL_SCORE L_FENETRE-H_FENETRE
 	#define TAILLE_PLATEAU 500
+	
+	#define COULEUR_PRIMAIRE 0x817462
 
 	// ###############################
 	// 2. FONCTIONS
@@ -48,6 +50,10 @@
 	void afficher_victoire(COUL joueur);
 	void afficher_coups_impossible();
 	void afficher_joueur_courant(COUL joueur);
+	void afficher_btn_info(char* texte, BOOL etat);
+	void afficher_texte_info(char* texte);
+	void afficher_placement_pions(int paladin, int licorne);
+	void afficher_pion_info(COUL coul);
 
 	void afficher_btn(POINT bg, COULEUR couleur, char* text);
 	void afficher_menu();
