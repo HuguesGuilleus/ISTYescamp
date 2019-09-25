@@ -7,11 +7,15 @@
 	#include "../modele/modele.h"
 	#include "../vue/vue.h"
 
+	void positionne_pions(int ig, COUL joueur);
+
 	NUMBOX point_ig_to_numBoite(int ig, POINT P);
 	POINT numBoite_to_pointBG_ig(int ig, NUMBOX numboxB);
 
+	BOOL estHors_plateau(POINT click);
+	BOOL estDans_panneau_info(POINT p);
+
 	NUMBOX attend_click_non_invalide(int ig);
 	NUMBOX attend_clic_numbox(int ig);
-	BOOL estHors_plateau(POINT click);
 
 #endif

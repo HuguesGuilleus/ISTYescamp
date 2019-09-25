@@ -133,6 +133,21 @@ void regle_case_accessible_position(int ig, COUL joueur) {
 	}
 }
 
+BOOL est_accessible_positionnement(NUMBOX box, int ig, COUL joueur) {
+	switch (ig) {
+		case 1:
+			return (box.l < 2 && joueur == BLANC) || (box.l > 3 && joueur == NOIR) ;
+		case 2:
+			return (box.c < 2 && joueur == BLANC) || (box.c > 3 && joueur == NOIR) ;
+		case 3:
+			return (box.l > 3 && joueur == BLANC) || (box.l < 2 && joueur == NOIR) ;
+		case 4:
+			return (box.c > 3 && joueur == BLANC) || (box.c < 2 && joueur == NOIR) ;
+		default:
+			return FALSE;
+	}
+}
+
 void ajoute_paladin(NUMBOX coord, COUL coul) {
 	plateau[coord.c][coord.l].typeP = PALADIN ;
 	plateau[coord.c][coord.l].coulP = coul ;
