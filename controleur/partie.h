@@ -13,7 +13,7 @@
 	POINT numBoite_to_pointBG_ig(int ig, NUMBOX numboxB);
 
 	BOOL estHors_plateau(POINT click);
-	BOOL estDans_btn_info(POINT p);
+	BOOL estDans_panneau_info(POINT p);
 
 	NUMBOX attend_click_non_invalide(int ig);
 	NUMBOX attend_clic_numbox(int ig);
