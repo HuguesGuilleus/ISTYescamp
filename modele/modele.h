@@ -46,6 +46,10 @@
 	void init_piece2_debug();
 	void init_piece3_debug();
 
+	void ajoute_paladin(NUMBOX coord, COUL coul);
+	void ajoute_licorne(NUMBOX coord, COUL coul);
+	void supprime_pion(NUMBOX coord);
+
 	void init_status();
 	BOOL selectionne_pion(COUL coul, int lisere, NUMBOX * select);
 

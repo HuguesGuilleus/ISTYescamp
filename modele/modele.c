@@ -119,6 +119,21 @@ void init_piece3_debug() {
 	plateau[2][3].coulP = NOIR ;
 }
 
+void ajoute_paladin(NUMBOX coord, COUL coul) {
+	plateau[coord.c][coord.l].typeP = PALADIN ;
+	plateau[coord.c][coord.l].coulP = coul ;
+}
+
+void ajoute_licorne(NUMBOX coord, COUL coul) {
+	plateau[coord.c][coord.l].typeP = LICORNE ;
+	plateau[coord.c][coord.l].coulP = coul ;
+}
+
+void supprime_pion(NUMBOX coord) {
+	plateau[coord.c][coord.l].typeP = VIDE ;
+	plateau[coord.c][coord.l].coulP = BLANC ;
+}
+
 // Met tout les status à invalide
 void init_status() {
 	int c,l;

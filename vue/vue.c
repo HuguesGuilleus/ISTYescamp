@@ -45,12 +45,12 @@ void afficher_victoire(COUL joueur){
 	aff_pol("VICTOIRE", 76, pHG, noir);
 	pHG.y += 1;pHG.x += 2;
 	aff_pol("VICTOIRE", 76, pHG, vert);
-	
+
 	char texte[50];
 	strcpy(texte,"Bravo joueur blanc !");
 	if (joueur == NOIR)
 		strcpy(texte,"Bravo joueur noir ! ");
-		
+
 	pHG.y -= 86;pHG.x += 34;
 	aff_pol(texte, 31, pHG, noir);
 	pHG.y += 1;pHG.x += 2;
@@ -386,7 +386,7 @@ void afficher_menu_select_joueur(COUL joueur,int ig,int mod){
 	}
 	pBtn.y += 150;
 	afficher_btn_select_ig(pBtn,couleur_RGB(40,40,40),ig);
-	
+
 	if (mod == 1){
 		pBtn.y += 182;
 		pBtn.x += (L_FENETRE/2)-200;
@@ -399,7 +399,7 @@ void afficher_menu_select_joueur(COUL joueur,int ig,int mod){
 		pBtn.x = (L_FENETRE/2)-245;
 		aff_pol("Selectionnez votre couleur et le plateau :", 24, pBtn, blanc);
 	}
-	
+
 	affiche_all();
 }
 
@@ -407,7 +407,7 @@ void afficher_plateau_mini(int ig){
 	int x,y;
 	int cercle;
 	int rayon_box = 10;
-	
+
 	POINT pBDBox;
 	NUMBOX box;
 
@@ -424,4 +424,22 @@ void afficher_plateau_mini(int ig){
 			}
 		}
 	}
+}
+
+void afficher_placement_pions(int paladin, int licorne) {
+	if (paladin == 5) {
+		printf("\e[1;32m=== PALADIN: %d/5\n", paladin);
+	} else if (paladin > 5) {
+		printf("\e[1;31m=== PALADIN: %d/5\n", paladin);
+	} else {
+		printf("\e[1;34m=== PALADIN: %d/5\n", paladin);
+	}
+	if (licorne == 1) {
+		printf("\e[1;32m=== LICORNE: %d/1\n", licorne);
+	} else if (licorne > 1) {
+		printf("\e[1;31m=== LICORNE: %d/1\n", licorne);
+	} else {
+		printf("\e[1;34m=== LICORNE: %d/1\n", licorne);
+	}
+	printf("\e[0m\n");
 }
