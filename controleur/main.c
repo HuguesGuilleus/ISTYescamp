@@ -2,67 +2,59 @@
 
 #include "main.h"
 
-int main(){
+int main() {
+	POINT clic_menu;
+	int ig = 1;
+	COUL joueur ;
+
 	init_graphics(L_FENETRE,H_FENETRE);
 	affiche_auto_off();
+	init_plateau();
+	afficher_menu();
+	joueur = BLANC;
 
-	POINT clic_menu;
-	BOOL go = FALSE;
-	int ig = 1;
-	COUL joueur = BLANC;
-
-
-	while(TRUE){
-		go= FALSE;
-		joueur = BLANC;
-
-		init_plateau();
-		afficher_menu();
+	while (TRUE) {
 		clic_menu = wait_clic();
-		if (est_dans_bouton_quitter(clic_menu)){
+		if (est_dans_bouton_quitter(clic_menu)) {
 			return 0;
-		}else if(est_dans_bouton_JvsJ(clic_menu)){
-			afficher_menu_select_joueur(joueur,ig,1);
-
-			while(!go){
+		} else if (est_dans_bouton_JvsJ(clic_menu)) {
+			afficher_menu_select_joueur(joueur, ig, 1);
+			do {
 				clic_menu = wait_clic();
-
-				if(est_dans_bouton_valider(clic_menu)){
-					go = TRUE;
-				}else if(est_dans_bouton_ig(clic_menu)){
-					if (est_dans_bouton_ig_gauche(clic_menu))
-						ig = (((ig-1)+3)%4)+1;
-					else
-						ig = (ig%4)+1;
-
+				if (est_dans_bouton_ig_gauche(clic_menu)) {
+					ig = (ig+2)%4 + 1 ;
+					afficher_menu_select_joueur(joueur,ig,1);
+				} else if (est_dans_bouton_ig_droit(clic_menu)) {
+					ig = ig%4 + 1 ;
 					afficher_menu_select_joueur(joueur,ig,1);
 				}
-			}
-			jouer(1,joueur,ig);
-		}else if(est_dans_bouton_JvsIA(clic_menu)){
-			afficher_menu_select_joueur(joueur,ig,2);
-
-			while(!go){
+			} while(!est_dans_bouton_valider(clic_menu));
+			jouer(1, joueur, ig);
+			init_plateau();
+			afficher_menu();
+			joueur = BLANC;
+		} else if (est_dans_bouton_JvsIA(clic_menu)) {
+			afficher_menu_select_joueur(joueur, ig, 2);
+			do {
 				clic_menu = wait_clic();
-
-				if(est_dans_bouton_valider(clic_menu)){
-					go = TRUE;
-				}else if(est_dans_bouton_coul(clic_menu)){
+				if (est_dans_bouton_coul(clic_menu)) {
 					if (joueur == BLANC)
-					joueur = NOIR;
+						joueur = NOIR;
 					else
-					joueur = BLANC;
+						joueur = BLANC;
+					afficher_menu_select_joueur(joueur, ig, 2);
+				} else if (est_dans_bouton_ig_gauche(clic_menu)) {
+					ig = (ig+2) % 4 + 1 ;
 					afficher_menu_select_joueur(joueur,ig,2);
-				}else if(est_dans_bouton_ig(clic_menu)){
-					if (est_dans_bouton_ig_gauche(clic_menu))
-						ig = (((ig-1)+3)%4)+1;
-					else
-						ig = (ig%4)+1;
-
+				} else if (est_dans_bouton_ig_droit(clic_menu)) {
+					ig = ig % 4 + 1 ;
 					afficher_menu_select_joueur(joueur,ig,2);
 				}
-			}
+			} while(!est_dans_bouton_valider(clic_menu));
 			jouer(2,joueur,ig);
+			init_plateau();
+			afficher_menu();
+			joueur = BLANC;
 		}
 	}
 }
@@ -71,6 +63,7 @@ void jouer(int mod,COUL joueur,int ig) {
 	NUMBOX boxOrigine, boxDest, clic ;
 	int lisere = 0;
 
+	init_plateau();
 	// init_piece3_debug();
 	positionne_pions(ig, BLANC);
 	positionne_pions(ig, NOIR);
