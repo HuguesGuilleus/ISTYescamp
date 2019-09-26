@@ -51,7 +51,7 @@ int main() {
 					afficher_menu_select_joueur(joueur,ig,2);
 				}
 			} while(!est_dans_bouton_valider(clic_menu));
-			jouer(2,joueur,ig);
+			jouer_ia(joueur,ig);
 			init_plateau();
 			afficher_menu();
 			joueur = BLANC;
@@ -107,4 +107,8 @@ void jouer(int mod,COUL joueur,int ig) {
 
 		change_joueur(&joueur);
 	}
+}
+
+void jouer_ia(COUL joueur,int ig) {
+	
 }
