@@ -111,13 +111,13 @@ void jouer_ia(COUL joueur,int ig) {
 
 	init_plateau();
 	
-	COUL ia = BLANC;
-	if (joueur == BLANC){
-		ia = NOIR;
+	COUL ia = NOIR;
+	if (joueur == NOIR){
+		ia = BLANC;
 		positionne_pions(ig, joueur);
-		positionne_pions_ia(ig, ia);
+		positionne_pions_ia(ia,ig);
 	}else{
-		positionne_pions_ia(ig, ia);
+		positionne_pions_ia(ia,ig );
 		positionne_pions(ig, joueur);
 	}
 
