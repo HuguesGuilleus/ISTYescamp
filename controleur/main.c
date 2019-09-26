@@ -125,37 +125,41 @@ void jouer_ia(COUL joueur,int ig) {
 	afficher_panneau_jeu(ig);
 
 	while (TRUE) {
-		afficher_panneau_jeu(ig);
-		afficher_joueur_courant(joueur);
+		if (joueur == ia){
+			lancer_tour_ia(ia,lisere,ig);
+		}else{
+			afficher_panneau_jeu(ig);
+			afficher_joueur_courant(joueur);
 
-		if (selectionne_pion(joueur, lisere, NULL)) {
-			afficher_plateau(ig);
-			if (attend_clic_numbox_valide(ig,&clic))
-				return ;
-			do {
-				boxOrigine = clic ;
-				selectionne_pion(joueur, lisere, &boxOrigine);
+			if (selectionne_pion(joueur, lisere, NULL)) {
 				afficher_plateau(ig);
 				if (attend_clic_numbox_valide(ig,&clic))
 					return ;
-				if (est_licorne_adverse(clic, joueur)) {
-					boxDest = clic ;
-					deplacement_simple(boxOrigine, boxDest);
+				do {
+					boxOrigine = clic ;
+					selectionne_pion(joueur, lisere, &boxOrigine);
 					afficher_plateau(ig);
-					afficher_victoire(joueur);
-					wait_clic();
-					return ;
-				}
-			} while(est_pion(clic));
+					if (attend_clic_numbox_valide(ig,&clic))
+						return ;
+					if (est_licorne_adverse(clic, joueur)) {
+						boxDest = clic ;
+						deplacement_simple(boxOrigine, boxDest);
+						afficher_plateau(ig);
+						afficher_victoire(joueur);
+						wait_clic();
+						return ;
+					}
+				} while(est_pion(clic));
 
-			boxDest = clic ;
-			deplacement_simple(boxOrigine, boxDest);
-			lisere = change_lisere(boxDest);
+				boxDest = clic ;
+				deplacement_simple(boxOrigine, boxDest);
+				lisere = change_lisere(boxDest);
 
-		} else {
-			afficher_plateau(ig);
-			afficher_coups_impossible();
-			wait_clic();
+			} else {
+				afficher_plateau(ig);
+				afficher_coups_impossible();
+				wait_clic();
+			}
 		}
 
 		change_joueur(&joueur);

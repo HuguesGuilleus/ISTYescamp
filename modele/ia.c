@@ -60,23 +60,39 @@ void positionne_pions_ia(COUL ia, int ig){
 	plateau[box.c][box.l].coulP = ia;
 }
 
-void lancer_tour_ia(COUL coul, int ig){
+void lancer_tour_ia(COUL ia, int lisere, int ig){
+	selectionne_pion(ia, lisere, NULL);
 	
+	recup_meilleur_deplacement_ia(ia,PALADIN,ig);
+
+	afficher_plateau(ig);
+	wait_clic();
+
 }
 
 NUMBOX recup_meilleur_deplacement_ia(COUL ia, TYPE caseType, int ig){
-	NUMBOX box;
-	box.c = 0; box.l = 0;
+	NUMBOX b;
+	b.c = 0; b.l = 0;
+	
+	BOX* box;
+	int c,l;
+	for (c = 0; c<NB_BOX_PLATEAU; c++){
+		for (l = 0; l<NB_BOX_PLATEAU; l++){
+			box = getBox(c,l);
+			if ( box->status == VALIDE ){
+				b.c = c; b.l =l;
+				selectionne_pion(ia,box->lisere,&b);
+			}
+		}
+	}
 	
 	
-	
-	return box;
+	return b;
 }
 
 NUMBOX recup_meilleur_placement_ia(COUL ia, TYPE caseType, int ig){
 	NUMBOX box;
 	box.c = 0; box.l = 0;
-	
 	
 	return box;
 }
