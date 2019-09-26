@@ -41,6 +41,27 @@ void init_plateau() {
 	plateau[5][5].lisere = 2 ;
 }
 
+// Met tout les status à invalide
+void init_status() {
+	int c,l;
+	for (c = 0; c < NB_BOX_PLATEAU; c++) {
+		for (l = 0; l < NB_BOX_PLATEAU; l++) {
+			plateau[c][l].status = INVALIDE ;
+		}
+	}
+}
+
+void init_juste_case_accessible() {
+	int c,l;
+	for (c = 0; c < NB_BOX_PLATEAU; c++) {
+		for (l = 0; l < NB_BOX_PLATEAU; l++) {
+			if (plateau[c][l].status == ACCESSIBLE) {
+				plateau[c][l].status = INVALIDE ;
+			}
+		}
+	}
+}
+
 void init_piece1_debug() {
 	init_plateau(plateau);
 
@@ -92,6 +113,7 @@ void init_piece2_debug() {
 	plateau[5][3].typeP = LICORNE ;
 }
 
+// Exemple de fin de partie
 void init_piece3_debug() {
 	int y;
 
@@ -119,7 +141,20 @@ void init_piece3_debug() {
 	plateau[2][3].coulP = NOIR ;
 }
 
-void regle_case_accessible_position(int ig, COUL joueur) {
+// Exemple de piece bloquée
+void init_piece4_debug() {
+	init_plateau();
+
+	plateau[0][0].typeP = PALADIN ;
+	plateau[0][0].coulP = BLANC ;
+
+	plateau[1][0].typeP = PALADIN ;
+	plateau[1][0].coulP = NOIR ;
+	plateau[0][1].typeP = PALADIN ;
+	plateau[0][1].coulP = NOIR ;
+}
+
+void init_case_accessible_position(int ig, COUL joueur) {
 	NUMBOX coord ;
 
 	init_status();
@@ -163,22 +198,12 @@ void supprime_pion(NUMBOX coord) {
 	plateau[coord.c][coord.l].coulP = BLANC ;
 }
 
-// Met tout les status à invalide
-void init_status() {
-	int c,l;
-	for (c = 0; c < NB_BOX_PLATEAU; c++) {
-		for (l = 0; l < NB_BOX_PLATEAU; l++) {
-			plateau[c][l].status = INVALIDE ;
-		}
-	}
-}
-
 // Séléctionne les pions déplacable, et les cases d'arrivés en fonction
 // de coul: la couleur du joueur actuel; lisere: la case d'arrivé de la
 // dernière pièce, 0 au premier tour; select: la case séléctionné ou NULL.
 // Renvoie TRUE si il y a des pions déplaçable.
 BOOL selectionne_pion(COUL coul, int lisere, NUMBOX * select) {
-	int c,l ;
+	int c, l ;
 	BOX * b ;
 	BOOL peutJouer = FALSE ;
 
@@ -186,7 +211,7 @@ BOOL selectionne_pion(COUL coul, int lisere, NUMBOX * select) {
 
 	for (c = 0; c < NB_BOX_PLATEAU; c++) {
 		for (l = 0; l < NB_BOX_PLATEAU; l++) {
-			b = &plateau[c][l] ;
+			b = getBox(c, l) ;
 			if (b->typeP != VIDE && b->coulP == coul) {
 				if (lisere == 0 || lisere == b->lisere) {
 					plateau[c][l].status = VALIDE ;
@@ -200,44 +225,55 @@ BOOL selectionne_pion(COUL coul, int lisere, NUMBOX * select) {
 		b = &plateau[select->c][select->l] ;
 		parcourt_plusieurs_cases(select->c, select->l, b->coulP, b->typeP, b->lisere) ;
 		b->status = SELECT ;
+	} else if (peutJouer) {
+		peutJouer = FALSE ;
+		for (c = 0; c < NB_BOX_PLATEAU; c++) {
+			for (l = 0; l < NB_BOX_PLATEAU; l++) {
+				b = getBox(c, l) ;
+				if (b->status == VALIDE && parcourt_plusieurs_cases(c, l, coul, b->typeP, b->lisere)) {
+					init_juste_case_accessible();
+					return TRUE ;
+				}
+			}
+		}
 	}
 
 	return peutJouer ;
 }
 
 // Déplacement pour la séléction des possibilités
-void parcourt_plusieurs_cases(int c, int l, COUL coul, TYPE pion, int lisere) {
+BOOL parcourt_plusieurs_cases(int c, int l, COUL coul, TYPE pion, int lisere) {
 	BOX* b = getBox(c, l) ;
+	BOOL peutJouer = FALSE ;
 
 	if (lisere == 0) {
 		b->status = ACCESSIBLE ;
-		return ;
+		return TRUE ;
 	}
 
-	parcourt_une_case(c, l-1, coul, pion, lisere-1);
-	parcourt_une_case(c, l+1, coul, pion, lisere-1);
-	parcourt_une_case(c-1, l, coul, pion, lisere-1);
-	parcourt_une_case(c+1, l, coul, pion, lisere-1);
+	parcourt_une_case(c, l-1, coul, pion, lisere-1) && (peutJouer = TRUE) ;
+	parcourt_une_case(c, l+1, coul, pion, lisere-1) && (peutJouer = TRUE) ;
+	parcourt_une_case(c-1, l, coul, pion, lisere-1) && (peutJouer = TRUE) ;
+	parcourt_une_case(c+1, l, coul, pion, lisere-1) && (peutJouer = TRUE) ;
 
-	if (b->status == PARCOUR ) {
-		b->status = INVALIDE ;
-	}
+	if (b->status == PARCOUR ) b->status = INVALIDE ;
+
+	return peutJouer ;
 }
 
 // Regarde si on peut parourire cette case et si oui, parcour les cases adjacentes.
-void parcourt_une_case(int c, int l, COUL coul, TYPE pion, int lisere) {
+BOOL parcourt_une_case(int c, int l, COUL coul, TYPE pion, int lisere) {
 	BOX * b = getBox(c, l);
 
-	if (b == NULL) {
-		return ;
-	}
+	if (b == NULL) return FALSE ;
 
 	if (peut_parourir(b, coul, pion, lisere)) {
 		if (b->status != ACCESSIBLE) {
 			b->status = PARCOUR ;
 		}
-		parcourt_plusieurs_cases(c, l, coul, pion, lisere);
-	}
+		return parcourt_plusieurs_cases(c, l, coul, pion, lisere);
+	} else
+		return FALSE ;
 }
 
 // indique si un pion peut parcourire sur une case

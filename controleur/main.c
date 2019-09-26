@@ -4,7 +4,7 @@
 
 int main() {
 	POINT clic_menu;
-	int ig = 1;
+	int ig = 1 ;
 	COUL joueur ;
 
 	srand(time(NULL));
@@ -53,7 +53,7 @@ int main() {
 					afficher_menu_select_joueur(joueur,ig,2);
 				}
 			} while(!est_dans_bouton_valider(clic_menu));
-			jouer_ia(joueur,ig);
+			jouer_ia(joueur, ig);
 			init_plateau();
 			afficher_menu();
 			joueur = BLANC;
@@ -62,7 +62,7 @@ int main() {
 }
 
 void jouer_humain(int ig) {
-	NUMBOX boxOrigine, boxDest, clic ;
+	NUMBOX boxOrigine, boxDest, coord ;
 	COUL joueur = BLANC ;
 	int lisere = 0;
 
@@ -75,25 +75,16 @@ void jouer_humain(int ig) {
 		afficher_panneau_jeu(ig);
 		afficher_joueur_courant(joueur);
 		if (selectionne_pion(joueur, lisere, NULL)) {
-			afficher_plateau(ig);
-			if (attend_clic_numbox_valide(ig,&clic))
-				return ;
+			afficher_plateau(ig) ;
+			if (attend_clic_numbox_non_invalide(ig,&coord)) return ;
 			do {
-				boxOrigine = clic ;
+				boxOrigine = coord ;
 				selectionne_pion(joueur, lisere, &boxOrigine);
 				afficher_plateau(ig);
-				if (attend_clic_numbox_valide(ig,&clic))
-					return ;
-				if (est_licorne_adverse(clic, joueur)) {
-					boxDest = clic ;
-					deplacement_simple(boxOrigine, boxDest);
-					afficher_plateau(ig);
-					afficher_victoire(joueur);
-					wait_clic();
-					return ;
-				}
-			} while(est_pion(clic));
-			boxDest = clic ;
+				if (attend_clic_numbox_non_invalide(ig,&coord)) return ;
+				if ((gagne(boxOrigine, coord, joueur, ig))) return ;
+			} while(est_pion(coord));
+			boxDest = coord ;
 			deplacement_simple(boxOrigine, boxDest);
 			lisere = change_lisere(boxDest);
 		} else {

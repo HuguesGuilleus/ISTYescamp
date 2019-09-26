@@ -10,7 +10,6 @@
 	#include "../modele/ia.h"
 
 	void jouer_humain(int ig);
+	void jouer_ia(COUL joueur, int ig);
 
-	void jouer(int mod,COUL joueur,int ig);
-	void jouer_ia(COUL joueur,int ig);
 #endif
