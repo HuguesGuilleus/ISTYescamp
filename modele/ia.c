@@ -78,8 +78,10 @@ BOOL lancer_tour_ia(COUL ia, int lisere, int ig){
 }
 
 BOOL recup_meilleur_deplacement_ia(NUMBOX* dest, NUMBOX* origine, COUL ia, TYPE caseType, int ig){
-	NUMBOX b,tabBox[18];
-	int nbTabBox = 0,i = 0;
+	NUMBOX b;
+	NUMBOX tabBoxAccessible[18];
+	NUMBOX tabBoxSelect[18];
+	int nbtabBoxAccessible = 0,nbtabBoxSelect = 0,i = 0;
 	b.c = 0; b.l = 0;
 	
 	BOX* box;
@@ -89,6 +91,9 @@ BOOL recup_meilleur_deplacement_ia(NUMBOX* dest, NUMBOX* origine, COUL ia, TYPE 
 			box = getBox(c,l);
 			if ( box->status == VALIDE ){
 				parcourt_plusieurs_cases(c, l, box->coulP, box->typeP, box->lisere) ;
+				b.c = c; b.l = l;
+				tabBoxSelect[nbtabBoxSelect] = b;
+				nbtabBoxSelect++;
 			}
 		}
 	}
@@ -99,12 +104,32 @@ BOOL recup_meilleur_deplacement_ia(NUMBOX* dest, NUMBOX* origine, COUL ia, TYPE 
 			box = getBox(c,l);
 			if ( box->status == ACCESSIBLE ){
 				if (box->typeP == LICORNE){
+					init_status();
 					dest->c = c; dest->l = l;
-					origine->c = 0; origine->l=0;
-					return TRUE; 
+					
+					//recup box origine
+					for (i = 0; i < nbtabBoxSelect;i++){
+						b = tabBoxSelect[i];
+						printf("tabBoxSelect[i].c = %d , tabBoxSelect[i].l = %d \n",tabBoxSelect[i].c,tabBoxSelect[i].l);
+						box = getBox(b.c,b.l);
+						parcourt_plusieurs_cases(b.c, b.l, box->coulP, box->typeP, box->lisere) ;
+						box = getBox(dest->c,dest->l);
+						for (c = 0; c<NB_BOX_PLATEAU; c++){
+							for (l = 0; l<NB_BOX_PLATEAU; l++){
+								box = getBox(b.c,b.l);
+								if ( box->status == ACCESSIBLE && c == dest->c && l == dest->l ){
+									printf("ok");
+									origine->c = b.c; origine->l= b.l;
+									return TRUE; 
+								}
+							}
+						}
+					}
+					return FALSE; 
 				}else{
-					tabBox[nbTabBox] = (NUMBOX){c:c,l:l};
-					nbTabBox++;
+					b.c = c; b.l =l;
+					tabBoxAccessible[nbtabBoxAccessible] = b;
+					nbtabBoxAccessible++;
 				}
 			}
 		}
@@ -112,27 +137,65 @@ BOOL recup_meilleur_deplacement_ia(NUMBOX* dest, NUMBOX* origine, COUL ia, TYPE 
 	init_status();
 	
 	//dexieme parcours
-	for (i = 0; i<nbTabBox; i++){
-		box = getBox(c,l);
-		parcourt_plusieurs_cases(tabBox[i].c, tabBox[i].l, box->coulP, box->typeP, box->lisere);
+	for (i = 0; i<nbtabBoxAccessible; i++){
+		box = getBox(tabBoxAccessible[i].c,tabBoxAccessible[i].l);
+		parcourt_plusieurs_cases(tabBoxAccessible[i].c, tabBoxAccessible[i].l, box->coulP, box->typeP, box->lisere);
 		
 		for (c = 0; c<NB_BOX_PLATEAU; c++){
 			for (l = 0; l<NB_BOX_PLATEAU; l++){
 				box = getBox(c,l);
 				if ( box->status == ACCESSIBLE ){
 					if (box->typeP == LICORNE){
-						dest->c = tabBox[i].c; dest->l = tabBox[i].l;
-						origine->c = 0; origine->l=0;
-						return TRUE; 
+						init_status();
+						dest->c = tabBoxAccessible[i].c; dest->l = tabBoxAccessible[i].l;
+						
+						//recup box origine
+						for (i = 0; i < nbtabBoxSelect;i++){
+							b = tabBoxSelect[i];
+							printf("tabBoxSelect[i].c = %d , tabBoxSelect[i].l = %d \n",tabBoxSelect[i].c,tabBoxSelect[i].l);
+							box = getBox(b.c,b.l);
+							parcourt_plusieurs_cases(b.c, b.l, box->coulP, box->typeP, box->lisere) ;
+							box = getBox(dest->c,dest->l);
+							for (c = 0; c<NB_BOX_PLATEAU; c++){
+								for (l = 0; l<NB_BOX_PLATEAU; l++){
+									box = getBox(b.c,b.l);
+									if ( box->status == ACCESSIBLE && c == dest->c && l == dest->l ){
+										printf("ok");
+										origine->c = b.c; origine->l= b.l;
+										return TRUE; 
+									}
+								}
+							}
+						}
+						return FALSE;
 					}
 				}
 			}
 		}
 		init_status();
 	}
+	i = rand()%nbtabBoxAccessible;
+	dest->c = tabBoxAccessible[i].c; dest->l = tabBoxAccessible[i].c;
 	
-	dest->c = 0; dest->l = 0;
-	origine->c = 0; origine->l=0;
+	//recup box origine
+	for (i = 0; i < nbtabBoxSelect;i++){
+		b = tabBoxSelect[i];
+		printf("tabBoxSelect[i].c = %d , tabBoxSelect[i].l = %d \n",tabBoxSelect[i].c,tabBoxSelect[i].l);
+		box = getBox(b.c,b.l);
+		parcourt_plusieurs_cases(b.c, b.l, box->coulP, box->typeP, box->lisere) ;
+		box = getBox(dest->c,dest->l);
+		for (c = 0; c<NB_BOX_PLATEAU; c++){
+			for (l = 0; l<NB_BOX_PLATEAU; l++){
+				box = getBox(b.c,b.l);
+				if ( box->status == ACCESSIBLE && c == dest->c && l == dest->l ){
+					printf("ok");
+					origine->c = b.c; origine->l= b.l;
+					return FALSE; 
+				}
+			}
+		}
+	}
+	printf("CA MARCCHE PAS MERDE !\n");
 	return FALSE;
 }
 
