@@ -7,6 +7,8 @@ int main() {
 	int ig = 1;
 	COUL joueur ;
 
+	srand(time(NULL));
+	
 	init_graphics(L_FENETRE,H_FENETRE);
 	affiche_auto_off();
 	init_plateau();
@@ -110,5 +112,58 @@ void jouer(int mod,COUL joueur,int ig) {
 }
 
 void jouer_ia(COUL joueur,int ig) {
+	NUMBOX boxOrigine, boxDest, clic ;
+	int lisere = 0;
+
+	init_plateau();
 	
+	COUL ia = BLANC;
+	if (joueur == BLANC){
+		ia = NOIR;
+		positionne_pions(ig, joueur);
+		positionne_pions_ia(ig, ia);
+	}else{
+		positionne_pions_ia(ig, ia);
+		positionne_pions(ig, joueur);
+	}
+
+	afficher_panneau_info();
+	afficher_panneau_jeu(ig);
+
+	while (TRUE) {
+		afficher_panneau_jeu(ig);
+		afficher_joueur_courant(joueur);
+
+		if (selectionne_pion(joueur, lisere, NULL)) {
+			afficher_plateau(ig);
+			if (attend_clic_numbox_valide(ig,&clic))
+				return ;
+			do {
+				boxOrigine = clic ;
+				selectionne_pion(joueur, lisere, &boxOrigine);
+				afficher_plateau(ig);
+				if (attend_clic_numbox_valide(ig,&clic))
+					return ;
+				if (est_licorne_adverse(clic, joueur)) {
+					boxDest = clic ;
+					deplacement_simple(boxOrigine, boxDest);
+					afficher_plateau(ig);
+					afficher_victoire(joueur);
+					wait_clic();
+					return ;
+				}
+			} while(est_pion(clic));
+
+			boxDest = clic ;
+			deplacement_simple(boxOrigine, boxDest);
+			lisere = change_lisere(boxDest);
+
+		} else {
+			afficher_plateau(ig);
+			afficher_coups_impossible();
+			wait_clic();
+		}
+
+		change_joueur(&joueur);
+	}
 }
