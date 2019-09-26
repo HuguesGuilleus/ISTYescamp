@@ -41,6 +41,16 @@ void init_plateau() {
 	plateau[5][5].lisere = 2 ;
 }
 
+// Met tout les status à invalide
+void init_status() {
+	int c,l;
+	for (c = 0; c < NB_BOX_PLATEAU; c++) {
+		for (l = 0; l < NB_BOX_PLATEAU; l++) {
+			plateau[c][l].status = INVALIDE ;
+		}
+	}
+}
+
 void init_piece1_debug() {
 	init_plateau(plateau);
 
@@ -119,7 +129,7 @@ void init_piece3_debug() {
 	plateau[2][3].coulP = NOIR ;
 }
 
-void regle_case_accessible_position(int ig, COUL joueur) {
+void init_case_accessible_position(int ig, COUL joueur) {
 	NUMBOX coord ;
 
 	init_status();
@@ -161,16 +171,6 @@ void ajoute_licorne(NUMBOX coord, COUL coul) {
 void supprime_pion(NUMBOX coord) {
 	plateau[coord.c][coord.l].typeP = VIDE ;
 	plateau[coord.c][coord.l].coulP = BLANC ;
-}
-
-// Met tout les status à invalide
-void init_status() {
-	int c,l;
-	for (c = 0; c < NB_BOX_PLATEAU; c++) {
-		for (l = 0; l < NB_BOX_PLATEAU; l++) {
-			plateau[c][l].status = INVALIDE ;
-		}
-	}
 }
 
 // Séléctionne les pions déplacable, et les cases d'arrivés en fonction

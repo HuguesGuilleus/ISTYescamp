@@ -7,7 +7,7 @@ void positionne_pions(int ig, COUL joueur) {
 	NUMBOX coord ;
 	int paladin = 0, licorne = 0 ;
 
-	regle_case_accessible_position(ig, joueur);
+	init_case_accessible_position(ig, joueur);
 
 	afficher_panneau_jeu(ig);
 	afficher_panneau_info();

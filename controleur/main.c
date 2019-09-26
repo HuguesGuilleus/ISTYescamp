@@ -65,11 +65,9 @@ void jouer_humain(int ig) {
 	int lisere = 0;
 
 	init_plateau();
-	// positionne_pions(ig, NOIR);
-	// positionne_pions(ig, BLANC);
+	positionne_pions(ig, NOIR);
+	positionne_pions(ig, BLANC);
 	afficher_panneau_info();
-
-	init_piece3_debug();
 
 	while (TRUE) {
 		afficher_panneau_jeu(ig);
