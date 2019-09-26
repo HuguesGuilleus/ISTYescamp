@@ -31,7 +31,7 @@ BOOL est_dans_bouton_coul(POINT clic) {
 }
 
 POINT numBoite_to_pointBG_ig_mini(int ig, NUMBOX numboxB) {
-	POINT P ;
+	POINT P = {} ;
 	int largeur_box = 20 ;
 	int margeX = (L_FENETRE-(largeur_box*6))/2 ;
 	int margeY = (H_FENETRE-(largeur_box*6))/2+100 ;

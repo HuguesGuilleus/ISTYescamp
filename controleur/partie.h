@@ -9,12 +9,14 @@
 
 	void positionne_pions(int ig, COUL joueur);
 
+	BOOL gagne(NUMBOX origine, NUMBOX dest, COUL joueur, int ig);
+
 	NUMBOX point_ig_to_numBoite(int ig, POINT P);
 	POINT numBoite_to_pointBG_ig(int ig, NUMBOX numboxB);
 
 	BOOL estHors_plateau(POINT click);
 	BOOL estDans_btn_info(POINT p);
 
-	BOOL attend_clic_numbox_valide(int ig, NUMBOX* box);
+	BOOL attend_clic_numbox_non_invalide(int ig, NUMBOX* box);
 
 #endif

@@ -13,7 +13,7 @@ void positionne_pions(int ig, COUL joueur) {
 	afficher_panneau_info();
 	afficher_joueur_courant(joueur);
 	afficher_pion_info(joueur);
-	
+
 	while (TRUE) {
 		afficher_placement_pions(paladin, licorne);
 		afficher_plateau(ig);
@@ -43,22 +43,34 @@ void positionne_pions(int ig, COUL joueur) {
 	}
 }
 
-BOOL attend_clic_numbox_valide(int ig, NUMBOX* box) {
+// Teste si le pion va sur la licorne adverse, si
+BOOL gagne(NUMBOX origine, NUMBOX dest, COUL joueur, int ig) {
+	if (est_licorne_adverse(dest, joueur)) {
+		deplacement_simple(origine, dest);
+		afficher_plateau(ig);
+		afficher_victoire(joueur);
+		wait_clic();
+		return TRUE ;
+	} else {
+		return FALSE ;
+	}
+}
+
+// Modifie box au premier clic dans une case non invalide ou
+// renvoie TRUE si le clic est dans le bouton quitter.
+BOOL attend_clic_numbox_non_invalide(int ig, NUMBOX* box) {
 	POINT clic;
 
 	do {
 		clic = wait_clic();
-		
 		if (estDans_btn_info(clic)){
-			return TRUE;
+			return TRUE ;
 		}
 		*box = point_ig_to_numBoite(ig,clic) ;
 	} while(estHors_plateau(clic) || !est_pas_invalide(*box));
 
-	
 	return FALSE;
 }
-
 
 BOOL estHors_plateau(POINT click) {
 	int marge = (H_FENETRE-TAILLE_PLATEAU)/2;

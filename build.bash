@@ -7,6 +7,8 @@ CC="gcc"
 CFLAGS="-O2 -Wall `sdl-config --cflags`"
 LIBS="`sdl-config --libs` -lm -lSDL_ttf"
 
+clear
+
 # Affiche les messages en couleur
 function print() {
 	if [[ $# != 0 ]]; then
@@ -20,7 +22,6 @@ if [[ $# == 1 && $1 == "clean" ]]; then
 	exit 0
 fi
 
-clear
 which getDoc &>/dev/null && getDoc && print "Documentation"
 
 rm -f vue/police.h
