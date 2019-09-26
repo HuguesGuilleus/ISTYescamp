@@ -116,21 +116,29 @@ void jouer_ia(COUL joueur,int ig) {
 	afficher_panneau_jeu(ig);
 
 	while (TRUE) {
+		afficher_plateau(ig);
+		afficher_joueur_courant(joueur);
+		
 		if (joueur == ia){
-			lancer_tour_ia(ia,lisere,ig);
+			if (lancer_tour_ia(ia,lisere,ig)){
+				afficher_plateau(ig);
+				afficher_victoire(ia);
+				wait_clic();
+				return ;
+			}else{
+				afficher_plateau(ig);
+				wait_clic();
+			}
 		}else{
-			afficher_panneau_jeu(ig);
-			afficher_joueur_courant(joueur);
-
 			if (selectionne_pion(joueur, lisere, NULL)) {
 				afficher_plateau(ig);
-				if (attend_clic_numbox_valide(ig,&clic))
+				if (attend_clic_numbox_non_invalide(ig,&clic))
 					return ;
 				do {
 					boxOrigine = clic ;
 					selectionne_pion(joueur, lisere, &boxOrigine);
 					afficher_plateau(ig);
-					if (attend_clic_numbox_valide(ig,&clic))
+					if (attend_clic_numbox_non_invalide(ig,&clic))
 						return ;
 					if (est_licorne_adverse(clic, joueur)) {
 						boxDest = clic ;

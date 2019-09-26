@@ -60,18 +60,26 @@ void positionne_pions_ia(COUL ia, int ig){
 	plateau[box.c][box.l].coulP = ia;
 }
 
-void lancer_tour_ia(COUL ia, int lisere, int ig){
+BOOL lancer_tour_ia(COUL ia, int lisere, int ig){
 	selectionne_pion(ia, lisere, NULL);
+	NUMBOX dest,origine;
 	
-	recup_meilleur_deplacement_ia(ia,PALADIN,ig);
+	if (recup_meilleur_deplacement_ia(&dest,&origine,ia,PALADIN,ig)){
+		if (est_licorne_adverse(dest, ia)){
+			deplacement_simple(origine,dest);
+			return TRUE;
+		}else{
+			deplacement_simple(origine,dest);
+		}
+	}
 
-	afficher_plateau(ig);
-	wait_clic();
+	return FALSE;
 
 }
 
-NUMBOX recup_meilleur_deplacement_ia(COUL ia, TYPE caseType, int ig){
-	NUMBOX b;
+BOOL recup_meilleur_deplacement_ia(NUMBOX* dest, NUMBOX* origine, COUL ia, TYPE caseType, int ig){
+	NUMBOX b,tabBox[18];
+	int nbTabBox = 0,i = 0;
 	b.c = 0; b.l = 0;
 	
 	BOX* box;
@@ -80,14 +88,52 @@ NUMBOX recup_meilleur_deplacement_ia(COUL ia, TYPE caseType, int ig){
 		for (l = 0; l<NB_BOX_PLATEAU; l++){
 			box = getBox(c,l);
 			if ( box->status == VALIDE ){
-				b.c = c; b.l =l;
-				selectionne_pion(ia,box->lisere,&b);
+				parcourt_plusieurs_cases(c, l, box->coulP, box->typeP, box->lisere) ;
 			}
 		}
 	}
 	
+	//premier parcours
+	for (c = 0; c<NB_BOX_PLATEAU; c++){
+		for (l = 0; l<NB_BOX_PLATEAU; l++){
+			box = getBox(c,l);
+			if ( box->status == ACCESSIBLE ){
+				if (box->typeP == LICORNE){
+					dest->c = c; dest->l = l;
+					origine->c = 0; origine->l=0;
+					return TRUE; 
+				}else{
+					tabBox[nbTabBox] = (NUMBOX){c:c,l:l};
+					nbTabBox++;
+				}
+			}
+		}
+	}
+	init_status();
 	
-	return b;
+	//dexieme parcours
+	for (i = 0; i<nbTabBox; i++){
+		box = getBox(c,l);
+		parcourt_plusieurs_cases(tabBox[i].c, tabBox[i].l, box->coulP, box->typeP, box->lisere);
+		
+		for (c = 0; c<NB_BOX_PLATEAU; c++){
+			for (l = 0; l<NB_BOX_PLATEAU; l++){
+				box = getBox(c,l);
+				if ( box->status == ACCESSIBLE ){
+					if (box->typeP == LICORNE){
+						dest->c = tabBox[i].c; dest->l = tabBox[i].l;
+						origine->c = 0; origine->l=0;
+						return TRUE; 
+					}
+				}
+			}
+		}
+		init_status();
+	}
+	
+	dest->c = 0; dest->l = 0;
+	origine->c = 0; origine->l=0;
+	return FALSE;
 }
 
 NUMBOX recup_meilleur_placement_ia(COUL ia, TYPE caseType, int ig){
