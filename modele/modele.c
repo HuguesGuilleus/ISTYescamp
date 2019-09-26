@@ -136,13 +136,13 @@ void regle_case_accessible_position(int ig, COUL joueur) {
 BOOL est_accessible_positionnement(NUMBOX box, int ig, COUL joueur) {
 	switch (ig) {
 		case 1:
-			return (box.l < 2 && joueur == BLANC) || (box.l > 3 && joueur == NOIR) ;
+			return (box.l < 2 && joueur == NOIR) || (box.l > 3 && joueur == BLANC) ;
 		case 2:
-			return (box.c < 2 && joueur == BLANC) || (box.c > 3 && joueur == NOIR) ;
+			return (box.c < 2 && joueur == NOIR) || (box.c > 3 && joueur == BLANC) ;
 		case 3:
-			return (box.l > 3 && joueur == BLANC) || (box.l < 2 && joueur == NOIR) ;
+			return (box.l > 3 && joueur == NOIR) || (box.l < 2 && joueur == BLANC) ;
 		case 4:
-			return (box.c > 3 && joueur == BLANC) || (box.c < 2 && joueur == NOIR) ;
+			return (box.c > 3 && joueur == NOIR) || (box.c < 2 && joueur == BLANC) ;
 		default:
 			return FALSE;
 	}

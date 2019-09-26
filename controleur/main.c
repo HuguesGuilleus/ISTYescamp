@@ -31,7 +31,7 @@ int main() {
 					afficher_menu_select_joueur(joueur,ig,1);
 				}
 			} while(!est_dans_bouton_valider(clic_menu));
-			jouer(1, joueur, ig);
+			jouer_humain(ig);
 			init_plateau();
 			afficher_menu();
 			joueur = BLANC;
@@ -61,22 +61,19 @@ int main() {
 	}
 }
 
-void jouer(int mod,COUL joueur,int ig) {
+void jouer_humain(int ig) {
 	NUMBOX boxOrigine, boxDest, clic ;
+	COUL joueur = BLANC ;
 	int lisere = 0;
 
 	init_plateau();
-	// init_piece3_debug();
-	positionne_pions(ig, BLANC);
 	positionne_pions(ig, NOIR);
-
+	positionne_pions(ig, BLANC);
 	afficher_panneau_info();
-	afficher_panneau_jeu(ig);
 
 	while (TRUE) {
 		afficher_panneau_jeu(ig);
 		afficher_joueur_courant(joueur);
-
 		if (selectionne_pion(joueur, lisere, NULL)) {
 			afficher_plateau(ig);
 			if (attend_clic_numbox_valide(ig,&clic))
@@ -96,17 +93,14 @@ void jouer(int mod,COUL joueur,int ig) {
 					return ;
 				}
 			} while(est_pion(clic));
-
 			boxDest = clic ;
 			deplacement_simple(boxOrigine, boxDest);
 			lisere = change_lisere(boxDest);
-
 		} else {
 			afficher_plateau(ig);
 			afficher_coups_impossible();
 			wait_clic();
 		}
-
 		change_joueur(&joueur);
 	}
 }
