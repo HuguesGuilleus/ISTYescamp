@@ -99,7 +99,7 @@ BOOL recup_meilleur_deplacement_ia(NUMBOX* dest, NUMBOX* origine, COUL ia, TYPE 
 		}
 	}
 	if (nbtabBoxSelect == 0){
-		printf('PAS DE CASE SELECTIONNABLE');
+		printf("PAS DE CASE SELECTIONNABLE");
 		return FALSE;
 	}
 	
@@ -200,7 +200,7 @@ BOOL recup_meilleur_deplacement_ia(NUMBOX* dest, NUMBOX* origine, COUL ia, TYPE 
 			}
 		}
 	}
-	printf("ERREUR IA - 3 %d\n",tabBoxSelect[0]);
+	printf("ERREUR IA - 3 \n");
 	return FALSE;
 }
 
