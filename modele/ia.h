@@ -13,4 +13,5 @@
 	BOOL recup_meilleur_deplacement_ia(NUMBOX* dest, NUMBOX* origine, COUL ia, TYPE caseType, int ig);
 	NUMBOX recup_meilleur_placement_ia(COUL ia,TYPE caseType,int ig);
 	
+	NUMBOX recup_numbox_vide_rand(COUL ia, int ig);
 #endif

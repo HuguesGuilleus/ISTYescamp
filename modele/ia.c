@@ -2,59 +2,60 @@
 
 #include "ia.h"
 
+NUMBOX recup_numbox_vide_rand(COUL ia, int ig){
+	NUMBOX box;
+	box.l = 0; box.c = 0;
+	
+	int minL = 0,minC = 0,maxL = 0,maxC = 0;
+	
+	if (ia == NOIR){
+		if (ig == 1){ minL = 0; maxL = 1; minC = 0; maxC = 5;}
+		else if (ig == 2){ minL = 0; maxL = 5; minC = 0; maxC = 1;}
+		else if (ig == 3){ minL = 4; maxL = 5; minC = 0; maxC = 5;}
+		else if (ig == 4){ minL = 0; maxL = 5; minC = 4; maxC = 5;}
+		
+		do{
+			box.l = minL+(rand()%(maxL-minL+1));
+			box.c = minC+(rand()%(maxC-minC+1));
+		}while (plateau[box.c][box.l].typeP != VIDE );
+	}else{
+		if (ig == 1){ minL = 4; maxL = 5; minC = 0; maxC = 5;}
+		else if (ig == 2){ minL = 0; maxL = 5; minC = 4; maxC = 5;}
+		else if (ig == 3){ minL = 0; maxL = 1; minC = 0; maxC = 5;}
+		else if (ig == 4){ minL = 0; maxL = 5; minC = 0; maxC = 1;}
+		
+		do{
+			box.l = minL+(rand()%(maxL-minL+1));
+			box.c = minC+(rand()%(maxC-minC+1));
+		}while (plateau[box.c][box.l].typeP != VIDE );
+	}
+	
+	return box;
+}
+
+
 void positionne_pions_ia(COUL ia, int ig){
 	NUMBOX box;
 	box.l = 0; box.c = 0;
 	
 	int i;
-	int minL = 0,minC = 0,maxL = 0,maxC = 0;
 	
 	for (i=0; i<NB_BOX_PLATEAU-1;i++){
 		if (ia == NOIR){
-			if (ig == 1){ minL = 0; maxL = 1; minC = 0; maxC = 5;}
-			else if (ig == 2){ minL = 0; maxL = 5; minC = 0; maxC = 1;}
-			else if (ig == 3){ minL = 4; maxL = 5; minC = 0; maxC = 5;}
-			else if (ig == 4){ minL = 0; maxL = 5; minC = 4; maxC = 5;}
-			
-			do{
-				box.l = minL+(rand()%(maxL-minL+1));
-				box.c = minC+(rand()%(maxC-minC+1));
-			}while (plateau[box.c][box.l].typeP != VIDE );
+			box = recup_numbox_vide_rand(ia,ig);
 		}else{
-			box = recup_meilleur_placement_ia(ia,PALADIN,ig);
+			//box = recup_meilleur_placement_ia(ia,PALADIN,ig);
+			box = recup_numbox_vide_rand(ia,ig);
 		}
 		plateau[box.c][box.l].typeP = PALADIN;
 		plateau[box.c][box.l].coulP = ia;
-	}//end for
-	
+	}
 	
 	if (ia == NOIR){
-		switch (ig) {
-			case 1:
-				do{
-					box.l = rand()%2; box.c = rand()%NB_BOX_PLATEAU;
-				}while (plateau[box.c][box.l].typeP != VIDE );
-				break;
-			case 2:
-				do{
-					box.l = rand()%NB_BOX_PLATEAU; box.c = rand()%2;
-				}while (plateau[box.c][box.l].typeP != VIDE );
-				break;
-			case 3:
-				do{
-					box.l = 4 + (rand()%2); box.c = rand()%NB_BOX_PLATEAU;
-				}while (plateau[box.c][box.l].typeP != VIDE );
-				break;
-			case 4:
-				do{
-					box.l = rand()%NB_BOX_PLATEAU; box.c = 4 + (rand()%2);
-				}while (plateau[box.c][box.l].typeP != VIDE );
-				break;
-			default:
-				break;
-		}//end switch
+		box = recup_numbox_vide_rand(ia,ig);
 	}else{
-		box = recup_meilleur_placement_ia(ia,LICORNE,ig);
+		//box = recup_meilleur_placement_ia(ia,LICORNE,ig);
+		box = recup_numbox_vide_rand(ia,ig);
 	}
 	plateau[box.c][box.l].typeP = LICORNE;
 	plateau[box.c][box.l].coulP = ia;
@@ -79,8 +80,8 @@ BOOL lancer_tour_ia(COUL ia, int lisere, int ig){
 
 BOOL recup_meilleur_deplacement_ia(NUMBOX* dest, NUMBOX* origine, COUL ia, TYPE caseType, int ig){
 	NUMBOX b;
-	NUMBOX tabBoxAccessible[18];
-	NUMBOX tabBoxSelect[18];
+	NUMBOX tabBoxAccessible[36];
+	NUMBOX tabBoxSelect[36];
 	int nbtabBoxAccessible = 0,nbtabBoxSelect = 0,i = 0;
 	b.c = 0; b.l = 0;
 	
@@ -97,6 +98,10 @@ BOOL recup_meilleur_deplacement_ia(NUMBOX* dest, NUMBOX* origine, COUL ia, TYPE 
 			}
 		}
 	}
+	if (nbtabBoxSelect == 0){
+		printf('PAS DE CASE SELECTIONNABLE');
+		return FALSE;
+	}
 	
 	//premier parcours
 	for (c = 0; c<NB_BOX_PLATEAU; c++){
@@ -110,21 +115,20 @@ BOOL recup_meilleur_deplacement_ia(NUMBOX* dest, NUMBOX* origine, COUL ia, TYPE 
 					//recup box origine
 					for (i = 0; i < nbtabBoxSelect;i++){
 						b = tabBoxSelect[i];
-						printf("tabBoxSelect[i].c = %d , tabBoxSelect[i].l = %d \n",tabBoxSelect[i].c,tabBoxSelect[i].l);
 						box = getBox(b.c,b.l);
 						parcourt_plusieurs_cases(b.c, b.l, box->coulP, box->typeP, box->lisere) ;
-						box = getBox(dest->c,dest->l);
 						for (c = 0; c<NB_BOX_PLATEAU; c++){
 							for (l = 0; l<NB_BOX_PLATEAU; l++){
-								box = getBox(b.c,b.l);
+								box = getBox(c,l);
 								if ( box->status == ACCESSIBLE && c == dest->c && l == dest->l ){
-									printf("ok");
 									origine->c = b.c; origine->l= b.l;
 									return TRUE; 
 								}
+								
 							}
 						}
 					}
+					printf("ERREUR IA - 1\n");
 					return FALSE; 
 				}else{
 					b.c = c; b.l =l;
@@ -135,6 +139,11 @@ BOOL recup_meilleur_deplacement_ia(NUMBOX* dest, NUMBOX* origine, COUL ia, TYPE 
 		}
 	}
 	init_status();
+	if (nbtabBoxAccessible == 0){
+		printf("PAS DE CASE ACCESSIBLE\n");
+		return FALSE;
+	}
+	
 	
 	//dexieme parcours
 	for (i = 0; i<nbtabBoxAccessible; i++){
@@ -148,26 +157,24 @@ BOOL recup_meilleur_deplacement_ia(NUMBOX* dest, NUMBOX* origine, COUL ia, TYPE 
 					if (box->typeP == LICORNE){
 						init_status();
 						dest->c = tabBoxAccessible[i].c; dest->l = tabBoxAccessible[i].l;
-						
+					
 						//recup box origine
 						for (i = 0; i < nbtabBoxSelect;i++){
 							b = tabBoxSelect[i];
-							printf("tabBoxSelect[i].c = %d , tabBoxSelect[i].l = %d \n",tabBoxSelect[i].c,tabBoxSelect[i].l);
 							box = getBox(b.c,b.l);
 							parcourt_plusieurs_cases(b.c, b.l, box->coulP, box->typeP, box->lisere) ;
-							box = getBox(dest->c,dest->l);
 							for (c = 0; c<NB_BOX_PLATEAU; c++){
 								for (l = 0; l<NB_BOX_PLATEAU; l++){
-									box = getBox(b.c,b.l);
+									box = getBox(c,l);
 									if ( box->status == ACCESSIBLE && c == dest->c && l == dest->l ){
-										printf("ok");
 										origine->c = b.c; origine->l= b.l;
 										return TRUE; 
 									}
 								}
 							}
 						}
-						return FALSE;
+						printf("ERREUR IA - 2\n");
+						return FALSE; 
 					}
 				}
 			}
@@ -175,27 +182,25 @@ BOOL recup_meilleur_deplacement_ia(NUMBOX* dest, NUMBOX* origine, COUL ia, TYPE 
 		init_status();
 	}
 	i = rand()%nbtabBoxAccessible;
-	dest->c = tabBoxAccessible[i].c; dest->l = tabBoxAccessible[i].c;
+	dest->c = tabBoxAccessible[i].c; dest->l = tabBoxAccessible[i].l;
 	
 	//recup box origine
 	for (i = 0; i < nbtabBoxSelect;i++){
 		b = tabBoxSelect[i];
-		printf("tabBoxSelect[i].c = %d , tabBoxSelect[i].l = %d \n",tabBoxSelect[i].c,tabBoxSelect[i].l);
 		box = getBox(b.c,b.l);
 		parcourt_plusieurs_cases(b.c, b.l, box->coulP, box->typeP, box->lisere) ;
-		box = getBox(dest->c,dest->l);
 		for (c = 0; c<NB_BOX_PLATEAU; c++){
 			for (l = 0; l<NB_BOX_PLATEAU; l++){
-				box = getBox(b.c,b.l);
+				box = getBox(c,l);
 				if ( box->status == ACCESSIBLE && c == dest->c && l == dest->l ){
-					printf("ok");
 					origine->c = b.c; origine->l= b.l;
-					return FALSE; 
+					return TRUE; 
 				}
+				
 			}
 		}
 	}
-	printf("CA MARCCHE PAS MERDE !\n");
+	printf("ERREUR IA - 3 %d\n",tabBoxSelect[0]);
 	return FALSE;
 }
 

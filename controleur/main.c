@@ -127,7 +127,6 @@ void jouer_ia(COUL joueur,int ig) {
 				return ;
 			}else{
 				afficher_plateau(ig);
-				wait_clic();
 			}
 		}else{
 			if (selectionne_pion(joueur, lisere, NULL)) {
