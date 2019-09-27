@@ -198,6 +198,15 @@ void supprime_pion(NUMBOX coord) {
 	plateau[coord.c][coord.l].coulP = BLANC ;
 }
 
+BOOL peut_selectionner_pion(COUL coul, int lisere) {
+	return selectionne_pion(coul, lisere, NULL) ;
+}
+
+void selectionne_case_accessible(COUL coul, int lisere, NUMBOX select) {
+	selectionne_pion(coul, lisere, &select) ;
+	return ;
+}
+
 // Séléctionne les pions déplacable, et les cases d'arrivés en fonction
 // de coul: la couleur du joueur actuel; lisere: la case d'arrivé de la
 // dernière pièce, 0 au premier tour; select: la case séléctionné ou NULL.
@@ -221,7 +230,7 @@ BOOL selectionne_pion(COUL coul, int lisere, NUMBOX * select) {
 		}
 	}
 
-	if (select) {
+	if (select != NULL) {
 		b = &plateau[select->c][select->l] ;
 		parcourt_plusieurs_cases(select->c, select->l, b->coulP, b->typeP, b->lisere) ;
 		b->status = SELECT ;
@@ -306,8 +315,16 @@ BOOL est_pas_invalide(NUMBOX b) {
 	return plateau[b.c][b.l].status != INVALIDE ;
 }
 
-BOOL est_pion(NUMBOX b) {
-	return plateau[b.c][b.l].typeP != VIDE ;
+BOOL est_pion_joueur_courant(NUMBOX coord, COUL joueur) {
+	BOX b = plateau[coord.c][coord.l] ;
+	switch (b.typeP) {
+		case PALADIN:
+			return TRUE ;
+		case LICORNE:
+			return b.coulP == joueur ;
+		default:
+			return FALSE ;
+	}
 }
 
 BOOL est_licorne_adverse(NUMBOX coord, COUL coul) {

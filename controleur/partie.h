@@ -11,6 +11,8 @@
 
 	BOOL gagne(NUMBOX origine, NUMBOX dest, COUL joueur, int ig);
 
+	POINT attend_clic_quitter_ou_case_non_invalide(int ig);
+
 	NUMBOX point_ig_to_numBoite(int ig, POINT P);
 	POINT numBoite_to_pointBG_ig(int ig, NUMBOX numboxB);
 

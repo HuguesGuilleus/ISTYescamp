@@ -8,7 +8,7 @@ int main() {
 	COUL joueur ;
 
 	srand(time(NULL));
-	
+
 	init_graphics(L_FENETRE,H_FENETRE);
 	affiche_auto_off();
 	init_plateau();
@@ -17,7 +17,7 @@ int main() {
 
 	while (TRUE) {
 		clic_menu = wait_clic();
-		if (est_dans_bouton_quitter(clic_menu)) {
+		if (est_dans_menu_bouton_quitter(clic_menu)) {
 			return 0;
 		} else if (est_dans_bouton_JvsJ(clic_menu)) {
 			afficher_menu_select_joueur(joueur, ig, 1);
@@ -31,7 +31,7 @@ int main() {
 					afficher_menu_select_joueur(joueur,ig,1);
 				}
 			} while(!est_dans_bouton_valider(clic_menu));
-			jouer_humain(ig);
+			jouer(ig);
 			init_plateau();
 			afficher_menu();
 			joueur = BLANC;
@@ -61,30 +61,42 @@ int main() {
 	}
 }
 
-void jouer_humain(int ig) {
+void jouer(int ig) {
 	NUMBOX boxOrigine, boxDest, coord ;
-	COUL joueur = BLANC ;
+	COUL joueur = NOIR ;
 	int lisere = 0;
+	BOOL perdu = TRUE ;
+	POINT clic ;
 
+	// init_piece3_debug();
 	init_plateau();
 	positionne_pions(ig, NOIR);
 	positionne_pions(ig, BLANC);
 	afficher_panneau_info();
+	afficher_panneau_jeu(ig);
 
-	while (TRUE) {
-		afficher_panneau_jeu(ig);
+	do {
+		change_joueur(&joueur);
 		afficher_joueur_courant(joueur);
-		if (selectionne_pion(joueur, lisere, NULL)) {
+		if (peut_selectionner_pion(joueur, lisere)) {
 			afficher_plateau(ig) ;
-			if (attend_clic_numbox_non_invalide(ig,&coord)) return ;
+			clic = attend_clic_quitter_ou_case_non_invalide(ig) ;
+			if (est_dans_bouton_quitter(clic))
+				return ;
+			coord = point_ig_to_numBoite(ig,clic) ;
 			do {
 				boxOrigine = coord ;
-				selectionne_pion(joueur, lisere, &boxOrigine);
+				selectionne_case_accessible(joueur, lisere, boxOrigine);
 				afficher_plateau(ig);
-				if (attend_clic_numbox_non_invalide(ig,&coord)) return ;
-				if ((gagne(boxOrigine, coord, joueur, ig))) return ;
-			} while(est_pion(coord));
+				clic = attend_clic_quitter_ou_case_non_invalide(ig) ;
+				if (est_dans_bouton_quitter(clic))
+					return ;
+				coord = point_ig_to_numBoite(ig,clic) ;
+			} while(est_pion_joueur_courant(coord, joueur));
 			boxDest = coord ;
+			if (est_licorne_adverse(boxDest, joueur)) {
+				perdu = FALSE ;
+			}
 			deplacement_simple(boxOrigine, boxDest);
 			lisere = change_lisere(boxDest);
 		} else {
@@ -92,8 +104,10 @@ void jouer_humain(int ig) {
 			afficher_coups_impossible();
 			wait_clic();
 		}
-		change_joueur(&joueur);
-	}
+	} while (perdu) ;
+	afficher_plateau(ig);
+	afficher_victoire(joueur);
+	wait_clic();
 }
 
 void jouer_ia(COUL joueur,int ig) {
@@ -101,7 +115,7 @@ void jouer_ia(COUL joueur,int ig) {
 	int lisere = 0;
 
 	init_plateau();
-	
+
 	COUL ia = NOIR;
 	if (joueur == NOIR){
 		ia = BLANC;
@@ -118,7 +132,7 @@ void jouer_ia(COUL joueur,int ig) {
 	while (TRUE) {
 		afficher_plateau(ig);
 		afficher_joueur_courant(joueur);
-		
+
 		if (joueur == ia){
 			if (lancer_tour_ia(ia,lisere,ig)){
 				afficher_plateau(ig);
@@ -147,7 +161,8 @@ void jouer_ia(COUL joueur,int ig) {
 						wait_clic();
 						return ;
 					}
-				} while(est_pion(clic));
+				// } while(est_pion(clic));
+			} while(est_pion_joueur_courant(clic, joueur));
 
 				boxDest = clic ;
 				deplacement_simple(boxOrigine, boxDest);

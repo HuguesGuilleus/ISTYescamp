@@ -43,6 +43,10 @@ void positionne_pions(int ig, COUL joueur) {
 	}
 }
 
+BOOL test_perdre(NUMBOX dest, COUL joueur) {
+	return est_licorne_adverse(dest, joueur) ;
+}
+
 // Teste si le pion va sur la licorne adverse, si
 BOOL gagne(NUMBOX origine, NUMBOX dest, COUL joueur, int ig) {
 	if (est_licorne_adverse(dest, joueur)) {
@@ -54,6 +58,18 @@ BOOL gagne(NUMBOX origine, NUMBOX dest, COUL joueur, int ig) {
 	} else {
 		return FALSE ;
 	}
+}
+
+POINT attend_clic_quitter_ou_case_non_invalide(int ig) {
+	POINT c ;
+	NUMBOX b ;
+
+	do {
+		c = wait_clic() ;
+		b = point_ig_to_numBoite(ig, c) ;
+	} while( !est_dans_bouton_quitter(c) && ( estHors_plateau(c) || !est_pas_invalide(b) ) );
+
+	return c ;
 }
 
 // Modifie box au premier clic dans une case non invalide ou

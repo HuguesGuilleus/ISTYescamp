@@ -2,8 +2,12 @@
 
 #include "menu.h"
 
+BOOL est_dans_menu_bouton_quitter(POINT clic) {
+	return 50 <= clic.x && clic.x <= (L_FENETRE-50) && 50 <= clic.y && clic.y <= 150 ;
+}
+
 BOOL est_dans_bouton_quitter(POINT clic) {
-	return clic.y >= 50 && clic.y <= 150 && clic.x <= (L_FENETRE-50) && clic.x >= 50 ;
+	return H_FENETRE+50 <= clic.x && clic.x <= (L_FENETRE-50) && 50 <= clic.y && clic.y <= 100 ;
 }
 
 BOOL est_dans_bouton_JvsJ(POINT clic) {

@@ -7,6 +7,7 @@
 	#include "../modele/modele.h"
 	#include "../vue/vue.h"
 
+	BOOL est_dans_menu_bouton_quitter(POINT clic);
 	BOOL est_dans_bouton_quitter(POINT clic);
 	BOOL est_dans_bouton_JvsJ(POINT clic);
 	BOOL est_dans_bouton_JvsIA(POINT clic);

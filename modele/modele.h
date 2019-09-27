@@ -56,10 +56,12 @@
 	void ajoute_licorne(NUMBOX coord, COUL coul);
 	void supprime_pion(NUMBOX coord);
 
+	BOOL peut_selectionner_pion(COUL coul, int lisere);
+	void selectionne_case_accessible(COUL coul, int lisere, NUMBOX select);
 	BOOL selectionne_pion(COUL coul, int lisere, NUMBOX * select);
 
 	BOOL est_pas_invalide(NUMBOX b);
-	BOOL est_pion(NUMBOX b);
+	BOOL est_pion_joueur_courant(NUMBOX coord, COUL joueur);
 	BOOL est_licorne_adverse(NUMBOX coord, COUL coul);
 	BOOL est_numbox_vide(NUMBOX b);
 	BOOL peut_selectioner_pion(NUMBOX entreBox, COUL coul, int lisere);
