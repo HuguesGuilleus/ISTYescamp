@@ -3,8 +3,8 @@
 #include "vue.h"
 
 // Affiche les boxs du plateau, les paladins et les licornes.
-// Prend en paramètre un entier 1 ou 2, pour l'interface graphique (rotation
-// du plateau).
+// Prend en paramètre un entier pour l'interface graphique
+// (rotation du plateau).
 void afficher_plateau(int ig){
 	int x,y;
 
@@ -14,9 +14,9 @@ void afficher_plateau(int ig){
 	for(x=0;x<NB_BOX_PLATEAU;x++){
 		for(y=0;y<NB_BOX_PLATEAU;y++){
 			box.l = y; box.c = x;
-			
+
 			pBDBox = numBoite_to_pointBG_ig(ig,box);
-			afficher_lisere(pBDBox, plateau[x][y].lisere,box);
+			afficher_lisere(pBDBox, plateau[x][y].lisere, box);
 
 			switch (plateau[x][y].typeP){
 				case LICORNE:
@@ -32,23 +32,26 @@ void afficher_plateau(int ig){
 	}
 	affiche_all();
 }
+
+
 void afficher_victoire(COUL joueur){
 	POINT pHG;
+	char texte[50];
+
 	pHG.x = (H_FENETRE-TAILLE_PLATEAU)/2+(TAILLE_PLATEAU/2)-200;
 	pHG.y = (H_FENETRE-TAILLE_PLATEAU)/2+(TAILLE_PLATEAU/2)+44;
 
 	aff_pol("VICTOIRE", 76, pHG, noir);
-	pHG.y += 1;pHG.x += 2;
+	pHG.y += 1; pHG.x += 2;
 	aff_pol("VICTOIRE", 76, pHG, vert);
 
-	char texte[50];
 	strcpy(texte,"Bravo joueur blanc !");
 	if (joueur == NOIR)
 		strcpy(texte,"Bravo joueur noir ! ");
 
-	pHG.y -= 86;pHG.x += 34;
+	pHG.y -= 86; pHG.x += 34;
 	aff_pol(texte, 31, pHG, noir);
-	pHG.y += 1;pHG.x += 2;
+	pHG.y += 1; pHG.x += 2;
 	aff_pol(texte, 31, pHG, vert);
 
 	affiche_all();
@@ -73,21 +76,20 @@ void afficher_coups_impossible(){
 
 //Affiche le panneau droit avec les informations
 void afficher_panneau_info(){
-	POINT pBG,pHD;
+	POINT pBG, pHD;
 
 	pBG.x = H_FENETRE ; pBG.y = 0 ;
 	pHD.x = L_FENETRE ; pHD.y = H_FENETRE ;
+	draw_fill_rectangle(pBG, pHD, COULEUR_PRIMAIRE);
 
-	draw_fill_rectangle(pBG,pHD,COULEUR_PRIMAIRE);
-	
 	afficher_btn_info("Quitter", 1);
 }
 
-//Affiche le panneau de jeu avec le plateau de jeu et les pions
+// Affiche le panneau de jeu avec le plateau de jeu et les pions
 void afficher_panneau_jeu(int ig){
 	POINT pBG, pHD;
 
-	pBG.x = 0 ; pBG.y = 0;
+	pBG.x = 0 ; pBG.y = 0 ;
 	pHD.x = H_FENETRE ; pHD.y = H_FENETRE ;
 	draw_fill_rectangle(pBG, pHD, couleur_RGB(232,210,160));
 
@@ -95,17 +97,14 @@ void afficher_panneau_jeu(int ig){
 	pBG.y += (H_FENETRE-TAILLE_PLATEAU)/2-25;
 	pHD.x -= (H_FENETRE-TAILLE_PLATEAU)/2-20;
 	pHD.y -= (H_FENETRE-TAILLE_PLATEAU)/2-20;
-
 	draw_fill_rectangle(pBG, pHD, COULEUR_PRIMAIRE);
 
 	afficher_legende_plateau(ig);
-
 	afficher_plateau(ig);
 }
 
 // Affiche la légende autour du plateau (chiffres et lettres)
-// Prend en paramètre un entier pour l'interface graphique.
-void afficher_legende_plateau(int ig){
+void afficher_legende_plateau(int ig) {
 	int i, chiffre = 0 ;
 	POINT pLettre, pChiffre;
 	char lettre[2];
@@ -138,7 +137,7 @@ void afficher_legende_plateau(int ig){
 			pChiffre.x = (H_FENETRE-TAILLE_PLATEAU)/2-18;
 			chiffre = NB_BOX_PLATEAU-i;
 			lettre[0] = ('F'-i);
-		}else if (ig == 4) {
+		} else if (ig == 4) {
 			pLettre.y = (H_FENETRE-TAILLE_PLATEAU)/2+(i*largeur_box)+largeur_box/2+6;
 			pChiffre.x = (H_FENETRE-TAILLE_PLATEAU)/2+(i*largeur_box)+largeur_box/2-3;
 
@@ -156,10 +155,10 @@ void afficher_legende_plateau(int ig){
 		} else if (ig == 2) {
 			pLettre.x = H_FENETRE-(H_FENETRE-TAILLE_PLATEAU)/2+5;
 			pChiffre.y = H_FENETRE-(H_FENETRE-TAILLE_PLATEAU)/2+20;
-		}else if (ig == 3) {
+		} else if (ig == 3) {
 			pLettre.y = H_FENETRE-(H_FENETRE-TAILLE_PLATEAU)/2+20;
 			pChiffre.x = H_FENETRE-(H_FENETRE-TAILLE_PLATEAU)/2+5;
-		}else if (ig == 4) {
+		} else if (ig == 4) {
 			pLettre.x = H_FENETRE-(H_FENETRE-TAILLE_PLATEAU)/2+5;
 			pChiffre.y = H_FENETRE-(H_FENETRE-TAILLE_PLATEAU)/2+20;
 		}
@@ -274,14 +273,14 @@ void afficher_joueur_courant(COUL joueur){
 		aff_pol("Joueur", 24, hg, noir);
 		hg.x +=2;hg.y+=2;
 		aff_pol("Joueur", 24, hg, blanc);
-		
+
 		hg.x += 150;hg.y-=15;
 		draw_fill_circle(hg, 30,blanc);
 	}else{
 		aff_pol("Joueur", 24, hg, noir);
 		hg.x +=2;hg.y+=2;
 		aff_pol("Joueur", 24, hg, blanc);
-		
+
 		hg.x += 150;hg.y-=15;
 		draw_fill_circle(hg, 30,noir);
 	}
@@ -314,7 +313,7 @@ void afficher_pion_info(COUL coul){
 	POINT bg;
 	bg.x = H_FENETRE+25; bg.y = H_FENETRE/2;
 	afficher_paladin(bg, coul);
-	
+
 	bg.x += (L_FENETRE-H_FENETRE)/2;
 	afficher_licorne(bg, coul);
 }
@@ -322,10 +321,10 @@ void afficher_pion_info(COUL coul){
 void afficher_placement_pions(int paladin, int licorne) {
 	POINT texteHG,texteBD;
 	texteHG.x = H_FENETRE+50; texteHG.y = H_FENETRE/2;
-	
+
 	char text[25];
 	COULEUR couleur;
-	
+
 	couleur = blanc;
 	if (paladin == 5) {
 		couleur = vert;
@@ -334,12 +333,12 @@ void afficher_placement_pions(int paladin, int licorne) {
 	}
 	texteBD.y = texteHG.y-24; texteBD.x = texteHG.x+(L_FENETRE-H_FENETRE)-30;
 	draw_fill_rectangle(texteHG,texteBD,COULEUR_PRIMAIRE);
-	
+
 	sprintf(text,"%d / 5", paladin);
 	aff_pol(text, 18, texteHG, noir);
 	texteHG.x +=2;texteHG.y +=2;
 	aff_pol(text, 18, texteHG, couleur);
-	
+
 	couleur = blanc;
 	if (licorne == 1) {
 		couleur = vert;
@@ -348,12 +347,12 @@ void afficher_placement_pions(int paladin, int licorne) {
 	}
 	texteHG.x += (L_FENETRE-H_FENETRE)/2;
 	texteBD.y = texteHG.y-24; texteBD.x = texteHG.x+(L_FENETRE-H_FENETRE)-30;
-	
+
 	sprintf(text,"%d / 1", licorne);
 	aff_pol(text, 18, texteHG, noir);
 	texteHG.x +=2;texteHG.y +=2;
 	aff_pol(text, 18, texteHG, couleur);
-	
+
 	if (licorne == 1 && paladin == 5){
 		afficher_btn_info("Valider", 1);
 	}else{
@@ -500,5 +499,3 @@ void afficher_plateau_mini(int ig){
 		}
 	}
 }
-
-
