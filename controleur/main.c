@@ -31,7 +31,7 @@ int main() {
 					afficher_menu_select_joueur(joueur,ig,1);
 				}
 			} while(!est_dans_bouton_valider(clic_menu));
-			jouer(ig);
+			jouer(ig, BLANC, TRUE);
 			init_plateau();
 			afficher_menu();
 			joueur = BLANC;
@@ -53,7 +53,7 @@ int main() {
 					afficher_menu_select_joueur(joueur,ig,2);
 				}
 			} while(!est_dans_bouton_valider(clic_menu));
-			jouer_ia(joueur, ig);
+			jouer(ig, joueur, FALSE);
 			init_plateau();
 			afficher_menu();
 			joueur = BLANC;
@@ -61,120 +61,66 @@ int main() {
 	}
 }
 
-void jouer(int ig) {
+void jouer(int ig, COUL joueur, BOOL JvsJ) {
 	NUMBOX boxOrigine, boxDest, coord ;
-	COUL joueur = NOIR ;
 	int lisere = 0;
 	BOOL perdu = TRUE ;
 	POINT clic ;
-
-	// init_piece3_debug();
-	init_plateau();
-	positionne_pions(ig, NOIR);
-	positionne_pions(ig, BLANC);
-	afficher_panneau_info();
-	afficher_panneau_jeu(ig);
-
-	do {
-		change_joueur(&joueur);
-		afficher_joueur_courant(joueur);
-		if (peut_selectionner_pion(joueur, lisere)) {
-			afficher_plateau(ig) ;
-			clic = attend_clic_quitter_ou_case_non_invalide(ig) ;
-			if (est_dans_bouton_quitter(clic))
-				return ;
-			coord = point_ig_to_numBoite(ig,clic) ;
-			do {
-				boxOrigine = coord ;
-				selectionne_case_accessible(joueur, lisere, boxOrigine);
-				afficher_plateau(ig);
-				clic = attend_clic_quitter_ou_case_non_invalide(ig) ;
-				if (est_dans_bouton_quitter(clic))
-					return ;
-				coord = point_ig_to_numBoite(ig,clic) ;
-			} while(est_pion_joueur_courant(coord, joueur));
-			boxDest = coord ;
-			if (est_licorne_adverse(boxDest, joueur)) {
-				perdu = FALSE ;
-			}
-			deplacement_simple(boxOrigine, boxDest);
-			lisere = change_lisere(boxDest);
-		} else {
-			afficher_plateau(ig);
-			afficher_coups_impossible();
-			wait_clic();
-		}
-	} while (perdu) ;
-	afficher_plateau(ig);
-	afficher_victoire(joueur);
-	wait_clic();
-}
-
-void jouer_ia(COUL joueur,int ig) {
-	NUMBOX boxOrigine, boxDest, clic ;
-	int lisere = 0;
-
-	init_plateau();
-
 	COUL ia = NOIR;
-	if (joueur == NOIR){
-		ia = BLANC;
-		positionne_pions(ig, joueur);
-		positionne_pions_ia(ia,ig);
-	}else{
-		positionne_pions_ia(ia,ig );
-		positionne_pions(ig, joueur);
+
+	init_plateau();
+	if (JvsJ) {
+		positionne_pions(ig, NOIR);
+		positionne_pions(ig, BLANC);
+	} else {
+		if (joueur == NOIR){
+			ia = BLANC;
+			positionne_pions(ig, joueur);
+			positionne_pions_ia(ia, ig);
+		} else {
+			positionne_pions_ia(ia, ig);
+			positionne_pions(ig, joueur);
+		}
 	}
 
 	afficher_panneau_info();
 	afficher_panneau_jeu(ig);
-
-	while (TRUE) {
-		afficher_plateau(ig);
-		afficher_joueur_courant(joueur);
-
-		if (joueur == ia){
-			if (lancer_tour_ia(ia,lisere,ig)){
-				afficher_plateau(ig);
-				afficher_victoire(ia);
-				wait_clic();
-				return ;
-			}else{
-				afficher_plateau(ig);
-			}
-		}else{
-			if (selectionne_pion(joueur, lisere, NULL)) {
-				afficher_plateau(ig);
-				if (attend_clic_numbox_non_invalide(ig,&clic))
+	do {
+		change_joueur(&joueur);
+		if (JvsJ || joueur != ia) {
+			afficher_joueur_courant(joueur);
+			if (peut_selectionner_pion(joueur, lisere)) {
+				afficher_plateau(ig) ;
+				clic = attend_clic_quitter_ou_case_non_invalide(ig) ;
+				if (est_dans_bouton_quitter(clic))
 					return ;
+				coord = point_ig_to_numBoite(ig,clic) ;
 				do {
-					boxOrigine = clic ;
-					selectionne_pion(joueur, lisere, &boxOrigine);
+					boxOrigine = coord ;
+					selectionne_case_accessible(joueur, lisere, boxOrigine);
 					afficher_plateau(ig);
-					if (attend_clic_numbox_non_invalide(ig,&clic))
+					clic = attend_clic_quitter_ou_case_non_invalide(ig) ;
+					if (est_dans_bouton_quitter(clic))
 						return ;
-					if (est_licorne_adverse(clic, joueur)) {
-						boxDest = clic ;
-						deplacement_simple(boxOrigine, boxDest);
-						afficher_plateau(ig);
-						afficher_victoire(joueur);
-						wait_clic();
-						return ;
-					}
-				// } while(est_pion(clic));
-			} while(est_pion_joueur_courant(clic, joueur));
-
-				boxDest = clic ;
+					coord = point_ig_to_numBoite(ig,clic) ;
+				} while(est_pion_joueur_courant(coord, joueur));
+				boxDest = coord ;
+				if (est_licorne_adverse(boxDest, joueur)) {
+					perdu = FALSE ;
+				}
 				deplacement_simple(boxOrigine, boxDest);
 				lisere = change_lisere(boxDest);
-
 			} else {
 				afficher_plateau(ig);
 				afficher_coups_impossible();
 				wait_clic();
 			}
+		} else {
+			if (lancer_tour_ia(ia,lisere,ig))
+				perdu = FALSE ;
 		}
-
-		change_joueur(&joueur);
-	}
+	} while (perdu) ;
+	afficher_plateau(ig);
+	afficher_victoire(joueur);
+	wait_clic();
 }

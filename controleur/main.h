@@ -9,7 +9,6 @@
 	#include "../modele/modele.h"
 	#include "../modele/ia.h"
 
-	void jouer(int ig);
-	void jouer_ia(COUL joueur, int ig);
+	void jouer(int ig, COUL joueur, BOOL JvsJ);
 
 #endif
