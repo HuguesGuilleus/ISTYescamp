@@ -78,6 +78,88 @@ BOOL lancer_tour_ia(COUL ia, int lisere, int ig){
 
 }
 
+NUMBOX* recup_numbox_licorne_en_danger(COUL ia){
+	NUMBOX* licorne =(NUMBOX*) malloc(sizeof(NUMBOX));
+	BOX* box;
+	int c,l;
+	
+	for (c = 0; c<NB_BOX_PLATEAU; c++){
+		for (l = 0; l<NB_BOX_PLATEAU; l++){
+			box = getBox(c,l);
+			if ( box->coulP == ia && box->typeP == LICORNE){
+				licorne->c = c; licorne->l = l;
+				if (va_mourir(*licorne,ia)) return licorne;
+				else return NULL;
+			}
+		}
+	}
+	
+	return NULL;
+}
+
+BOOL va_mourir(NUMBOX licorne,COUL ia){
+	
+	COUL joueur = BLANC;
+	if (ia == BLANC) joueur = NOIR;
+	
+	//recup les positions d'accessible de l'adversaire
+	BOX* box;
+	BOX* box1;
+	int c,l,c1,l1;
+	
+	
+	for (c = 0; c<NB_BOX_PLATEAU; c++){
+		for (l = 0; l<NB_BOX_PLATEAU; l++){
+			box = getBox(c,l);
+			if ( box->typeP == PALADIN && box->coulP == joueur ){
+				parcourt_plusieurs_cases(c, l, box->coulP, box->typeP, box->lisere);
+			}
+		}
+	}
+	
+	for (c1 = 0; c1<NB_BOX_PLATEAU; c1++){
+		for (l1 = 0; l1<NB_BOX_PLATEAU; l1++){
+			box1 = getBox(c1,l1);
+			if ( box1->status == ACCESSIBLE && c1 == licorne.c && l1 == licorne.l ){
+				return TRUE;
+			}
+			
+		}
+	}
+	
+	return FALSE;
+	
+
+	
+	
+}
+
+NUMBOX recup_numbox_origine(NUMBOX destination, int nbtabBoxSelect,NUMBOX tabBoxSelect[38] ){
+	
+	int c,l,i = 0;
+	BOX* box;
+	NUMBOX b,origine;
+	
+	for (i = 0; i < nbtabBoxSelect;i++){
+		b = tabBoxSelect[i];
+		box = getBox(b.c,b.l);
+		parcourt_plusieurs_cases(b.c, b.l, box->coulP, box->typeP, box->lisere) ;
+		for (c = 0; c<NB_BOX_PLATEAU; c++){
+			for (l = 0; l<NB_BOX_PLATEAU; l++){
+				box = getBox(c,l);
+				if ( box->status == ACCESSIBLE && c == destination.c && l == destination.l ){
+					origine.c = b.c;
+					origine.l= b.l;
+					return origine;
+				}
+				
+			}
+		}
+	}
+	return destination; 
+}
+
+
 BOOL recup_meilleur_deplacement_ia(NUMBOX* dest, NUMBOX* origine, COUL ia, TYPE caseType, int ig){
 	NUMBOX b;
 	NUMBOX tabBoxAccessible[36];
@@ -85,6 +167,7 @@ BOOL recup_meilleur_deplacement_ia(NUMBOX* dest, NUMBOX* origine, COUL ia, TYPE 
 	int nbtabBoxAccessible = 0,nbtabBoxSelect = 0,i = 0;
 	b.c = 0; b.l = 0;
 	
+	//recup les positions d'origine possible
 	BOX* box;
 	int c,l;
 	for (c = 0; c<NB_BOX_PLATEAU; c++){
@@ -98,12 +181,13 @@ BOOL recup_meilleur_deplacement_ia(NUMBOX* dest, NUMBOX* origine, COUL ia, TYPE 
 			}
 		}
 	}
+	//si pas de pion d'origine
 	if (nbtabBoxSelect == 0){
 		printf("PAS DE CASE SELECTIONNABLE");
 		return FALSE;
 	}
 	
-	//premier parcours
+	//premier parcours des cases accessibles si peux gagner gagne
 	for (c = 0; c<NB_BOX_PLATEAU; c++){
 		for (l = 0; l<NB_BOX_PLATEAU; l++){
 			box = getBox(c,l);
@@ -111,25 +195,9 @@ BOOL recup_meilleur_deplacement_ia(NUMBOX* dest, NUMBOX* origine, COUL ia, TYPE 
 				if (box->typeP == LICORNE){
 					init_status();
 					dest->c = c; dest->l = l;
-					
-					//recup box origine
-					for (i = 0; i < nbtabBoxSelect;i++){
-						b = tabBoxSelect[i];
-						box = getBox(b.c,b.l);
-						parcourt_plusieurs_cases(b.c, b.l, box->coulP, box->typeP, box->lisere) ;
-						for (c = 0; c<NB_BOX_PLATEAU; c++){
-							for (l = 0; l<NB_BOX_PLATEAU; l++){
-								box = getBox(c,l);
-								if ( box->status == ACCESSIBLE && c == dest->c && l == dest->l ){
-									origine->c = b.c; origine->l= b.l;
-									return TRUE; 
-								}
-								
-							}
-						}
-					}
-					printf("ERREUR IA - 1\n");
-					return FALSE; 
+					*origine = recup_numbox_origine(*dest,nbtabBoxSelect,tabBoxSelect);
+					if(origine) return TRUE;
+					else return FALSE;
 				}else{
 					b.c = c; b.l =l;
 					tabBoxAccessible[nbtabBoxAccessible] = b;
@@ -139,13 +207,39 @@ BOOL recup_meilleur_deplacement_ia(NUMBOX* dest, NUMBOX* origine, COUL ia, TYPE 
 		}
 	}
 	init_status();
+	//Pion bloquer
 	if (nbtabBoxAccessible == 0){
 		printf("PAS DE CASE ACCESSIBLE\n");
 		return FALSE;
 	}
 	
+	//Parcour si licorne en danger
+	NUMBOX* licorne = recup_numbox_licorne_en_danger(ia);
+	if (licorne != NULL){
+		box = getBox(licorne->c,licorne->l);
+		for (i = 0; i < nbtabBoxSelect;i++){
+			if (tabBoxSelect[i].c == licorne->c && tabBoxSelect[i].l == licorne->l){
+				printf("Je peux le deplacer\n");
+				*origine = tabBoxSelect[i];
+				init_status();
+				parcourt_plusieurs_cases(tabBoxSelect[i].c, tabBoxSelect[i].l, box->coulP, box->typeP, box->lisere);
+				for (c = 0; c<NB_BOX_PLATEAU; c++){
+					for (l = 0; l<NB_BOX_PLATEAU; l++){
+						box = getBox(c,l);
+						if ( box->status == ACCESSIBLE ){
+							dest->c = c; 
+							dest->l = l;
+							return TRUE;
+						}
+					}
+				}
+			}
+		}
+		printf("la licorne est en danger !\n");
+	}
+	init_status();
 	
-	//dexieme parcours
+	//dexieme parcours des coups possible pour les case accessibles
 	for (i = 0; i<nbtabBoxAccessible; i++){
 		box = getBox(tabBoxAccessible[i].c,tabBoxAccessible[i].l);
 		parcourt_plusieurs_cases(tabBoxAccessible[i].c, tabBoxAccessible[i].l, box->coulP, box->typeP, box->lisere);
@@ -157,51 +251,22 @@ BOOL recup_meilleur_deplacement_ia(NUMBOX* dest, NUMBOX* origine, COUL ia, TYPE 
 					if (box->typeP == LICORNE){
 						init_status();
 						dest->c = tabBoxAccessible[i].c; dest->l = tabBoxAccessible[i].l;
-					
-						//recup box origine
-						for (i = 0; i < nbtabBoxSelect;i++){
-							b = tabBoxSelect[i];
-							box = getBox(b.c,b.l);
-							parcourt_plusieurs_cases(b.c, b.l, box->coulP, box->typeP, box->lisere) ;
-							for (c = 0; c<NB_BOX_PLATEAU; c++){
-								for (l = 0; l<NB_BOX_PLATEAU; l++){
-									box = getBox(c,l);
-									if ( box->status == ACCESSIBLE && c == dest->c && l == dest->l ){
-										origine->c = b.c; origine->l= b.l;
-										return TRUE; 
-									}
-								}
-							}
-						}
-						printf("ERREUR IA - 2\n");
-						return FALSE; 
+						*origine = recup_numbox_origine(*dest,nbtabBoxSelect,tabBoxSelect);
+						if(origine) return TRUE;
+						else return FALSE;
 					}
 				}
 			}
 		}
 		init_status();
 	}
+	
+	//Si aucun coups gagnant ou defensif trouver choisi un tire aléatoire
 	i = rand()%nbtabBoxAccessible;
 	dest->c = tabBoxAccessible[i].c; dest->l = tabBoxAccessible[i].l;
-	
-	//recup box origine
-	for (i = 0; i < nbtabBoxSelect;i++){
-		b = tabBoxSelect[i];
-		box = getBox(b.c,b.l);
-		parcourt_plusieurs_cases(b.c, b.l, box->coulP, box->typeP, box->lisere) ;
-		for (c = 0; c<NB_BOX_PLATEAU; c++){
-			for (l = 0; l<NB_BOX_PLATEAU; l++){
-				box = getBox(c,l);
-				if ( box->status == ACCESSIBLE && c == dest->c && l == dest->l ){
-					origine->c = b.c; origine->l= b.l;
-					return TRUE; 
-				}
-				
-			}
-		}
-	}
-	printf("ERREUR IA - 3 \n");
-	return FALSE;
+	*origine = recup_numbox_origine(*dest,nbtabBoxSelect,tabBoxSelect);
+	if(origine) return TRUE;
+	else return FALSE;
 }
 
 NUMBOX recup_meilleur_placement_ia(COUL ia, TYPE caseType, int ig){
