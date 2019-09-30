@@ -7,11 +7,12 @@ void positionne_pions(int ig, COUL joueur) {
 	NUMBOX coord ;
 	int paladin = 0, licorne = 0 ;
 
-	regle_case_accessible_position(ig, joueur);
+	init_case_accessible_position(ig, joueur);
 
 	afficher_panneau_jeu(ig);
 	afficher_panneau_info();
 	afficher_joueur_courant(joueur);
+	afficher_pion_info(joueur);
 
 	while (TRUE) {
 		afficher_placement_pions(paladin, licorne);
@@ -19,11 +20,11 @@ void positionne_pions(int ig, COUL joueur) {
 		affiche_all();
 		do {
 			clic = wait_clic();
-			if (estDans_panneau_info(clic) && licorne == 1 && paladin == 5) {
+			if (estDans_btn_info(clic) && licorne == 1 && paladin == 5) {
 				return ;
 			}
 			coord = point_ig_to_numBoite(ig, clic);
-		} while(!est_accessible_positionnement(coord, ig, joueur));
+		} while(estHors_plateau(clic) || !est_accessible_positionnement(coord, ig, joueur));
 		switch (plateau[coord.c][coord.l].typeP) {
 			case VIDE:
 				ajoute_paladin(coord,joueur) ;
@@ -42,23 +43,49 @@ void positionne_pions(int ig, COUL joueur) {
 	}
 }
 
-NUMBOX attend_clic_numbox(int ig) {
+BOOL test_perdre(NUMBOX dest, COUL joueur) {
+	return est_licorne_adverse(dest, joueur) ;
+}
+
+// Teste si le pion va sur la licorne adverse, si
+BOOL gagne(NUMBOX origine, NUMBOX dest, COUL joueur, int ig) {
+	if (est_licorne_adverse(dest, joueur)) {
+		deplacement_simple(origine, dest);
+		afficher_plateau(ig);
+		afficher_victoire(joueur);
+		wait_clic();
+		return TRUE ;
+	} else {
+		return FALSE ;
+	}
+}
+
+POINT attend_clic_quitter_ou_case_non_invalide(int ig) {
+	POINT c ;
+	NUMBOX b ;
+
+	do {
+		c = wait_clic() ;
+		b = point_ig_to_numBoite(ig, c) ;
+	} while( !est_dans_bouton_quitter(c) && ( estHors_plateau(c) || !est_pas_invalide(b) ) );
+
+	return c ;
+}
+
+// Modifie box au premier clic dans une case non invalide ou
+// renvoie TRUE si le clic est dans le bouton quitter.
+BOOL attend_clic_numbox_non_invalide(int ig, NUMBOX* box) {
 	POINT clic;
 
 	do {
 		clic = wait_clic();
-	} while(estHors_plateau(clic));
+		if (estDans_btn_info(clic)){
+			return TRUE ;
+		}
+		*box = point_ig_to_numBoite(ig,clic) ;
+	} while(estHors_plateau(clic) || !est_pas_invalide(*box));
 
-	return point_ig_to_numBoite(ig,clic) ;
-
-}
-
-NUMBOX attend_click_non_invalide(int ig) {
-	NUMBOX b ;
-	do {
-		b = attend_clic_numbox(ig);
-	} while(!est_pas_invalide(b));
-	return b ;
+	return FALSE;
 }
 
 BOOL estHors_plateau(POINT click) {
@@ -69,8 +96,8 @@ BOOL estHors_plateau(POINT click) {
 		click.y < marge || finPlateau < click.y ;
 }
 
-BOOL estDans_panneau_info(POINT p) {
-	return p.x > H_FENETRE ;
+BOOL estDans_btn_info(POINT p) {
+	return p.x > H_FENETRE+50 && p.x < L_FENETRE-50 && p.y > 50 && p.y < 100;
 }
 
 POINT numBoite_to_pointBG_ig(int ig, NUMBOX numboxB){

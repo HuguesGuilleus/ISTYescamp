@@ -7,7 +7,8 @@
 	#include "../controleur/partie.h"
 	#include "../controleur/menu.h"
 	#include "../modele/modele.h"
+	#include "../modele/ia.h"
 
-	void jouer(int mod,COUL joueur,int ig);
+	void jouer(int ig, COUL joueur, BOOL JvsJ);
 
 #endif
