@@ -107,7 +107,7 @@ void afficher_panneau_jeu(int ig){
 void afficher_legende_plateau(int ig) {
 	int i, chiffre = 0 ;
 	POINT pLettre, pChiffre;
-	char lettre[2];
+	char lettre[2] = "";
 	int largeur_box = (TAILLE_PLATEAU/NB_BOX_PLATEAU);
 
 	for(i=0;i<NB_BOX_PLATEAU;i++){
